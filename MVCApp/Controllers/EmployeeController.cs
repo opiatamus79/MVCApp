@@ -29,7 +29,7 @@ namespace MVCApp.Controllers
 
 
 
-
+            //Need to figure out way to join with Contract Changes table and display results.
             return View(emp);
         }
     }
