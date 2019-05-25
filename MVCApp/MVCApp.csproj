@@ -136,6 +136,7 @@
     <Compile Include="Models\AuthenticateContext.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeContractChanges.cs" />
+    <Compile Include="Models\EmployeeCurrentContractInfo.cs" />
     <Compile Include="Models\FormStatus.cs" />
     <Compile Include="Models\LegalForm.cs" />
     <Compile Include="Models\Login.cs" />
@@ -182,6 +183,7 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Login.cshtml" />
     <Content Include="Views\Employee\LoggedIn.cshtml" />
+    <Content Include="Views\Employee\BulkView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -199,7 +201,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

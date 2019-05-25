@@ -12,42 +12,60 @@ namespace MVCApp.Controllers
         /// <summary>
         /// //Testing here
         /// </summary>
-        public class EmployeeCurrentContractInfo
+        public  IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
-            public string Email { get; set; }
             
-        }
-        public IQueryable<EmployeeCurrentContractInfo> RetrieveContractInfo()
-        {
             using (AuthenticateContext db = new AuthenticateContext())
-            { //Will need to change this context
-                return from e in db.Employees
-                       join c in db.EmployeeContractChanges on e.ID equals c.EmployeeID
-                       orderby e.LastName descending
-                       select new EmployeeCurrentContractInfo()
-                       {
-                           Email = e.Email.ToString()
-                       };
+            {
+                return (from e in db.Employees.AsEnumerable()
+                        join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID
+                        orderby e.LastName descending
+                        select new EmployeeCurrentContractInfo() //Still need to join by Formstatus
+                        {
+                            ID = e.ID,
+                            Email = e.Email.ToString(),
+                            NewEmail = c.NewEmail.ToString(),
+                            LastName = e.LastName.ToString(),
+                            NewLastName = c.NewLastName.ToString(),
+                            Address = e.Address.ToString(),
+                            NewAddress = c.NewAddress.ToString(),
+                            City = e.City.ToString(),
+                            NewCity = c.NewCity.ToString(),
+                            State = e.State.ToString(),
+                            NewState = c.NewState.ToString(),
+                            Zipcode = e.Zipcode,
+                            NewZipcode = c.NewZipcode,
+                            Country = e.Country.ToString(),
+                            NewCountry = c.NewCountry.ToString(),
+                            Homephone = e.HomePhone.ToString(),
+                            NewHomephone = c.NewHomePhone.ToString(),
+
+                            LastUpdateOnSurvery = e.LastUpdate
+
+
+                        }).ToList();
             }
         }
 
         // GET: Employee
         public ActionResult Index()
         {
-            //var contractInfo = RetrieveContractInfo().ToList();
+            //var contractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext()) {
                 return View(db.Employees.OrderBy(e => e.FirstName).ToList());
             }
-
-          
-            
-            //var employees = db.Employees.OrderBy(e => e.FirstName);
-            //return View();
-            //return View(db.Employees.OrderBy(e => e.LastName).ToList()); //Worked
-               
-            
-
            
+        }
+
+        // GET: Employee
+        public ActionResult BulkView()
+        {
+            var contractInfo = RetrieveContractInfo();
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+                return View(contractInfo);
+            }
+
         }
 
         public ActionResult Login()

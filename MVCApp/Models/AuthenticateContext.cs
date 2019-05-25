@@ -17,10 +17,6 @@ namespace MVCApp.Models
         public DbSet<FormStatus> FormStatuses { get; set; }
         public DbSet<LegalForm> LegalForms { get; set; }
 
-
-
-
-
-
+        public System.Data.Entity.DbSet<MVCApp.Models.EmployeeCurrentContractInfo> EmployeeCurrentContractInfo { get; set; }
     }
 }
