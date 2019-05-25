@@ -60,10 +60,10 @@ namespace MVCApp.Controllers
         // GET: Employee
         public ActionResult BulkView()
         {
-            var contractInfo = RetrieveContractInfo();
+            var EmployeesContractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                return View(contractInfo);
+                return View(EmployeesContractInfo);
             }
 
         }
