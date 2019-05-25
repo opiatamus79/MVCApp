@@ -14,32 +14,35 @@ namespace MVCApp.Controllers
         /// </summary>
         public class EmployeeCurrentContractInfo
         {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
+            public string Email { get; set; }
+            
         }
         public IQueryable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
-            using (AuthenticateContext db = new AuthenticateContext()) //Will need to change this context
+            using (AuthenticateContext db = new AuthenticateContext())
+            { //Will need to change this context
                 return from e in db.Employees
-                   join c in db.EmployeeContractChanges on e.ID equals c.EmployeeID
-                   orderby e.LastName descending
-                   select new EmployeeCurrentContractInfo()
-                   {
-                       FirstName = e.FirstName,
-                       LastName = e.LastName
-                   };
+                       join c in db.EmployeeContractChanges on e.ID equals c.EmployeeID
+                       orderby e.LastName descending
+                       select new EmployeeCurrentContractInfo()
+                       {
+                           Email = e.Email.ToString()
+                       };
+            }
         }
 
         // GET: Employee
         public ActionResult Index()
         {
             //var contractInfo = RetrieveContractInfo().ToList();
-             using (AuthenticateContext db = new AuthenticateContext())
+            using (AuthenticateContext db = new AuthenticateContext()) {
+                return View(db.Employees.OrderBy(e => e.FirstName).ToList());
+            }
 
-            // db.Employees.OrderBy(e => e.FirstName).ToList();
-            return View(db.Employees.OrderBy(e => e.FirstName).ToList());
+          
+            
             //var employees = db.Employees.OrderBy(e => e.FirstName);
-
+            //return View();
             //return View(db.Employees.OrderBy(e => e.LastName).ToList()); //Worked
                
             

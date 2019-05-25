@@ -13,11 +13,11 @@ namespace MVCApp.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(50)]
         public string FilePath { get; set; }
 
         [Required]
-        [StringLength(300)]
+        [StringLength(50)]
         public string Reason { get; set; }
     }
 }

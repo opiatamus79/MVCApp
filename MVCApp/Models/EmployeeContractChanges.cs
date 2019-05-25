@@ -17,7 +17,7 @@ namespace MVCApp.Models
         public string NewLastName { get; set; }
 
         [Required]
-        [StringLength(200)]
+        [StringLength(50)]
         public string NewEmail { get; set; }
 
         [Required]

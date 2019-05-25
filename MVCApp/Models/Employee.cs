@@ -41,7 +41,7 @@
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(200)]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [Required]
