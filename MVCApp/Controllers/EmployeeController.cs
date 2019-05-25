@@ -9,9 +9,6 @@ namespace MVCApp.Controllers
 {
     public class EmployeeController : Controller
     {
-        /// <summary>
-        /// //Testing here
-        /// </summary>
         public  IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
             
@@ -19,7 +16,7 @@ namespace MVCApp.Controllers
             {
                 return (from e in db.Employees.AsEnumerable()
                         join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID
-                        orderby e.LastName descending
+                        orderby e.DateCreated descending
                         select new EmployeeCurrentContractInfo() //Still need to join by Formstatus
                         {
                             ID = e.ID,
@@ -48,7 +45,7 @@ namespace MVCApp.Controllers
         }
 
         // GET: Employee
-        public ActionResult Index()
+        public ActionResult Index() //Returning list of all employees (TODO REWRITE)
         {
             //var contractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext()) {
@@ -81,15 +78,12 @@ namespace MVCApp.Controllers
                 var usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
                 if (usr != null)
                 {
-
                     Session["StaffID"] = usr.StaffID;
                     Session["UserName"] = usr.UserName.ToString();
                     Session["UserType"] = usr.UserTypeID;
 
 
                     //Can perform check here to send admin user or regular user to respective pages.
-
-
                     if (usr.UserTypeID != 2)//NonAdmin (Should retrieve the usertypes and compare first in result) 
                     {
                         return RedirectToAction("LoggedIn");
@@ -117,7 +111,6 @@ namespace MVCApp.Controllers
             {
                 return View();
             }
-
             else
             {
                 return RedirectToAction("Login");
