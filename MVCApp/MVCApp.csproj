@@ -135,6 +135,9 @@
     </Compile>
     <Compile Include="Models\AuthenticateContext.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeContractChanges.cs" />
+    <Compile Include="Models\FormStatus.cs" />
+    <Compile Include="Models\LegalForm.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

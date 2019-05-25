@@ -9,17 +9,40 @@ namespace MVCApp.Controllers
 {
     public class EmployeeController : Controller
     {
+        /// <summary>
+        /// //Testing here
+        /// </summary>
+        public class EmployeeCurrentContractInfo
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+        }
+        public IQueryable<EmployeeCurrentContractInfo> RetrieveContractInfo()
+        {
+            using (AuthenticateContext db = new AuthenticateContext()) //Will need to change this context
+                return from e in db.Employees
+                   join c in db.EmployeeContractChanges on e.ID equals c.EmployeeID
+                   orderby e.LastName descending
+                   select new EmployeeCurrentContractInfo()
+                   {
+                       FirstName = e.FirstName,
+                       LastName = e.LastName
+                   };
+        }
+
         // GET: Employee
         public ActionResult Index()
         {
-            using (AuthenticateContext db = new AuthenticateContext())
-            {
-                // db.Employees.OrderBy(e => e.FirstName).ToList();
-                //return View(db.Employees.OrderBy(e => e.FirstName).ToList());
-                //var employees = db.Employees.OrderBy(e => e.FirstName);
-                
-                return View(db.Employees.ToList());
-            }
+            //var contractInfo = RetrieveContractInfo().ToList();
+             using (AuthenticateContext db = new AuthenticateContext())
+
+            // db.Employees.OrderBy(e => e.FirstName).ToList();
+            return View(db.Employees.OrderBy(e => e.FirstName).ToList());
+            //var employees = db.Employees.OrderBy(e => e.FirstName);
+
+            //return View(db.Employees.OrderBy(e => e.LastName).ToList()); //Worked
+               
+            
 
            
         }
