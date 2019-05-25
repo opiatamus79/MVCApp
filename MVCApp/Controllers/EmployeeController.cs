@@ -10,27 +10,65 @@ namespace MVCApp.Controllers
     public class EmployeeController : Controller
     {
         // GET: Employee
-        public ActionResult GetEmployees()
+        public ActionResult Index()
         {
-            //var employee = new Employee() { ID = 1, StaffID = 1, HRID = 1 };
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+                // db.Employees.OrderBy(e => e.FirstName).ToList();
+                //return View(db.Employees.OrderBy(e => e.FirstName).ToList());
+                //var employees = db.Employees.OrderBy(e => e.FirstName);
+                
+                return View(db.Employees.ToList());
+            }
+
+           
+        }
+
+        public ActionResult Login()
+        {
             return View();
         }
 
-        // GET: Employees
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Login(Login info)
         {
-            var emp = new List<Employee>(); //Initializing emp for returning employees.
-            using (HRP_DBEntities3 databaseConn = new HRP_DBEntities3()) //NOTE CONNECTION STRING
+            using (AuthenticateContext db = new AuthenticateContext())
             {
-                var employees = databaseConn.Employees.OrderBy(a => a.FirstName).ToList();
-                emp = employees; //Json(new {employees= employees }, JsonRequestBehavior.AllowGet); // used to send json.
+                var usr = db.Employees.Single(e => e.UserName == info.UserName && e.Password == info.Password);
+                if (usr != null)
+                {
+                    Session["StaffID"] = usr.StaffID;
+                    Session["UserName"] = usr.UserName.ToString();
+                    Session["UserType"] = usr.UserTypeID;
+
+
+                    //Can perform check here to send admin user or regular user to respective pages.
+
+                    return RedirectToAction("AdminLoggedIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username or Password is wrong.");
+                }
+               
+
             }
 
-
-
-
-            //Need to figure out way to join with Contract Changes table and display results.
-            return View(emp);
+                return View();
         }
+
+        public ActionResult LoggedIn()
+        {
+            if (Session["StaffID"] != null)
+            {
+                return View();
+            }
+
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
     }
 }
