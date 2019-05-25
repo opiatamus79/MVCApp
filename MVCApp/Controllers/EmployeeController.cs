@@ -78,9 +78,10 @@ namespace MVCApp.Controllers
         {
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                var usr = db.Employees.Single(e => e.UserName == info.UserName && e.Password == info.Password);
+                var usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
                 if (usr != null)
                 {
+
                     Session["StaffID"] = usr.StaffID;
                     Session["UserName"] = usr.UserName.ToString();
                     Session["UserType"] = usr.UserTypeID;
@@ -88,7 +89,16 @@ namespace MVCApp.Controllers
 
                     //Can perform check here to send admin user or regular user to respective pages.
 
-                    return RedirectToAction("AdminLoggedIn");
+
+                    if (usr.UserTypeID != 2)//NonAdmin (Should retrieve the usertypes and compare first in result) 
+                    {
+                        return RedirectToAction("LoggedIn");
+                    }
+                    else
+                    {
+                        return RedirectToAction("BulkView");
+                    }
+                    
                 }
                 else
                 {
@@ -97,7 +107,7 @@ namespace MVCApp.Controllers
                
 
             }
-
+                //could not connect to db
                 return View();
         }
 
