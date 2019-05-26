@@ -140,6 +140,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthenticateContext.cs" />
+    <Compile Include="Models\CustomMembership.cs" />
+    <Compile Include="Models\CustomMemberShipUser.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeContractChanges.cs" />
     <Compile Include="Models\EmployeeCurrentContractInfo.cs" />

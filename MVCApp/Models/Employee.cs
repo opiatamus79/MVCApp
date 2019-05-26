@@ -1,4 +1,4 @@
-﻿namespace MVCApp.Models
+﻿namespace MVCApp.Models.DataAccess
 {
     using System;
     using System.Collections.Generic;

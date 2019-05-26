@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using MVCApp.Models.DataAccess;
 
 namespace MVCApp.Models
 {
@@ -38,6 +39,7 @@ namespace MVCApp.Models
         public DbSet<FormStatus> FormStatuses { get; set; }
         public DbSet<LegalForm> LegalForms { get; set; }
 
-        public System.Data.Entity.DbSet<MVCApp.Models.EmployeeCurrentContractInfo> EmployeeCurrentContractInfo { get; set; }
+        //Changed namespace here to use the name EmployeeCurrentContractInfo
+        public System.Data.Entity.DbSet<EmployeeCurrentContractInfo> EmployeeCurrentContractInfo { get; set; }
     }
 }
