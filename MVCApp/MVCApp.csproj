@@ -194,7 +194,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Employee\Login.cshtml" />
     <Content Include="Views\Employee\LoggedIn.cshtml" />
     <Content Include="Views\Employee\BulkView.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
