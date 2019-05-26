@@ -7,8 +7,10 @@ using MVCApp.Models;
 
 namespace MVCApp.Controllers
 {
+    
     public class EmployeeController : Controller
     {
+        
         public  IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
             
@@ -45,6 +47,7 @@ namespace MVCApp.Controllers
         }
 
         // GET: Employee
+        
         public ActionResult Index() //Returning list of all employees (TODO REWRITE)
         {
             //var contractInfo = RetrieveContractInfo();
@@ -55,6 +58,7 @@ namespace MVCApp.Controllers
         }
 
         // GET: Employee
+        
         public ActionResult BulkView()
         {
             var EmployeesContractInfo = RetrieveContractInfo();
@@ -75,24 +79,31 @@ namespace MVCApp.Controllers
         {
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                var usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
+                Employee usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
                 if (usr != null)
                 {
+                    Session["ID"] = usr.ID;
+
                     Session["StaffID"] = usr.StaffID;
                     Session["UserName"] = usr.UserName.ToString();
-                    Session["UserType"] = usr.UserTypeID;
-
+                    //Session["UserType"] = usr.UserTypeID;
+                    var user = User.Identity.Name;
 
                     //Can perform check here to send admin user or regular user to respective pages.
-                    if (usr.UserTypeID != 2)//NonAdmin (Should retrieve the usertypes and compare first in result) 
+                  /*  if (usr.UserTypeID == Role.Admin)//NonAdmin (Should retrieve the usertypes and compare first in result) 
                     {
-                        return RedirectToAction("LoggedIn");
+                          //Perform call to determine if need to show EmployeeContractChangesForm
+                         return RedirectToAction("BulkView");
                     }
-                    else
+                    else if (usr.UserTypeID == Role.User)
                     {
-                        return RedirectToAction("BulkView");
+                        var username = User.Identity.Name;
+                        
+                        //Perform call to determine if need to show EmployeeContractChangesForm
+                        return RedirectToAction("Index", "UserDashboard");
+
                     }
-                    
+                    */
                 }
                 else
                 {
@@ -104,7 +115,7 @@ namespace MVCApp.Controllers
                 //could not connect to db
                 return View();
         }
-
+        
         public ActionResult LoggedIn()
         {
             if (Session["StaffID"] != null)
@@ -116,6 +127,10 @@ namespace MVCApp.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+
+
+
 
     }
 }

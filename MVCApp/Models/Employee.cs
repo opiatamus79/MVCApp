@@ -65,10 +65,13 @@
         [StringLength(20)]
         public string HomePhone { get; set; }
 
+        public bool IsActive { get; set; }
+
+        public Guid ActivationCode { get; set; }
+
+        public virtual ICollection<Role> Roles { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime DateCreated { get; set; }
-
-        //[ForeignKey]
-        public int UserTypeID { get; set; }
     }
 }
