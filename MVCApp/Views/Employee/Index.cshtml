@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVCApp.Models.Employee>
+﻿@model IEnumerable<MVCApp.Models.DataAccess.Employee>
 
 @{
     ViewBag.Title = "Index";
@@ -58,10 +58,13 @@
             @Html.DisplayNameFor(model => model.HomePhone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.IsActive)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserTypeID)
+            @Html.DisplayNameFor(model => model.ActivationCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th></th>
     </tr>
@@ -114,10 +117,13 @@
             @Html.DisplayFor(modelItem => item.HomePhone)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
+            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserTypeID)
+            @Html.DisplayFor(modelItem => item.ActivationCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

@@ -194,12 +194,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Login.cshtml" />
     <Content Include="Views\Employee\LoggedIn.cshtml" />
     <Content Include="Views\Employee\BulkView.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\EditContractForm.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
