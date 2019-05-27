@@ -68,7 +68,15 @@ namespace MVCApp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index");
+                        Session["ID"] = user.UserId;
+                        Session["UserName"] = user.UserName;
+                        
+                        
+
+
+
+
+                        return RedirectToAction("Bulkview", "Employee");
                     }
                 }
             }
@@ -170,8 +178,8 @@ namespace MVCApp.Controllers
             var url = string.Format("/Account/ActivationAccount/{0}", activationCode);
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
 
-            var fromEmail = new MailAddress("mehdi.rami2012@gmail.com", "Activation Account - AKKA");
-            var toEmail = new MailAddress(email);
+            var fromEmail = new MailAddress("opiatamus79@gmail.com", "Activation Account - AKKA");
+            var toEmail = new MailAddress("thatherton08@yahoo.com");
 
             var fromEmailPassword = "******************";
             string subject = "Activation Account !";

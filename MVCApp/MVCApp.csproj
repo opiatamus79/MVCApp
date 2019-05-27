@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthenticateContext.cs" />
+    <Compile Include="Models\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\CustomMembership.cs" />
     <Compile Include="Models\CustomMemberShipUser.cs" />
     <Compile Include="Models\CustomPrincipal.cs" />
@@ -199,6 +200,7 @@
     <Content Include="Views\Shared\EditContractForm.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
