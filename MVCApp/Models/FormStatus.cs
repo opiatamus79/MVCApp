@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     public class FormStatus
     {

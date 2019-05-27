@@ -134,14 +134,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905261705379_initial_migration.cs" />
-    <Compile Include="Migrations\201905261705379_initial_migration.Designer.cs">
-      <DependentUpon>201905261705379_initial_migration.cs</DependentUpon>
+    <Compile Include="Migrations\201905270623544_Initial_Auth.cs" />
+    <Compile Include="Migrations\201905270623544_Initial_Auth.Designer.cs">
+      <DependentUpon>201905270623544_Initial_Auth.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthenticateContext.cs" />
-    <Compile Include="Models\CustomMembership.cs" />
-    <Compile Include="Models\CustomMemberShipUser.cs" />
+    <Compile Include="Models\CustomPrincipal.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeContractChanges.cs" />
     <Compile Include="Models\EmployeeCurrentContractInfo.cs" />
@@ -153,9 +152,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DB.mdf" />
-    <Content Include="App_Data\DB_log.ldf">
-      <DependentUpon>DB.mdf</DependentUpon>
+    <Content Include="App_Data\MVCApp.Models.AuthenticateContext.mdf" />
+    <Content Include="App_Data\MVCApp.Models.AuthenticateContext_log.ldf">
+      <DependentUpon>MVCApp.Models.AuthenticateContext.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -198,7 +197,6 @@
     <Content Include="Views\Employee\BulkView.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\EditContractForm.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -220,8 +218,8 @@
     <Folder Include="Views\DBMockup\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905261705379_initial_migration.resx">
-      <DependentUpon>201905261705379_initial_migration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905270623544_Initial_Auth.resx">
+      <DependentUpon>201905270623544_Initial_Auth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

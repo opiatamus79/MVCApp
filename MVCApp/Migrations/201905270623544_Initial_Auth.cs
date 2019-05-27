@@ -3,7 +3,7 @@ namespace MVCApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial_migration : DbMigration
+    public partial class Initial_Auth : DbMigration
     {
         public override void Up()
         {
@@ -53,20 +53,12 @@ namespace MVCApp.Migrations
                         Zipcode = c.Int(nullable: false),
                         Country = c.String(nullable: false, maxLength: 50),
                         HomePhone = c.String(maxLength: 20),
-                        IsActive = c.Boolean(nullable: false),
-                        ActivationCode = c.Guid(nullable: false),
                         DateCreated = c.DateTime(nullable: false, storeType: "date"),
+                        Role_RoleId = c.Int(),
                     })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.Roles",
-                c => new
-                    {
-                        RoleId = c.Int(nullable: false, identity: true),
-                        RoleName = c.String(),
-                    })
-                .PrimaryKey(t => t.RoleId);
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Roles", t => t.Role_RoleId)
+                .Index(t => t.Role_RoleId);
             
             CreateTable(
                 "dbo.FormStatus",
@@ -114,37 +106,30 @@ namespace MVCApp.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.UserRoles",
+                "dbo.Roles",
                 c => new
                     {
-                        UserId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false, identity: true),
+                        RoleName = c.String(),
                     })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.Employees", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
+                .PrimaryKey(t => t.RoleId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Employees", "Role_RoleId", "dbo.Roles");
             DropForeignKey("dbo.EmployeeContractChanges", "LegalFormsID", "dbo.LegalForms");
             DropForeignKey("dbo.EmployeeContractChanges", "StatusID", "dbo.FormStatus");
             DropForeignKey("dbo.EmployeeContractChanges", "EmployeeID", "dbo.Employees");
-            DropForeignKey("dbo.UserRoles", "RoleId", "dbo.Roles");
-            DropForeignKey("dbo.UserRoles", "UserId", "dbo.Employees");
-            DropIndex("dbo.UserRoles", new[] { "RoleId" });
-            DropIndex("dbo.UserRoles", new[] { "UserId" });
+            DropIndex("dbo.Employees", new[] { "Role_RoleId" });
             DropIndex("dbo.EmployeeContractChanges", new[] { "EmployeeID" });
             DropIndex("dbo.EmployeeContractChanges", new[] { "LegalFormsID" });
             DropIndex("dbo.EmployeeContractChanges", new[] { "StatusID" });
-            DropTable("dbo.UserRoles");
+            DropTable("dbo.Roles");
             DropTable("dbo.EmployeeCurrentContractInfoes");
             DropTable("dbo.LegalForms");
             DropTable("dbo.FormStatus");
-            DropTable("dbo.Roles");
             DropTable("dbo.Employees");
             DropTable("dbo.EmployeeContractChanges");
         }

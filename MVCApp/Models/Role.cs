@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     public class Role
     {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCApp.Models;
-using MVCApp.DataAccess;
 
 namespace MVCApp.Controllers
 {

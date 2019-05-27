@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     public class EmployeeCurrentContractInfo
     {

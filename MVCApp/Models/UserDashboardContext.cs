@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     public class UserDashboardContext : DbContext
     {

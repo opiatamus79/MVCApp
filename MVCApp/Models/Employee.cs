@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     
     public partial class Employee
@@ -63,12 +63,6 @@ namespace MVCApp.DataAccess
 
         [StringLength(20)]
         public string HomePhone { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public Guid ActivationCode { get; set; }
-
-        public virtual ICollection<Role> Roles { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime DateCreated { get; set; }

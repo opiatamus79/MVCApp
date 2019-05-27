@@ -1,5 +1,4 @@
-﻿using MVCApp.DataAccess;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Web;
 using System.Web.Configuration;
 
 
-namespace MVCApp.DataAccess
+namespace MVCApp.Models
 {
     public class AuthenticateContext : DbContext
     {
@@ -15,24 +14,6 @@ namespace MVCApp.DataAccess
         /// TODO: Need to rename this context its main purpose now is to show HR Bulk View (Employees Contract Changes)
         /// </summary>
         /// 
-        public AuthenticateContext()
-            : base("AuthenticationDB")
-        {
-
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Employee>()
-                .HasMany(u => u.Roles)
-                .WithMany(r => r.Employees)
-                .Map(m =>
-                {
-                    m.ToTable("UserRoles");
-                    m.MapLeftKey("UserId");
-                    m.MapRightKey("RoleId");
-                });
-        }
 
         
 
