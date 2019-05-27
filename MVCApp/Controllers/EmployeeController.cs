@@ -17,12 +17,13 @@ namespace MVCApp.Controllers
 
         public IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
+            // Will be changing this. Delete contractinfoes model and just 
             
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 return (from e in db.Employees.AsEnumerable()
                         join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID
-                        orderby e.DateCreated descending
+                        orderby e.FirstName descending
                         select new EmployeeCurrentContractInfo() //Still need to join by Formstatus
                         {
                             ID = e.ID,

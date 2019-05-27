@@ -56,6 +56,8 @@ namespace MVCApp.DataAccess
         [Column(TypeName = "date")]
         public DateTime DateCreated { get; set; }
 
+        public int ChangeLogID { get; set; }
+
         //[Required]
         public int StatusID { get; set; }
 
