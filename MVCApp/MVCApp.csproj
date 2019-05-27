@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,12 +143,14 @@
     <Compile Include="Models\AuthenticateContext.cs" />
     <Compile Include="Models\CustomMembership.cs" />
     <Compile Include="Models\CustomMemberShipUser.cs" />
+    <Compile Include="Models\CustomPrincipal.cs" />
+    <Compile Include="Models\CustomRole.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeContractChanges.cs" />
     <Compile Include="Models\EmployeeCurrentContractInfo.cs" />
     <Compile Include="Models\FormStatus.cs" />
     <Compile Include="Models\LegalForm.cs" />
-    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\LoginView.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserDashboardContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,6 +198,7 @@
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\EditContractForm.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

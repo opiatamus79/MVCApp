@@ -76,35 +76,14 @@ namespace MVCApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Login info)
+        public ActionResult Login(LoginView info)
         {
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 Employee usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
                 if (usr != null)
                 {
-                    Session["ID"] = usr.ID;
 
-                    Session["StaffID"] = usr.StaffID;
-                    Session["UserName"] = usr.UserName.ToString();
-                    //Session["UserType"] = usr.UserTypeID;
-                    var user = User.Identity.Name;
-
-                    //Can perform check here to send admin user or regular user to respective pages.
-                  /*  if (usr.UserTypeID == Role.Admin)//NonAdmin (Should retrieve the usertypes and compare first in result) 
-                    {
-                          //Perform call to determine if need to show EmployeeContractChangesForm
-                         return RedirectToAction("BulkView");
-                    }
-                    else if (usr.UserTypeID == Role.User)
-                    {
-                        var username = User.Identity.Name;
-                        
-                        //Perform call to determine if need to show EmployeeContractChangesForm
-                        return RedirectToAction("Index", "UserDashboard");
-
-                    }
-                    */
                 }
                 else
                 {
