@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ContractChanges</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+    <h2>Test</h2>
+
+    <div><b>Table Format Data Displaying in ForEach</b><br /></div>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Change Log ID </th>
+            <th>New Address </th>
+            <th>Approve</th>
+            <th>Status </th>
+        </tr>
+        @foreach (var d in Model)
+        {
+            <tr>
+                <td>@d.EmployeeContractChange.ChangeLogID</td>
+                <td>@d.EmployeeContractChange.NewAddress</td>
+                <td>@d.Status.StatusName</td>
+                <td>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Approve Dropdown</button>
+                </td>
+
+            </tr>
+        }
+    </table>
+</body>
+</html>

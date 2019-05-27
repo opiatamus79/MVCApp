@@ -70,15 +70,7 @@ namespace MVCApp.Controllers
                     }
                     else
                     {
-                        Session["ID"] = user.UserId;
-                        Session["UserName"] = user.UserName;
-                        
-                        
-
-
-
-
-                        return RedirectToAction("Bulkview", "Employee");
+                        return RedirectToAction("ContractChanges", "Employee"); //HERE IS MAIN ENTRY POINT
                     }
                 }
             }

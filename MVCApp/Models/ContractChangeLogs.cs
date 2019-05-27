@@ -9,7 +9,7 @@ namespace MVCApp.DataAccess
     public class ContractChangeLogs 
     {
         public Employee Employee { get; set; }   
-        public EmployeeContractChanges EmployeeContractChange { get; set; } 
+        public IEnumerable<EmployeeContractChanges> EmployeeContractChangeList { get; set; } 
         public FormStatus FormStatus { get; set; }
         public LegalForm LegalForms { get; set; }
         public DateTime UpdatedOn { get; set; }

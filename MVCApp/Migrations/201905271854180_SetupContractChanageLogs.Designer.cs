@@ -13,7 +13,7 @@ namespace MVCApp.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201905271817124_SetupContractChanageLogs"; }
+            get { return "201905271854180_SetupContractChanageLogs"; }
         }
         
         string IMigrationMetadata.Source

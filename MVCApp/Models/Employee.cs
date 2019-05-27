@@ -69,9 +69,6 @@ namespace MVCApp.DataAccess
         public Guid ActivationCode { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime DateUpdated { get; set; }
     }
 }
 

@@ -15,44 +15,20 @@ namespace MVCApp.Controllers
     {
 
 
-        public IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
+        /*public IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
             // Will be changing this. Delete contractinfoes model and just 
             
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 return (from e in db.Employees.AsEnumerable()
-                        join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID
+                        join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID //Can 
                         orderby e.FirstName descending
-                        select new EmployeeCurrentContractInfo() //Still need to join by Formstatus
-                        {
-                            ID = e.ID,
-                            Email = e.Email.ToString(),
-                            NewEmail = c.NewEmail.ToString(),
-                            LastName = e.LastName.ToString(),
-                            NewLastName = c.NewLastName.ToString(),
-                            Address = e.Address.ToString(),
-                            NewAddress = c.NewAddress.ToString(),
-                            City = e.City.ToString(),
-                            NewCity = c.NewCity.ToString(),
-                            State = e.State.ToString(),
-                            NewState = c.NewState.ToString(),
-                            Zipcode = e.Zipcode,
-                            NewZipcode = c.NewZipcode,
-                            Country = e.Country.ToString(),
-                            NewCountry = c.NewCountry.ToString(),
-                            Homephone = e.HomePhone.ToString(),
-                            NewHomephone = c.NewHomePhone.ToString(),
-
-                            LastUpdateOnSurvery = e.LastUpdate
-
-
-                        }).ToList();
+                        select new EmployeeCurrentContractInfo()).ToList();
             }
-        }
+       }*/
 
         // GET: Employee
-        
         public ActionResult Index() //Returning list of all employees (TODO REWRITE)
         {
             //var contractInfo = RetrieveContractInfo();
@@ -61,19 +37,66 @@ namespace MVCApp.Controllers
             }
            
         }
+        // GET: Employee
+        public ActionResult ContractChanges() 
+        {
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+                /*
+                 *NOTICE: This query will be used to populate modals for the Admin HR Bulk view. 
+                 * Put this inside a partial view, still currently testing,
+                 * Also be aware that there is a constant value being used just for testing, will just need to 
+                 * make a call to the partial view and pass in the ChangeLogId to ViewBag and should populate modal
+                 * with all the logs of a specific Employee Contract that was created when the user updated their info.
+                 * 
+                 * Remember will be creating two entries into the EmployeeContractChanges table when starting, one for the 
+                 * initial to show the earliest change and another one to represent the update to user info.
+                 * 
+                 * ?
+                */
+
+
+
+
+                var GroupedChangeLogs = (from c in db.EmployeeContractChanges.AsEnumerable()
+                                         join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
+                                         join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
+                                         where c.ChangeLogID == 1 ////BE AWARE THIS IS FOR TESTING
+                                         select new ViewModels.ContractChanges
+                                         {
+                                             ID = c.ID,
+                                             EmployeeContractChange = c,
+                                             LegalForms = c.LegalForm,
+                                             UpdatedOn = c.DateCreated,
+                                             Status = c.FormStatus
+
+                                        }).ToList();
+
+                
+                
+                if(GroupedChangeLogs != null)
+                {
+                    return View(GroupedChangeLogs);
+                }
+
+                return View();
+            }
+
+        }
+
 
         // GET: Employee
-        [CustomAuthorize(Roles = "NonAdmin")]
+        //[CustomAuthorize(Roles = "NonAdmin")]
         public ActionResult BulkView()
         {
             
 
-            var EmployeesContractInfo = RetrieveContractInfo();
+            //var EmployeesContractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
-                return View(EmployeesContractInfo);
+                return View();
             }
 
         }
@@ -81,27 +104,6 @@ namespace MVCApp.Controllers
         public ActionResult Login()
         {
             return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(LoginView info)
-        {
-            using (AuthenticateContext db = new AuthenticateContext())
-            {
-                Employee usr = db.Employees.FirstOrDefault(e => e.UserName == info.UserName && e.Password == info.Password);
-                if (usr != null)
-                {
-
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password is wrong.");
-                }
-               
-
-            }
-                //could not connect to db
-                return View();
         }
         
         public ActionResult LoggedIn()

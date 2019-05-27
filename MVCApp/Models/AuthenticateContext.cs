@@ -42,7 +42,6 @@ namespace MVCApp.DataAccess
         public DbSet<FormStatus> FormStatuses { get; set; }
         public DbSet<LegalForm> LegalForms { get; set; }
 
-        //Changed namespace here to use the name EmployeeCurrentContractInfo
-        public System.Data.Entity.DbSet<EmployeeCurrentContractInfo> EmployeeCurrentContractInfo { get; set; }
+        public System.Data.Entity.DbSet<MVCApp.ViewModels.ContractChanges> ContractChangeLogs { get; set; }
     }
 }
