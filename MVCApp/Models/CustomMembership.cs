@@ -1,13 +1,12 @@
-﻿using MVCApp.Models.DataAccess;
+﻿using MVCApp.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using MVCApp.Models;
 
 
-namespace MVCApp.Models.CustomAuthentication
+namespace MVCApp.CustomAuthentication
 {
     public class CustomMembership : MembershipProvider
     {
@@ -73,7 +72,7 @@ namespace MVCApp.Models.CustomAuthentication
                 {
                     return null;
                 }
-                var selectedUser = new MVCApp.CustomAuthentication.CustomMembershipUser(user);
+                var selectedUser = new CustomMembershipUser(user);
 
                 return selectedUser;
             }

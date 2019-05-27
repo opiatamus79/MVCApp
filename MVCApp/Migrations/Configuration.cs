@@ -5,14 +5,14 @@ namespace MVCApp.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MVCApp.Models.AuthenticateContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MVCApp.DataAccess.AuthenticateContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MVCApp.Models.AuthenticateContext context)
+        protected override void Seed(MVCApp.DataAccess.AuthenticateContext context)
         {
             //  This method will be called after migrating to the latest version.
 

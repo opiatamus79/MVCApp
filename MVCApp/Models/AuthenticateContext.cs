@@ -1,11 +1,13 @@
-﻿using System;
+﻿using MVCApp.DataAccess;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
-using MVCApp.Models.DataAccess;
+using System.Web.Configuration;
 
-namespace MVCApp.Models
+
+namespace MVCApp.DataAccess
 {
     public class AuthenticateContext : DbContext
     {
@@ -32,6 +34,7 @@ namespace MVCApp.Models
                 });
         }
 
+        
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Role> Roles { get; set; }

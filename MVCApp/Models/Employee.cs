@@ -1,12 +1,11 @@
-﻿namespace MVCApp.Models.DataAccess
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-   
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-    //[Table("Employee")]
+namespace MVCApp.DataAccess
+{
+    
     public partial class Employee
     {
         [Key]
@@ -75,3 +74,4 @@
         public DateTime DateCreated { get; set; }
     }
 }
+
