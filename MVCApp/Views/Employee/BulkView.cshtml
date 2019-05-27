@@ -1,10 +1,10 @@
-﻿@model IEnumerable<MVCApp.Models.EmployeeCurrentContractInfo>
+﻿@model IEnumerable<MVCApp.DataAccess.EmployeeCurrentContractInfo>
 
 @{
-    ViewBag.Title = "BulkView";
+    ViewBag.Title = "Contract Updates";
 }
 
-<h2>BulkView</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")

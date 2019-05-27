@@ -23,6 +23,7 @@ using System.Web.Security;
             public CustomMembershipUser(Employee user) : base("CustomMembership", user.UserName, user.ID, user.Email, string.Empty, string.Empty, true, false, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now)
             {
                 UserId = user.ID;
+                Email = user.Email;
                 FirstName = user.FirstName;
                 LastName = user.LastName;
                 Roles = user.Roles;

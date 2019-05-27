@@ -38,5 +38,7 @@ namespace MVCApp.CustomAuthentication
         {
             Identity = new GenericIdentity(username);
         }
+
+
     }
 }

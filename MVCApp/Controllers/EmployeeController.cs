@@ -6,15 +6,16 @@ using System.Web.Mvc;
 using System.Web.Security;
 using MVCApp.Models;
 using MVCApp.DataAccess;
-
+using MVCApp.CustomAuthentication;
 
 namespace MVCApp.Controllers
 {
     
     public class EmployeeController : Controller
     {
-        
-        public  IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
+
+
+        public IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
         {
             
             using (AuthenticateContext db = new AuthenticateContext())
@@ -61,14 +62,16 @@ namespace MVCApp.Controllers
         }
 
         // GET: Employee
-        
+        [CustomAuthorize(Roles = "NonAdmin")]
         public ActionResult BulkView()
         {
-            CustomAuthentication.CustomPrincipal x = (CustomAuthentication.CustomPrincipal)this.HttpContext.User;
-            var who = x.ID;
+            
+
             var EmployeesContractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext())
             {
+                
+                ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 return View(EmployeesContractInfo);
             }
 

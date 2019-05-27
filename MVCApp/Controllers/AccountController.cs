@@ -13,9 +13,11 @@ using System.Web.Security;
 
 namespace MVCApp.Controllers
 {
+
     [AllowAnonymous]
     public class AccountController : Controller
     {
+
         // GET: Account
         public ActionResult Index()
         {
