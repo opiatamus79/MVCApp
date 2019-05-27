@@ -3,7 +3,7 @@ namespace MVCApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial_migration : DbMigration
+    public partial class authDb : DbMigration
     {
         public override void Up()
         {
