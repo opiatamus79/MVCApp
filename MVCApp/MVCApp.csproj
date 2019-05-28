@@ -129,9 +129,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\UserDashboardController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserDashboardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,14 +203,15 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\HR\LoggedIn.cshtml" />
-    <Content Include="Views\UserDashboard\Index.cshtml" />
-    <Content Include="Views\Shared\EditContractForm.cshtml" />
     <Content Include="Views\HR\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\HR\ChangeHistoryTable.cshtml" />
     <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
     <Content Include="Views\HR\ChangeHistoryModal.cshtml" />
+    <Content Include="Views\UserDashboard\Index.cshtml" />
+    <Content Include="Views\Shared\ContractForm.cshtml" />
+    <Content Include="Views\HR\ContractFormModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

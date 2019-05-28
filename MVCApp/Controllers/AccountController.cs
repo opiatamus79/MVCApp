@@ -70,12 +70,23 @@ namespace MVCApp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("ChangeHistoryOverview", "HR"); //Right now only testing, will need to determine if user is admin, send to this view
-                        //or if they are a user to send to their user dashboard view.
+                        var roles = user.Roles.Select(r => r.RoleName).ToList();
+                        
+                        if (roles.Contains("Admin"))
+                        {
+                            Session["Role"] = "Admin";
+                            return RedirectToAction("ChangeHistoryOverview", "HR"); //Right now only testing, will need to determine if user is admin, send to this view
+                                                                                    //or if they are a user to send to their user dashboard view.
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "UserDashboard");
+                        }
+
                     }
                 }
             }
-            ModelState.AddModelError("", "Something Wrong : Username or Password invalid ^_^ ");
+            ModelState.AddModelError("", "Something Wrong : Username or Password is invalid");
             return View(loginView);
         }
 

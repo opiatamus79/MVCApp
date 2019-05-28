@@ -24,17 +24,15 @@ namespace MVCApp
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
         }
+        
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
-        {
+        {//Setting Up Authentication for user, currently already determine user is valid user and assigning cookie for session.
             HttpCookie authCookie = Request.Cookies["Cookie1"];
             if (authCookie != null)
             {
                 FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 
                 var serializeModel = JsonConvert.DeserializeObject<CustomSerializeModel>(authTicket.UserData);
-                //JavaScriptSerializer js = new JavaScriptSerializer();
-                //var serializeModel = js.Deserialize<CustomSerializeModel>(authTicket.UserData);
-
                 CustomPrincipal principal = new CustomPrincipal(authTicket.Name);
 
                 principal.ID = serializeModel.ID;

@@ -11,7 +11,7 @@ using MVCApp.ViewModels;
 
 namespace MVCApp.Controllers
 {
-    
+    [CustomAuthorize(Roles = "Admin")]
     public class HRController : Controller
     {
 
@@ -29,38 +29,22 @@ namespace MVCApp.Controllers
             }
        }*/
 
-        // GET: Employee
-        public ActionResult Index() //Returning list of all employees (TODO REWRITE)
+        // GET: HR
+        public ActionResult Index() 
         {
-            //var contractInfo = RetrieveContractInfo();
-            using (AuthenticateContext db = new AuthenticateContext()) {
-                return View(db.Employees.OrderBy(e => e.FirstName).ToList());
-            }
-           
+
+
+            return View();
         }
-        // GET: Employee
-        public ActionResult ChangeHistory(int changeLogID, int employeeID)  //Pass the cid and eid as parameters
+        // GET: HR
+        public ActionResult ChangeHistory(int changeLogID, int employeeID)  
         {
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                /*
-                 *NOTICE: This query will be used to populate modals for the Admin HR Bulk view. 
-                 * Put this inside a partial view, still currently testing,
-                 * Also be aware that there is a constant value being used just for testing, will just need to 
-                 * make a call to the partial view and pass in the ChangeLogId to ViewBag and should populate modal
-                 * with all the logs of a specific Employee Contract that was created when the user updated their info.
-                 * 
-                 * Remember will be creating two entries into the EmployeeContractChanges table when starting, one for the 
-                 * initial to show the earliest change and another one to represent the update to user info.
-                 * 
-                 * ?
-                */
-
-
                 var ContractChangeHistory = (from c in db.EmployeeContractChanges.AsEnumerable()
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
-                                         where (c.ChangeLogID == changeLogID &&  c.EmployeeID == employeeID)////BE AWARE THIS IS FOR TESTING
+                                         where (c.ChangeLogID == changeLogID &&  c.EmployeeID == employeeID)
                                          select new ViewModels.ContractChanges
                                          {
                                              ID = c.ID,
@@ -75,7 +59,7 @@ namespace MVCApp.Controllers
                 
                 if(ContractChangeHistory != null)
                 {
-                    return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());//View(ContractChangeHistory.ToList());
+                    return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());
                 }
 
                 return View();
@@ -84,9 +68,8 @@ namespace MVCApp.Controllers
         }
 
 
-        // GET: HR/BulkView
-        [CustomAuthorize(Roles = "NonAdmin")]
-        public ActionResult ChangeHistoryOverview()
+        // GET: HR/ChangeHistoryView
+        public ActionResult ChangeHistoryOverview() //NOTE: need to come to only list table with unique change log ids and latest contract changes.
         {
 
             using (AuthenticateContext db = new AuthenticateContext())
@@ -122,7 +105,7 @@ namespace MVCApp.Controllers
         
         public ActionResult LoggedIn()
         {
-            if (Session["StaffID"] != null)
+            if (Session["Role"] != null)
             {
                 return View();
             }
