@@ -103,9 +103,7 @@ namespace MVCApp.Controllers
                                              Status = c.FormStatus
 
                                          });
-                var x = GroupedChangeLogs.ToList();
-
-
+  
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
                 if (GroupedChangeLogs != null)
                 {

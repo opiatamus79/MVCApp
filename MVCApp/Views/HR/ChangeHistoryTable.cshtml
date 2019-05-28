@@ -2,23 +2,39 @@
 
 @{
     Layout = null;
+
+   
 }
 
 
-    <div><b>Table Format Data Displaying in ForEach</b><br /></div>
-    <table class="table table-bordered table-responsive table-hover">
-        <tr>
-            <th>Change Log ID </th>
-            <th>New Address </th>
-            <th>Approve</th>
-            <th>Status </th>
-            <th>UpdatedOn</th>
-        </tr>
-        @foreach (var d in Model)
-        {
-        <tr>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        <th># </th>
+        <th>Edited Address</th>
+        <th>Edited City</th>
+        <th>Edited State</th>
+        <th>Edited Zipcode</th>
+        <th>Edited Country</th>
+        <th>Edited Email</th>
+        <th>Edited HomePhone</th>
+        <th>Edited Last Name</th>
+        <th>Status </th>
+        <th>UpdatedOn</th>
+        <th>Approve</th>
+    </tr>
+    @foreach (var d in Model)
+    {
+        <tr id="rows" 
+            onclick="callModal({ ChangeLogID: @d.EmployeeContractChange.ChangeLogID, EmployeeID: @d.EmployeeContractChange.EmployeeID })">
             <td>@d.EmployeeContractChange.ChangeLogID</td>
             <td>@d.EmployeeContractChange.NewAddress</td>
+            <td>@d.EmployeeContractChange.NewCity</td>
+            <td>@d.EmployeeContractChange.NewState</td>
+            <td>@d.EmployeeContractChange.NewZipcode</td>
+            <td>@d.EmployeeContractChange.NewCountry</td>
+            <td>@d.EmployeeContractChange.NewEmail</td>
+            <td>@d.EmployeeContractChange.NewHomePhone</td>
+            <td>@d.EmployeeContractChange.NewLastName</td>
             <td>@d.Status.StatusName</td>
             <td>@d.UpdatedOn</td>
 
@@ -27,6 +43,6 @@
             </td>
 
         </tr>
-        }
-    </table>
+    }
+</table>
 
