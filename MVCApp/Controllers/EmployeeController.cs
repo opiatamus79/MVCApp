@@ -61,7 +61,7 @@ namespace MVCApp.Controllers
                 var GroupedChangeLogs = (from c in db.EmployeeContractChanges.AsEnumerable()
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
-                                         where c.ChangeLogID == 1 ////BE AWARE THIS IS FOR TESTING
+                                         where (c.ChangeLogID == 1 &&  c.EmployeeID == 5)////BE AWARE THIS IS FOR TESTING
                                          select new ViewModels.ContractChanges
                                          {
                                              ID = c.ID,
@@ -70,13 +70,13 @@ namespace MVCApp.Controllers
                                              UpdatedOn = c.DateCreated,
                                              Status = c.FormStatus
 
-                                        }).ToList();
+                                        });
 
                 
                 
                 if(GroupedChangeLogs != null)
                 {
-                    return View(GroupedChangeLogs);
+                    return View(GroupedChangeLogs.ToList());
                 }
 
                 return View();

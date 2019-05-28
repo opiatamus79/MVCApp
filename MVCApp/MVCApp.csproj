@@ -148,18 +148,18 @@
       <DependentUpon>201905272122212_ContractChangeLogs2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AuthenticateContext.cs" />
-    <Compile Include="Models\CustomAuthorizeAttribute.cs" />
-    <Compile Include="Models\CustomMembership.cs" />
-    <Compile Include="Models\CustomMemberShipUser.cs" />
-    <Compile Include="Models\CustomPrincipal.cs" />
-    <Compile Include="Models\CustomRole.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="DataAccess\AuthenticateContext.cs" />
+    <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
+    <Compile Include="CustomAuthentication\CustomMembership.cs" />
+    <Compile Include="CustomAuthentication\CustomMemberShipUser.cs" />
+    <Compile Include="CustomAuthentication\CustomPrincipal.cs" />
+    <Compile Include="CustomAuthentication\CustomRole.cs" />
+    <Compile Include="DataAccess\Employee.cs" />
     <Compile Include="Models\EmployeeContractChanges.cs" />
     <Compile Include="Models\FormStatus.cs" />
     <Compile Include="Models\LegalForm.cs" />
     <Compile Include="Models\LoginView.cs" />
-    <Compile Include="Models\Role.cs" />
+    <Compile Include="DataAccess\Role.cs" />
     <Compile Include="Models\ContractChangeLogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ContractChanges.cs" />
