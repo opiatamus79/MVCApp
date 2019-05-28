@@ -16,14 +16,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("HR Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                @if ((string)Session["Role"] == "Admin")
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Contract Changes Overview", "ChangeHistoryOverview", "HR")</li>
+                    </ul>
+
+                }
+                @if ((string)Session["Role"] == null)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    </ul>
+
+                }
             </div>
         </div>
     </div>
