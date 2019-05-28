@@ -130,7 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UserDashboardController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,13 +202,15 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Employee\LoggedIn.cshtml" />
+    <Content Include="Views\HR\LoggedIn.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\EditContractForm.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\HR\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Employee\ContractChanges.cshtml" />
+    <Content Include="Views\HR\ChangeHistoryTable.cshtml" />
+    <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
+    <Content Include="Views\HR\ChangeHistoryModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -228,7 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DBMockup\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905271040421_authDb.resx">

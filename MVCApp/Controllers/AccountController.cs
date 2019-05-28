@@ -70,7 +70,8 @@ namespace MVCApp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("ContractChanges", "Employee"); //HERE IS MAIN ENTRY POINT
+                        return RedirectToAction("ChangeHistoryOverview", "HR"); //Right now only testing, will need to determine if user is admin, send to this view
+                        //or if they are a user to send to their user dashboard view.
                     }
                 }
             }

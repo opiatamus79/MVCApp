@@ -7,11 +7,12 @@ using System.Web.Security;
 using MVCApp.Models;
 using MVCApp.DataAccess;
 using MVCApp.CustomAuthentication;
+using MVCApp.ViewModels;
 
 namespace MVCApp.Controllers
 {
     
-    public class EmployeeController : Controller
+    public class HRController : Controller
     {
 
 
@@ -38,7 +39,7 @@ namespace MVCApp.Controllers
            
         }
         // GET: Employee
-        public ActionResult ContractChanges() 
+        public ActionResult ChangeHistory(int changeLogID, int employeeID)  //Pass the cid and eid as parameters
         {
             using (AuthenticateContext db = new AuthenticateContext())
             {
@@ -56,12 +57,10 @@ namespace MVCApp.Controllers
                 */
 
 
-
-
-                var GroupedChangeLogs = (from c in db.EmployeeContractChanges.AsEnumerable()
+                var ContractChangeHistory = (from c in db.EmployeeContractChanges.AsEnumerable()
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
-                                         where (c.ChangeLogID == 1 &&  c.EmployeeID == 5)////BE AWARE THIS IS FOR TESTING
+                                         where (c.ChangeLogID == changeLogID &&  c.EmployeeID == employeeID)////BE AWARE THIS IS FOR TESTING
                                          select new ViewModels.ContractChanges
                                          {
                                              ID = c.ID,
@@ -74,9 +73,9 @@ namespace MVCApp.Controllers
 
                 
                 
-                if(GroupedChangeLogs != null)
+                if(ContractChangeHistory != null)
                 {
-                    return View(GroupedChangeLogs.ToList());
+                    return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());//View(ContractChangeHistory.ToList());
                 }
 
                 return View();
@@ -85,17 +84,34 @@ namespace MVCApp.Controllers
         }
 
 
-        // GET: Employee
-        //[CustomAuthorize(Roles = "NonAdmin")]
-        public ActionResult BulkView()
+        // GET: HR/BulkView
+        [CustomAuthorize(Roles = "NonAdmin")]
+        public ActionResult ChangeHistoryOverview()
         {
-            
 
-            //var EmployeesContractInfo = RetrieveContractInfo();
             using (AuthenticateContext db = new AuthenticateContext())
             {
+                var GroupedChangeLogs = (from c in db.EmployeeContractChanges.AsEnumerable()
+                                         join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
+                                         join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
+                                         select new ViewModels.ContractChanges
+                                         {
+                                             ID = c.ID,
+                                             EmployeeContractChange = c,
+                                             LegalForms = c.LegalForm,
+                                             UpdatedOn = c.DateCreated,
+                                             Status = c.FormStatus
+
+                                         });
+                var x = GroupedChangeLogs.ToList();
+
+
+                ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
+                if (GroupedChangeLogs != null)
+                {
+                    return View(GroupedChangeLogs.ToList()); 
+                }
                 
-                ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 return View();
             }
 
