@@ -90,6 +90,7 @@ namespace MVCApp.Controllers
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
                 ViewBag.showSurvey = showSurvey ? true : false;
                 ViewBag.showOptOut = showOptOut ? true : false;
+                ViewBag.pending = 5;
                 if (GroupedChangeLogs != null)
                 {
                     return View(GroupedChangeLogs.ToList()); 

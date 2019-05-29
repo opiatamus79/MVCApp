@@ -7,6 +7,8 @@
 }
 <h2>@ViewBag.Title</h2>
 
+
+<p> Forms Pending: @ViewBag.pending</p>
 <!--ADD Another Partial view here for the table, the table that is showing contract changes.-->
 <!--1. have table, click on a button to open up -->
 <!--Button will be used for each row. When clicked will get the Id of the EmployeeContractChange-->
@@ -20,6 +22,8 @@
 
 
 @Html.Partial("ChangeHistoryModal");
+
+
 
 
 @section Scripts

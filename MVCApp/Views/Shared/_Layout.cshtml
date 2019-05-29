@@ -26,10 +26,10 @@
                     </ul>
 
                 }
-                @if ((string)Session["Role"] == null)
+                @if ((string)Session["Role"] == "Admin" || (string)Session["Role"] == "NonAdmin")
                 {
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Logout", "Login", "Account")</li>
                     </ul>
 
                 }
