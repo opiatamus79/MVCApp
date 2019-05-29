@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
 @{
-    ViewBag.Title = "ChangeHistory";
+    ViewBag.Title = "Change History";
     ViewBag.ModalHeader = "History";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -29,7 +29,7 @@
 @section Scripts
 {
     <script>
-
+        $('[data-toggle="tooltip"]').tooltip();
         function callModal(contract)
         {
             var eId = contract.EmployeeID;

@@ -19,6 +19,58 @@ namespace MVCApp.Controllers
             return View();
         }
 
+        public ActionResult LoadContractChangeForm( string ReturnUrl="") //User can only see this if they are in opt out period.
+        {
+            //Gather list of the current logged on users info, into model EmployeeContractChanges.
+            //(and would need to allow for two models)
+
+
+            //then after form can be viewed and submitted can add partial view 
+
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+             int userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+
+
+
+            var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
+
+            if (lastContractChangeForm != null)
+             {
+               var lastCF = lastContractChangeForm;
+
+                    return RedirectToAction("CreateContractChangeForm", "UserDashboard", new {
+                        ID = lastCF.ID,
+                        address = lastCF.NewAddress,
+                        NewCity = lastCF.NewCity,
+                        NewCountry = lastCF.NewCountry,
+                        NewEmail = lastCF.NewEmail,
+                        NewHomePhone = lastCF.NewHomePhone,
+                        NewLastName = lastCF.NewLastName,
+                        NewState = lastCF.NewState,
+                        Zipcode = lastCF.NewZipcode,
+                        DateCreated = lastCF.DateCreated,
+                        ChangeLogID = lastCF.ChangeLogID,
+                        StatusID = lastCF.StatusID,
+                        LegalFormsID = lastCF.LegalFormsID,
+                        EmployeeID = lastCF.EmployeeID,
+                        FormStatus = lastCF.FormStatus,
+                        LegalForm = lastCF.LegalForm,
+                        Employee = lastCF.Employee
+                    });
+
+                
+             }
+            }
+
+            if (Url.IsLocalUrl(ReturnUrl))
+            {
+                return Redirect(ReturnUrl);
+            }
+
+            return View();
+
+        }
 
         // GET: FormUpdates
         public ActionResult EnableSurvey() 

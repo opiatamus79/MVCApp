@@ -25,7 +25,8 @@
     @foreach (var d in Model)
     {
         <tr id="rows" 
-            onclick="callModal({ ChangeLogID: @d.ChangeLogID, EmployeeID: @d.EmployeeID })">
+            onclick="callModal({ ChangeLogID: @d.ChangeLogID, EmployeeID: @d.EmployeeID })
+            "data-toggle="tooltip" data-placement="top" title="Show History?">
             <td>@d.ChangeLogID</td>
             <td>@d.NewAddress</td>
             <td>@d.NewCity</td>
@@ -45,7 +46,7 @@
                         <a class="dropdown-item" href="#">Approve</a>
                         <a class="dropdown-item" href="#">Edit</a>
                     </div>
-                    <button id="contractUpdate" disabled type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateContractModal">Edit</button>
+                    <button id="contractUpdate" type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateContractModal">Edit</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Approve</a>
                         <a class="dropdown-item" href="#">Edit</a>

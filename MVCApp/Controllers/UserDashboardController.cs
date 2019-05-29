@@ -26,11 +26,20 @@ namespace MVCApp.Controllers
 
                 return View();
         }
+        // GET: Dashboard
+        public ActionResult CreateContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        {
+            //Has last
+            //var result = (from contract )
+            var x = contract;
+
+            return PartialView("CreateContractChangeForm" , contract); //return to partial view
+        }
 
 
 
-                
-        
+
+
     }
 
 }

@@ -12,7 +12,8 @@
 }
 
 <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
-<button id="test" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#CreateContractChangeFormModal">Reset Account</button>
+<button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
+      id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">Reset Account</button>
 
 @Html.Partial("CreateContractChangeFormModal");
 
@@ -23,15 +24,12 @@
 {
     <script>
         $('[data-toggle="tooltip"]').tooltip();
-        function callModal()
-        {
-            var showingModal = $('#CreateContractChangeFormModal').hasClass('in');
-            if (!showingModal)
-            {
-                $("#CreateContractChangeModal").load("@Html.Raw(Url.Action("CreateEmployeeContractChange", "FormUpdates"))");
-                $('#CreateContractChangeFormModal').modal('show');
-            }
+        function callContractChangeFormModal() {
+
+            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $('#createContractChangeFormModal').modal('show');
 
         }
+        
     </script>
 }
