@@ -41,14 +41,14 @@ namespace MVCApp.Controllers
 
                     return RedirectToAction("CreateContractChangeForm", "UserDashboard", new {
                         ID = lastCF.ID,
-                        address = lastCF.NewAddress,
+                        NewAddress = lastCF.NewAddress,
                         NewCity = lastCF.NewCity,
                         NewCountry = lastCF.NewCountry,
                         NewEmail = lastCF.NewEmail,
                         NewHomePhone = lastCF.NewHomePhone,
                         NewLastName = lastCF.NewLastName,
                         NewState = lastCF.NewState,
-                        Zipcode = lastCF.NewZipcode,
+                        NewZipcode = lastCF.NewZipcode,
                         DateCreated = lastCF.DateCreated,
                         ChangeLogID = lastCF.ChangeLogID,
                         StatusID = lastCF.StatusID,

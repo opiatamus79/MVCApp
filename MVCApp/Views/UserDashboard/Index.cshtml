@@ -1,7 +1,10 @@
 ﻿@model MVCApp.DataAccess.EmployeeContractChanges
 @{
+    /**/
+
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.submitSurvey = false;
 }
 
 <h2>Welcome Back @ViewBag.Name</h2>
@@ -11,9 +14,33 @@
 
 }
 
-<!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
-<button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
-      id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">Reset Account</button>
+
+@{
+    if (ViewBag.Optout == false)
+    {
+        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+        <button data-toggle="modal" disabled data-placement="top" title="Reset your account credentials to previous change?"
+                id="disabledOptOut" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+            Reset Account
+        </button>
+
+    }
+}
+
+
+@{
+    if (ViewBag.Optout == true)
+    {
+        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+        <button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
+                id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+            Reset Account
+        </button>
+    }
+}
+
+
+
 
 @Html.Partial("CreateContractChangeFormModal");
 
@@ -24,12 +51,21 @@
 {
     <script>
         $('[data-toggle="tooltip"]').tooltip();
-        function callContractChangeFormModal() {
+        function callContractChangeFormModal()
+        {//If User submits they are opting out.
 
             $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
             $('#createContractChangeFormModal').modal('show');
 
         }
-        
+
+        if (@ViewBag.submitSurvey == false && @ViewBag.showSurvey == true)
+        {//Survey the User
+            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $('#createContractChangeFormModal').modal('show');
+            $("#createContractChangeFormModal").modal({ "backdrop": "static" });
+
+        }
+
     </script>
 }
