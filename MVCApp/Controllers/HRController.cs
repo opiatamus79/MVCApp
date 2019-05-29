@@ -69,7 +69,7 @@ namespace MVCApp.Controllers
 
 
         // GET: HR/ChangeHistoryView
-        public ActionResult ChangeHistoryOverview() //NOTE: need to come to only list table with unique change log ids and latest contract changes.
+        public ActionResult ChangeHistoryOverview(bool showSurvey = false, bool showOptOut = false ) //NOTE: need to come to only list table with unique change log ids and latest contract changes.
         {
 
             using (AuthenticateContext db = new AuthenticateContext())
@@ -88,11 +88,14 @@ namespace MVCApp.Controllers
                                          });
   
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
+                ViewBag.showSurvey = showSurvey ? true : false;
+                ViewBag.showOptOut = showOptOut ? true : false;
                 if (GroupedChangeLogs != null)
                 {
                     return View(GroupedChangeLogs.ToList()); 
                 }
                 
+
                 return View();
             }
 
