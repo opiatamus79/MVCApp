@@ -22,9 +22,6 @@ namespace MVCApp.DataAccess
             List<ContractChanges> emptyList = new List<ContractChanges>();
             var uniqueList = EmpContractChangesDbContext.Database.SqlQuery<ContractChanges>("RetrieveUniqueChangeLogs");
 
-            var x = uniqueList.ToList();
-
-
             if (uniqueList != null)
             {
                 return uniqueList.ToList();

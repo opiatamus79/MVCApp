@@ -1,0 +1,122 @@
+﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
+
+<h2> Recent Activity</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NewLastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewZipcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewHomePhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LegalFormsID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeLogID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewZipcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewHomePhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LegalFormsID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChangeLogID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FilePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedOn)
+        </td>
+    </tr>
+}
+
+</table>

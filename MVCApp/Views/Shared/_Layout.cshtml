@@ -21,14 +21,15 @@
             <div class="navbar-collapse collapse">
                 @if ((string)Session["Role"] == "Admin")
                 {
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Contract Changes Overview", "ChangeHistoryOverview", "HR")</li>
-                    </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Contract Changes Overview", "ChangeHistoryOverview", "HR")</li>
+                    <li>@Html.ActionLink("Visual Overview", "VisualOverview", "HR")</li>
+                </ul>
 
                 }
                 @if ((string)Session["Role"] == "Admin" || (string)Session["Role"] == "NonAdmin")
                 {
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav ml-auto">
                         <li>@Html.ActionLink("Logout", "Login", "Account")</li>
                     </ul>
 

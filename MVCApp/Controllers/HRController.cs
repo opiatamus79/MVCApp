@@ -14,22 +14,6 @@ namespace MVCApp.Controllers
     [CustomAuthorize(Roles = "Admin")]
     public class HRController : Controller
     {
-
-
-        /*public IEnumerable<EmployeeCurrentContractInfo> RetrieveContractInfo()
-        {
-            // Will be changing this. Delete contractinfoes model and just 
-            
-            using (AuthenticateContext db = new AuthenticateContext())
-            {
-                return (from e in db.Employees.AsEnumerable()
-                        join c in db.EmployeeContractChanges.AsEnumerable() on e.ID equals c.EmployeeID //Can 
-                        orderby e.FirstName descending
-                        select new EmployeeCurrentContractInfo()).ToList();
-            }
-       }*/
-
-
         // GET: HR
         public ActionResult Index() 
         {
@@ -46,7 +30,7 @@ namespace MVCApp.Controllers
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
                                          where (c.ChangeLogID == changeLogID &&  c.EmployeeID == employeeID)
-                                         select new ViewModels.ContractChanges
+                                         select new ViewModels.ContractChanges //NEED TO REFACTOR THIS 
                                          {
                                              ID = c.ID,
                                              NewLastName = c.NewLastName,
@@ -111,11 +95,30 @@ namespace MVCApp.Controllers
         public ActionResult VisualOverview()
         {
             //Need to show Pending, Edited, and Approved forms for each user.
+            EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+            var UniqueContracChangeList = eCCR.GetUniqueEmployeeContractLogs();
+            ViewBag.pending = 0;
+            ViewBag.approved = 0;
+            ViewBag.editing = 0;
+            ViewBag.optout = 0;
 
+            if (UniqueContracChangeList != null)
+            {
+                foreach (ContractChanges c in UniqueContracChangeList)
+                {
+                    ViewBag.pending = c.StatusName == "Pending" ? (ViewBag.pending + 1) : ViewBag.pending;
+                    ViewBag.approved = c.StatusName == "Editing" ? (ViewBag.approved + 1) : ViewBag.approved;
+                    ViewBag.editing = c.StatusName == "Approved" ? (ViewBag.editing + 1) : ViewBag.approved;
+                    ViewBag.optout = c.StatusName == "Opt-out" ? (ViewBag.optout + 1) : ViewBag.optout;
+                }
+                return View(UniqueContracChangeList);
 
-            ViewBag.pending = 5; //will be making call to stored procedure to determine amount of pending, edited, and approved forms.
+            }
 
             return View();
+            
+            
+           
         }
 
         public ActionResult Login()

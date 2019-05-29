@@ -230,6 +230,10 @@
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\ContractForm.cshtml" />
     <Content Include="Views\HR\ContractFormModal.cshtml" />
+    <Content Include="Views\HR\VisualOverview.cshtml" />
+    <Content Include="Views\UserDashboard\CreateContractChangeFormModal.cshtml" />
+    <Content Include="Views\UserDashboard\CreateContractChangeForm.cshtml" />
+    <Content Include="Views\UserDashboard\UserActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

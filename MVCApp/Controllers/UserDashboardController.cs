@@ -15,10 +15,11 @@ namespace MVCApp.Controllers
     public class UserDashboardController : Controller
     {
         // GET: Dashboard
-        public ActionResult Index() //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        public ActionResult Index(bool showSurvey = false, bool showOptout = false) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {
             ViewBag.Title = "Dashboard";
             ViewBag.ModalHeader = "Survey";
+            ViewBag.Name = Session["Firstname"] + " " + Session["Lastname"];
 
             
 

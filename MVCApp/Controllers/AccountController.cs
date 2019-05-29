@@ -68,13 +68,18 @@ namespace MVCApp.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
-                    else
+                    else if(user != null)
                     {
                        var roles = user.Roles.Select(r => r.RoleName).ToList();
 
                       Session["Role"] = roles.Contains("Admin") ? "Admin" : "NonAdmin";
+                      Session["Firstname"] = user.FirstName;
+                      Session["Lastname"] = user.LastName;
+                        
                       return RedirectToAction("EnableSurvey", "FormUpdates");
                     }
+
+                    View();
                 }
             }
             ModelState.AddModelError("", "Something Wrong : Username or Password is invalid");
@@ -89,15 +94,16 @@ namespace MVCApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowDashboard()
+        public ActionResult ShowDashboard(bool s = false, bool opt = false)
         {
+
             if ((string)Session["Role"] == "Admin")
             {
-                return RedirectToAction("ChangeHistoryOverview", "HR");
+                return RedirectToAction("ChangeHistoryOverview", "HR", new { showSurvey = s, showOptout = opt});
             }
              
 
-             return RedirectToAction("Index", "UserDashboard");
+             return RedirectToAction("Index", "UserDashboard", new { showSurvey = s, showOptout = opt });
         }
 
         [HttpPost]
@@ -135,7 +141,7 @@ namespace MVCApp.Controllers
 
                 //Verification Email
                 VerificationEmail(registrationView.Email, registrationView.ActivationCode.ToString());
-                messageRegistration = "Your account has been created successfully. ^_^";
+                messageRegistration = "Your account has been created successfully.";
                 statusRegistration = true;
             }
             else
