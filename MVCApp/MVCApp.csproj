@@ -157,6 +157,14 @@
     <Compile Include="Migrations\201905291347446_StoredProcedures1.Designer.cs">
       <DependentUpon>201905291347446_StoredProcedures1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905291451049_setupProcedures_3.cs" />
+    <Compile Include="Migrations\201905291451049_setupProcedures_3.Designer.cs">
+      <DependentUpon>201905291451049_setupProcedures_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291537398_StoreProcedures_4.cs" />
+    <Compile Include="Migrations\201905291537398_StoreProcedures_4.Designer.cs">
+      <DependentUpon>201905291537398_StoreProcedures_4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DataAccess\AuthenticateContext.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
@@ -258,6 +266,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905291347446_StoredProcedures1.resx">
       <DependentUpon>201905291347446_StoredProcedures1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291451049_setupProcedures_3.resx">
+      <DependentUpon>201905291451049_setupProcedures_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291537398_StoreProcedures_4.resx">
+      <DependentUpon>201905291537398_StoreProcedures_4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

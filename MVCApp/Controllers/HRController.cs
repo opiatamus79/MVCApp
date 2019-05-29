@@ -40,6 +40,7 @@ namespace MVCApp.Controllers
         // GET: HR
         public ActionResult ChangeHistory(int changeLogID, int employeeID)  
         {
+            /*
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 var ContractChangeHistory = (from c in db.EmployeeContractChanges.AsEnumerable()
@@ -62,10 +63,11 @@ namespace MVCApp.Controllers
                 {
                     return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());
                 }
-
+                
                 return View();
             }
-
+            */
+            return View();
         }
 
 
@@ -79,7 +81,10 @@ namespace MVCApp.Controllers
                 EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
                 var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
 
-                var GroupedChangeLogs = (from c in UniqueList
+
+
+
+                /*var GroupedChangeLogs = (from c in UniqueList
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
                                          select new ViewModels.ContractChanges
@@ -90,9 +95,9 @@ namespace MVCApp.Controllers
                                              UpdatedOn = c.DateCreated,
                                              Status = c.FormStatus
 
-                                         });
+                                         });*/
 
-                var x = GroupedChangeLogs.ToList();
+                var GroupedChangeLogs = UniqueList.ToList();
 
 
   

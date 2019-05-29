@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,13 @@ namespace MVCApp.DataAccess
             return EmpContractChangesDbContext.EmployeeContractChanges.Find(id);
         }
 
-        public List<EmployeeContractChanges> GetUniqueEmployeeContractLogs()//will be using stored procedure.
+        public List<ContractChanges> GetUniqueEmployeeContractLogs()//will be using stored procedure.
         {
-            List<EmployeeContractChanges> emptyList = new List<EmployeeContractChanges>();
-            var uniqueList = EmpContractChangesDbContext.Database.SqlQuery<EmployeeContractChanges>("RetrieveUniqueChangeLogs");
+            List<ContractChanges> emptyList = new List<ContractChanges>();
+            var uniqueList = EmpContractChangesDbContext.Database.SqlQuery<ContractChanges>("RetrieveUniqueChangeLogs");
+
+            var x = uniqueList.ToList();
+
 
             if (uniqueList != null)
             {
