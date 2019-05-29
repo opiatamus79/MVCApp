@@ -40,7 +40,6 @@ namespace MVCApp.Controllers
         // GET: HR
         public ActionResult ChangeHistory(int changeLogID, int employeeID)  
         {
-            /*
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 var ContractChangeHistory = (from c in db.EmployeeContractChanges.AsEnumerable()
@@ -50,23 +49,35 @@ namespace MVCApp.Controllers
                                          select new ViewModels.ContractChanges
                                          {
                                              ID = c.ID,
-                                             EmployeeContractChange = c,
-                                             LegalForms = c.LegalForm,
-                                             UpdatedOn = c.DateCreated,
-                                             Status = c.FormStatus
+                                             NewLastName = c.NewLastName,
+                                             NewEmail = c.NewEmail,
+                                             NewAddress = c.NewAddress,
+                                             NewCity = c.NewCity,
+                                             NewState = c.NewState,
+                                             NewZipcode = c.NewZipcode,
+                                             NewCountry = c.NewCountry,
+                                             NewHomePhone = c.NewHomePhone,
+                                             DateCreated = c.DateCreated,
+                                             StatusID = c.StatusID,
+                                             LegalFormsID = c.LegalFormsID,
+                                             EmployeeID = c.EmployeeID,
+                                             ChangeLogID = c.ChangeLogID,
+                                             StatusName = c.FormStatus.StatusName,
+                                             Description = c.FormStatus.Description,
+                                             FilePath = c.LegalForm.FilePath,
+                                             Reason = c.LegalForm.Reason,
+                                             UpdatedOn = c.DateCreated
 
                                         });
 
-                
-                
+              
                 if(ContractChangeHistory != null)
                 {
                     return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());
                 }
                 
-                return View();
             }
-            */
+            
             return View();
         }
 
@@ -80,23 +91,6 @@ namespace MVCApp.Controllers
                 //pass in stored procedure result here then modify to be ContractChanges format.
                 EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
                 var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
-
-
-
-
-                /*var GroupedChangeLogs = (from c in UniqueList
-                                         join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
-                                         join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
-                                         select new ViewModels.ContractChanges
-                                         {
-                                             ID = c.ID,
-                                             EmployeeContractChange = c,
-                                             LegalForms = c.LegalForm,
-                                             UpdatedOn = c.DateCreated,
-                                             Status = c.FormStatus
-
-                                         });*/
-
                 var GroupedChangeLogs = UniqueList.ToList();
 
 
