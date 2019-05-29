@@ -75,7 +75,11 @@ namespace MVCApp.Controllers
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                var GroupedChangeLogs = (from c in db.EmployeeContractChanges.AsEnumerable()
+                //pass in stored procedure result here then modify to be ContractChanges format.
+                EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+                var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
+
+                var GroupedChangeLogs = (from c in UniqueList
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
                                          select new ViewModels.ContractChanges
@@ -87,6 +91,10 @@ namespace MVCApp.Controllers
                                              Status = c.FormStatus
 
                                          });
+
+                var x = GroupedChangeLogs.ToList();
+
+
   
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
                 ViewBag.showSurvey = showSurvey ? true : false;
@@ -103,17 +111,8 @@ namespace MVCApp.Controllers
         }
         public ActionResult VisualOverview()
         {
-            //Need to show Pending, Edited, and Approved forms for each user. 
+            //Need to show Pending, Edited, and Approved forms for each user.
 
-            //Get Unique and last items in EmployContractChanges for each employee.
-
-
-
-            //Join with Unique Employee Contract Changes list.
-            /* using (AuthenticateContext db = new AuthenticateContext)
-             {
-
-             }*/
 
             ViewBag.pending = 5; //will be making call to stored procedure to determine amount of pending, edited, and approved forms.
 

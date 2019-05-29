@@ -17,6 +17,7 @@ namespace MVCApp.ViewModels
         public FormStatus Status { get; set; }
         public LegalForm LegalForms { get; set; }
         public DateTime UpdatedOn { get; set; }
+        //public String StatusName { get; set; }
 
     }
 }

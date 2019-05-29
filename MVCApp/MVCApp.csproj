@@ -133,6 +133,7 @@
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserDashboardController.cs" />
+    <Compile Include="DataAccess\EmployeeContractChangesRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -147,6 +148,14 @@
     <Compile Include="Migrations\201905272122212_ContractChangeLogs2.cs" />
     <Compile Include="Migrations\201905272122212_ContractChangeLogs2.Designer.cs">
       <DependentUpon>201905272122212_ContractChangeLogs2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291336000_StoredProcedures.cs" />
+    <Compile Include="Migrations\201905291336000_StoredProcedures.Designer.cs">
+      <DependentUpon>201905291336000_StoredProcedures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291347446_StoredProcedures1.cs" />
+    <Compile Include="Migrations\201905291347446_StoredProcedures1.Designer.cs">
+      <DependentUpon>201905291347446_StoredProcedures1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DataAccess\AuthenticateContext.cs" />
@@ -213,7 +222,6 @@
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\ContractForm.cshtml" />
     <Content Include="Views\HR\ContractFormModal.cshtml" />
-    <Content Include="Views\HR\VisualOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -244,6 +252,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905272122212_ContractChangeLogs2.resx">
       <DependentUpon>201905272122212_ContractChangeLogs2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291336000_StoredProcedures.resx">
+      <DependentUpon>201905291336000_StoredProcedures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291347446_StoredProcedures1.resx">
+      <DependentUpon>201905291347446_StoredProcedures1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

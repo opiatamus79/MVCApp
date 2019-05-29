@@ -13,7 +13,10 @@ namespace MVCApp.DataAccess
         public FormStatus FormStatus { get; set; }
         public LegalForm LegalForms { get; set; }
         public DateTime UpdatedOn { get; set; }
+        
 
 
     }
+
+
 }

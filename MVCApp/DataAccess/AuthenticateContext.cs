@@ -32,9 +32,9 @@ namespace MVCApp.DataAccess
                     m.MapLeftKey("UserId");
                     m.MapRightKey("RoleId");
                 });
+            modelBuilder.Entity<EmployeeContractChanges>().MapToStoredProcedures();
+            base.OnModelCreating(modelBuilder);
         }
-
-        
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -44,4 +44,6 @@ namespace MVCApp.DataAccess
 
         public System.Data.Entity.DbSet<MVCApp.ViewModels.ContractChanges> ContractChangeLogs { get; set; }
     }
+
+     
 }
