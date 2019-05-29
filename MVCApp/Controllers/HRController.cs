@@ -29,6 +29,7 @@ namespace MVCApp.Controllers
             }
        }*/
 
+
         // GET: HR
         public ActionResult Index() 
         {
@@ -90,7 +91,6 @@ namespace MVCApp.Controllers
                 ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
                 ViewBag.showSurvey = showSurvey ? true : false;
                 ViewBag.showOptOut = showOptOut ? true : false;
-                ViewBag.pending = 5;
                 if (GroupedChangeLogs != null)
                 {
                     return View(GroupedChangeLogs.ToList()); 
@@ -100,6 +100,24 @@ namespace MVCApp.Controllers
                 return View();
             }
 
+        }
+        public ActionResult VisualOverview()
+        {
+            //Need to show Pending, Edited, and Approved forms for each user. 
+
+            //Get Unique and last items in EmployContractChanges for each employee.
+
+
+
+            //Join with Unique Employee Contract Changes list.
+            /* using (AuthenticateContext db = new AuthenticateContext)
+             {
+
+             }*/
+
+            ViewBag.pending = 5; //will be making call to stored procedure to determine amount of pending, edited, and approved forms.
+
+            return View();
         }
 
         public ActionResult Login()
