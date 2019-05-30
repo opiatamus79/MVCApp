@@ -19,10 +19,10 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string ReturnUrl="") //User can only see this if they are in opt out period.
+        public ActionResult LoadContractChangeForm( string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {
             //Gather list of the current logged on users info, into model EmployeeContractChanges.
-            //(and would need to allow for two models)
+            //(and would need to allow for two models)D:\Source\repos\MVCApp\MVCApp\Controllers\FormUpdatesController.cs
 
 
             //then after form can be viewed and submitted can add partial view 
@@ -96,26 +96,33 @@ namespace MVCApp.Controllers
 
 
                 bool showSurvey = true;
-                bool inOptOutPeriod = true;
+                bool showOptout = true;
 
                 //case where Employee has past contract changes.
                 if (employee != null && latestContractForm != null)
                 {
                     var latestCF = latestContractForm.FirstOrDefault();
                     DateTime today = DateTime.Today;
-                    inOptOutPeriod = (employee.LastUpdate).AddDays(90.00) <= today ? true : false;
-                    showSurvey = ((employee.LastUpdate).AddMonths(3) >= today) && !inOptOutPeriod ? true : false;
+                    DateTime SurveyPeriod = (employee.LastUpdate).AddMonths(3);
+                    DateTime OptOutPeriod = (employee.LastUpdate).AddDays(90.00);
 
-                    //If showSurvey is true need to give edit form.
 
-                    return RedirectToAction("ShowDashboard", "Account", new {showSurvey = showSurvey, showOptOut = inOptOutPeriod });
+                    bool optOutLastDay = SurveyPeriod == OptOutPeriod;
+
+                    showOptout = (OptOutPeriod <= today) ? false : true;
+                    showSurvey = (  SurveyPeriod >= today) && !optOutLastDay  ? false : true;
+
+
+                    TempData["showOptout"] = showOptout ? "show" : "hide";
+                    TempData["showSurvey"] = showSurvey ? "show" : "hide";
+                    return RedirectToAction("ShowDashboard", "Account");
                 }
 
                 //case where Employee is new.
                 //Check if userID exists, if it does update display the create form, if it does not then just redirect to login.
                 if (userID >= 0)
                 {//create contract forms.
-                    return RedirectToAction("ShowDashboard", "Account", new { showSurvey = true, showOptOut = true });
+                    return RedirectToAction("ShowDashboard", "Account");
                 }
 
                 //Will be creating 2 new change log if will increment the ChangeLogID.

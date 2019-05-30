@@ -94,16 +94,16 @@ namespace MVCApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowDashboard(bool s = false, bool opt = false)
+        public ActionResult ShowDashboard()
         {
 
             if ((string)Session["Role"] == "Admin")
             {
-                return RedirectToAction("ChangeHistoryOverview", "HR", new { showSurvey = s, showOptout = opt});
+                return RedirectToAction("ChangeHistoryOverview", "HR");
             }
              
 
-             return RedirectToAction("Index", "UserDashboard", new { showSurvey = s, showOptout = opt });
+             return RedirectToAction("Index", "UserDashboard");
         }
 
         [HttpPost]
