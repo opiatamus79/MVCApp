@@ -39,7 +39,7 @@ namespace MVCApp.Controllers
              {
                var lastCF = lastContractChangeForm;
 
-                    return RedirectToAction("CreateContractChangeForm", "UserDashboard", new {
+                    return RedirectToAction("showContractChangeForm", "UserDashboard", new {
                         ID = lastCF.ID,
                         NewAddress = lastCF.NewAddress,
                         NewCity = lastCF.NewCity,

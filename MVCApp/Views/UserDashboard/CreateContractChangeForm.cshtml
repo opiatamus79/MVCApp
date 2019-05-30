@@ -1,6 +1,6 @@
 ﻿@model MVCApp.DataAccess.EmployeeContractChanges
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("createContractChangeForm", "UserDashboard", FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     
@@ -8,8 +8,6 @@
         <h4>EmployeeContractChanges</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
-
         <div class="form-group">
             @Html.LabelFor(model => model.NewLastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -74,32 +72,16 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChangeLogID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChangeLogID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChangeLogID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
 
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" value="Create" name="" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to Dashboard", "Index")
+
 </div>

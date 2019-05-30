@@ -29,14 +29,66 @@ namespace MVCApp.DataAccess
             return emptyList;
         }
 
-        public void InsertEmployeeContractChanges(EmployeeContractChanges contract)
+        /*public void InsertEmployeeContractChanges(EmployeeContractChanges contract)
         {
             EmpContractChangesDbContext.EmployeeContractChanges.Add(contract);
             EmpContractChangesDbContext.SaveChanges();
+        }*/
+        public void InsertEmployeeContractChanges( EmployeeContractChanges contract)
+        {
+            Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == contract.EmployeeID);
+            employeeToUpdate.LastUpdate = DateTime.Today;
+
+            EmployeeContractChanges eCC = new EmployeeContractChanges();
+
+            
+
+
+            eCC.LegalForm = new LegalForm();
+            eCC.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.Description == "Pending").FirstOrDefault().ID;
+            eCC.EmployeeID = employeeToUpdate.ID;
+            eCC.ChangeLogID = 1 + (EmpContractChangesDbContext.EmployeeContractChanges.
+                OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
+            eCC.NewAddress = employeeToUpdate.Address;
+            eCC.NewCity = employeeToUpdate.City;
+            eCC.NewCountry = employeeToUpdate.Country;
+            eCC.NewEmail = employeeToUpdate.Email;
+            eCC.NewHomePhone = employeeToUpdate.HomePhone;
+            eCC.NewLastName = employeeToUpdate.LastName;
+            eCC.NewState = employeeToUpdate.State;
+            eCC.NewZipcode = employeeToUpdate.Zipcode;
+
+            EmployeeContractChanges eCC_NEW = new EmployeeContractChanges();
+
+
+
+
+            eCC_NEW.LegalForm = new LegalForm();
+            eCC_NEW.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.Description == "Pending").FirstOrDefault().ID;
+            eCC_NEW.EmployeeID = employeeToUpdate.ID;
+            eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
+                OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
+            eCC_NEW.NewAddress = contract.NewAddress;
+            eCC_NEW.NewCity = contract.NewCity;
+            eCC_NEW.NewCountry = contract.NewCountry;
+            eCC_NEW.NewEmail = contract.NewEmail;
+            eCC_NEW.NewHomePhone = contract.NewHomePhone;
+            eCC_NEW.NewLastName = contract.NewLastName;
+            eCC_NEW.NewState = employeeToUpdate.State;
+            eCC_NEW.NewZipcode = employeeToUpdate.Zipcode;
+
+
+            EmpContractChangesDbContext.SaveChanges();
+
+
+
+
         }
         public void UpdateEmployee(Employee e)
         {
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == e.ID);
+
+            
             employeeToUpdate.LastName = e.LastName;
             employeeToUpdate.Email = e.Email;
             employeeToUpdate.Address = e.Address;
@@ -45,6 +97,7 @@ namespace MVCApp.DataAccess
             employeeToUpdate.Zipcode = e.Zipcode;
             employeeToUpdate.Country = e.Country;
             employeeToUpdate.HomePhone = e.HomePhone;
+            //employeeToUpdate.LastUpdate = DateTime.Today;
             EmpContractChangesDbContext.SaveChanges();
 
             

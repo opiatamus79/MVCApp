@@ -58,13 +58,13 @@ namespace MVCApp.DataAccess
 
         public int ChangeLogID { get; set; }
 
-        //[Required]
+        [Required]
         public int StatusID { get; set; }
 
-        //[Required]
+        [Required]
         public int LegalFormsID { get; set; }
 
-        //[Required]
+        [Required]
         public int EmployeeID { get; set; }
 
 

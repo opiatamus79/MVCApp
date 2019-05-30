@@ -12,7 +12,6 @@ namespace MVCApp.ViewModels
     //ChangeLogID, EmployeeID, based on the ChangeLogId/EmployeeID from the very last contractChange entry in the set.
         [Key]
         public int ID { get; set; } //ContractChangeID
-
         public string NewLastName { get; set; }
         public string NewEmail { get; set; }
         public string NewAddress { get; set; }
@@ -21,6 +20,7 @@ namespace MVCApp.ViewModels
         public int NewZipcode { get; set; }
         public string NewCountry { get; set; }
         public string NewHomePhone { get; set; }
+
         public DateTime DateCreated { get; set; }
         public int StatusID { get; set; }
         public int LegalFormsID { get; set; }

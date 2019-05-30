@@ -50,10 +50,6 @@
         var submitSurvey = "@ViewBag.submitSurvey" != "True" ? false : true;
         var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
 
-        console.log(Boolean(showSurvey));
-        console.log(Boolean(submitSurvey));
-        console.log("@ViewBag.showSurvey")
-
         $('[data-toggle="tooltip"]').tooltip();
         function callContractChangeFormModal()
         {//If User submits they are opting out.
@@ -65,9 +61,8 @@
 
         if (!submitSurvey && showSurvey)
         {//Survey the User
-            console.log('CAME IN HERE', showSurvey);
             $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
-            $('#createContractChangeFormModal').modal();
+            //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
 
         }

@@ -28,10 +28,25 @@ namespace MVCApp.Controllers
            return View();
         }
         // GET: Dashboard
-        public ActionResult CreateContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        public ActionResult ShowContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {
 
             return PartialView("CreateContractChangeForm" , contract); //return to partial view
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult createContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract)
+        {
+
+
+            EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+
+            eCCR.InsertEmployeeContractChanges(contract);
+
+                //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
+                return RedirectToAction("EnableSurvey", "FormUpdates");
         }
 
 
