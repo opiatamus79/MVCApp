@@ -183,9 +183,9 @@
     <Compile Include="ViewModels\ContractChanges.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\MVCASPDb.mdf" />
-    <Content Include="App_Data\MVCASPDb_log.ldf">
-      <DependentUpon>MVCASPDb.mdf</DependentUpon>
+    <Content Include="App_Data\MVCApp.Models.AuthenticateContext.mdf" />
+    <Content Include="App_Data\MVCApp.Models.AuthenticateContext_log.ldf">
+      <DependentUpon>MVCApp.Models.AuthenticateContext.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

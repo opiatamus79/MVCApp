@@ -1,0 +1,75 @@
+﻿@model MVCApp.DataAccess.EmployeeContractChanges
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool showOptout = ViewBag.showOptout;
+}
+
+<h2>Welcome Back @ViewBag.Name</h2>
+
+
+@{
+
+}
+
+
+
+   @if (!showOptout)
+   {
+        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+        <button data-toggle="modal" disabled data-placement="top" title="Reset your account credentials to previous change?"
+                id="disabledOptOut" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+            Reset Account
+        </button>
+
+    }
+
+
+    @if(showOptout)
+    {
+        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+        <button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
+                id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+            Reset Account
+        </button>
+    }
+
+
+
+
+@Html.Partial("~/Views/Shared/CreateContractChangeFormModal.cshtml");
+
+
+
+
+@section Scripts
+{
+    <script>
+        var submitSurvey = "@ViewBag.submitSurvey" != "True" ? false : true;
+        var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
+
+        $('[data-toggle="tooltip"]').tooltip();
+        function callContractChangeFormModal()
+        {//If User submits they are opting out.
+
+            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $('#createContractChangeFormModal').modal('show');
+
+        }
+
+        if (!submitSurvey && showSurvey)
+        {//Survey the User
+            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            //$('#createContractChangeFormModal').modal();
+            $("#createContractChangeFormModal").modal({ "backdrop": "static" });
+
+        }
+
+        function hitSubmit() {
+            submitSurvey = true;
+        }
+
+    </script>
+}
