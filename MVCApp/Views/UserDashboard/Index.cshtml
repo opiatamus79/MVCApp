@@ -39,7 +39,7 @@
 
 
 
-@Html.Partial("CreateContractChangeFormModal");
+@Html.Partial("~/Views/Shared/CreateContractChangeFormModal.cshtml");
 
 
 
@@ -65,6 +65,10 @@
             //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
 
+        }
+
+        function hitSubmit() {
+            submitSurvey = true;
         }
 
     </script>

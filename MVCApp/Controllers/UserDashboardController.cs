@@ -30,6 +30,7 @@ namespace MVCApp.Controllers
         // GET: Dashboard
         public ActionResult ShowContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {
+            
 
             return PartialView("CreateContractChangeForm" , contract); //return to partial view
         }
@@ -43,7 +44,8 @@ namespace MVCApp.Controllers
 
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
 
-            eCCR.InsertEmployeeContractChanges(contract);
+             int UserID =  ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+             eCCR.InsertEmployeeContractChanges(contract, UserID);
 
                 //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
                 return RedirectToAction("EnableSurvey", "FormUpdates");

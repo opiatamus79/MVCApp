@@ -113,6 +113,13 @@ namespace MVCApp.Controllers
                     showSurvey = (  SurveyPeriod >= today) && !optOutLastDay  ? false : true;
 
 
+
+
+
+                    TempData["showOptout"] = null;
+                    TempData["showSurvey"] = null;
+
+
                     TempData["showOptout"] = showOptout ? "show" : "hide";
                     TempData["showSurvey"] = showSurvey ? "show" : "hide";
                     return RedirectToAction("ShowDashboard", "Account");

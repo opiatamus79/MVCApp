@@ -41,8 +41,8 @@ namespace MVCApp.CustomAuthentication
                 (new System.Web.Routing.RouteValueDictionary
                  (new
                  {
-                     controller = "Error",
-                     action = "AccessDenied"
+                     controller = "Account",
+                     action = "Login"
                  }
                  ));
             }

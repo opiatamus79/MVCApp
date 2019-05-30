@@ -99,6 +99,12 @@ namespace MVCApp.Controllers
 
             if ((string)Session["Role"] == "Admin")
             {
+
+
+
+
+
+
                 return RedirectToAction("ChangeHistoryOverview", "HR");
             }
              

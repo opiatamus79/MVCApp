@@ -34,10 +34,18 @@ namespace MVCApp.DataAccess
             EmpContractChangesDbContext.EmployeeContractChanges.Add(contract);
             EmpContractChangesDbContext.SaveChanges();
         }*/
-        public void InsertEmployeeContractChanges( EmployeeContractChanges contract)
+        public void InsertEmployeeContractChanges( EmployeeContractChanges contract, int employeeID)
         {
-            Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == contract.EmployeeID);
-            employeeToUpdate.LastUpdate = DateTime.Today;
+            
+            
+            Employee employeeToUpdate = EmpContractChangesDbContext.Employees
+                                        .FirstOrDefault(x => x.ID == employeeID);
+
+
+
+
+
+            employeeToUpdate.LastUpdate = new DateTime();
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
 
@@ -57,6 +65,8 @@ namespace MVCApp.DataAccess
             eCC.NewLastName = employeeToUpdate.LastName;
             eCC.NewState = employeeToUpdate.State;
             eCC.NewZipcode = employeeToUpdate.Zipcode;
+
+            EmpContractChangesDbContext.SaveChanges();
 
             EmployeeContractChanges eCC_NEW = new EmployeeContractChanges();
 
