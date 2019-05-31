@@ -43,9 +43,9 @@ namespace MVCApp.DataAccess
 
 
 
+            
 
-
-            employeeToUpdate.LastUpdate = new DateTime();
+            employeeToUpdate.LastUpdate = DateTime.Today;
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
 
@@ -84,8 +84,9 @@ namespace MVCApp.DataAccess
             eCC_NEW.NewEmail = contract.NewEmail;
             eCC_NEW.NewHomePhone = contract.NewHomePhone;
             eCC_NEW.NewLastName = contract.NewLastName;
-            eCC_NEW.NewState = employeeToUpdate.State;
-            eCC_NEW.NewZipcode = employeeToUpdate.Zipcode;
+            eCC_NEW.NewState = contract.NewState;
+            eCC_NEW.NewZipcode = contract.NewZipcode;
+
 
 
             EmpContractChangesDbContext.SaveChanges();

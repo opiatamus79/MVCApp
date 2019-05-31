@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
 @{
-    ViewBag.Title = "Change History";
+    ViewBag.Title = "ChangeHistory";
     ViewBag.ModalHeader = "History";
     ViewBag.SurveyModalHeader = "Survey";
     ViewBag.SurveyModalTitle = "Please Review your current information.";
@@ -81,7 +81,9 @@
         }
 
         function hitSubmit() {
+            console.log('Came in here.')
             submitSurvey = true;
+            $("#createContractChangeFormModal").modal('hide');
         }
     </script>
 }

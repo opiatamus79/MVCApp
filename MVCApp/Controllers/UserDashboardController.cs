@@ -47,8 +47,8 @@ namespace MVCApp.Controllers
              int UserID =  ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
              eCCR.InsertEmployeeContractChanges(contract, UserID);
 
-                //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
-                return RedirectToAction("EnableSurvey", "FormUpdates");
+            //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
+            return RedirectToAction("EnableSurvey", "FormUpdates");
         }
 
 
