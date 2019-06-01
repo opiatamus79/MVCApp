@@ -61,12 +61,12 @@
         $('[data-toggle="tooltip"]').tooltip();
         function showModals(info)
         {
-            console.log('came in here too.')
+            console.log('came in here too.', info)
            
             var showingModal = $('#changeHistoryModal').hasClass('in');
             if (!showingModal && info.modalName == "changeHistoryModal")
             {
-                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", new { changeLogID: info.cId, employeeID: info.eId });
+                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { employeeID: info.eId, changeLogID: info.cId });
                 $('#changeHistoryModal').modal('show');
             }
             else if (!showingModal == "updateContractModal")
