@@ -66,7 +66,7 @@
             var showingModal = $('#changeHistoryModal').hasClass('in');
             if (!showingModal && info.modalName == "changeHistoryModal")
             {
-                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { changeLogID: info.cId, employeeID: info.eId });
+                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", new { changeLogID: info.cId, employeeID: info.eId });
                 $('#changeHistoryModal').modal('show');
             }
             else if (!showingModal == "updateContractModal")

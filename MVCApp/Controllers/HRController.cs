@@ -57,6 +57,8 @@ namespace MVCApp.Controllers
               
                 if(ContractChangeHistory != null)
                 {
+                    var x = ContractChangeHistory.ToList();
+
                     return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());
                 }
                 
