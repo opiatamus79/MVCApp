@@ -19,17 +19,31 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string ReturnUrl="" ) //User can only see this if they are in opt out period.
+        public ActionResult OptOutForm()
+        {
+            return View();
+        }
+
+        public ActionResult LoadContractChangeForm( string role, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {
             //Gather list of the current logged on users info, into model EmployeeContractChanges.
-            //(and would need to allow for two models)D:\Source\repos\MVCApp\MVCApp\Controllers\FormUpdatesController.cs
+            //
 
 
             //then after form can be viewed and submitted can add partial view 
 
+            
+
+
             using (AuthenticateContext db = new AuthenticateContext())
             {
-             int userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+                int userID = 0;
+                if (role == "NonAdmin")
+                {
+                    userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+
+                }
+                userID = employeeID;
 
 
 

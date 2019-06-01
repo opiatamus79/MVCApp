@@ -230,7 +230,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\HR\ChangeHistoryTable.cshtml" />
-    <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
     <Content Include="Views\HR\ChangeHistoryModal.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\Shared\ContractForm.cshtml" />
@@ -238,6 +237,8 @@
     <Content Include="Views\UserDashboard\UserActivity.cshtml" />
     <Content Include="Views\UserDashboard\CreateContractChangeForm.cshtml" />
     <Content Include="Views\Shared\CreateContractChangeFormModal.cshtml" />
+    <Content Include="Views\HR\updateContractModal.cshtml" />
+    <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -87,7 +87,8 @@ namespace MVCApp.Controllers
                 //ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
 
 
-                if (GroupedChangeLogs != null)
+
+              if (GroupedChangeLogs != null)
                 {
                     return View(GroupedChangeLogs.ToList()); 
                 }

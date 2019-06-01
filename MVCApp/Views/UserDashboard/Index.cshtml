@@ -52,7 +52,7 @@
 
         $('[data-toggle="tooltip"]').tooltip();
         function callContractChangeFormModal()
-        {//If User submits they are opting out.
+        {//If User submits they are opting out
 
             $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
             $('#createContractChangeFormModal').modal('show');
@@ -61,7 +61,7 @@
 
         if (!submitSurvey && showSurvey)
         {//Survey the User
-            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new { role= "NonAdmin"}))");
             //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
 

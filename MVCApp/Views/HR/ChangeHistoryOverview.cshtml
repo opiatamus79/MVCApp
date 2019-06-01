@@ -59,31 +59,36 @@
         var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
 
         $('[data-toggle="tooltip"]').tooltip();
-        function callModal(contract)
+        function showModals(info)
         {
-            var eId = contract.EmployeeID;
-            var cId = contract.ChangeLogID;
+            console.log('came in here too.')
+           
             var showingModal = $('#changeHistoryModal').hasClass('in');
-            if (!showingModal)
+            if (!showingModal && info.modalName == "changeHistoryModal")
             {
-                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { changeLogID: cId, employeeID: eId });
+                $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { changeLogID: info.cId, employeeID: info.eId });
                 $('#changeHistoryModal').modal('show');
             }
-
+            else if (!showingModal == "updateContractModal")
+            {
+                //$("#updaateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID= eId, role= "Admin" });
+                //$('#updateContractModal').modal('show');
+            }
+            else
+            {
+                //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {role="NonAdmin"});
+                //$('#createContractChangeFormModal').modal('show');
+            }
         }
 
-        if (!submitSurvey && showSurvey)
-        {//Survey the User
+        if (!submitSurvey && showSurvey) {//Survey the User
             $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
             //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
-
         }
+            
 
-        function hitSubmit() {
-            console.log('Came in here.')
-            submitSurvey = true;
-            $("#createContractChangeFormModal").modal('hide');
-        }
+
+      
     </script>
 }

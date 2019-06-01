@@ -2,6 +2,8 @@
 
 @{
     Layout = null;
+    var changeHistoryModal = "changeHistoryModal";
+    var updateContractModal = "updateContractModal";
 
 }
 
@@ -23,9 +25,8 @@
     </tr>
     @foreach (var d in Model)
     {
-        <tr id="rows" 
-            onclick="callModal({ ChangeLogID: @d.ChangeLogID, EmployeeID: @d.EmployeeID })
-            "data-toggle="tooltip" data-placement="top" title="Show History?">
+        <tr id="view"
+            onclick="showModals({ eId: @d.ChangeLogID, cId: @d.EmployeeID, modalName: '@changeHistoryModal'})" data-toggle="tooltip" data-placement="top" title="Show History?">
             <td>@d.ChangeLogID</td>
             <td>@d.NewAddress</td>
             <td>@d.NewCity</td>
@@ -40,29 +41,26 @@
 
             <td>
 
-
-                <div class="btn-group">
+                @if (d.StatusName == "Opted-out" || d.StatusName == "Approved")
+                {
                     <button id="contractApprove" disabled type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateContractModal">Edit</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Approve</a>
                         <a class="dropdown-item" href="#">Edit</a>
                     </div>
-                
 
-                    
-                        <button id="contractUpdate" type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateContractModal">Edit</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Approve</a>
-                                <a class="dropdown-item" href="#">Edit</a>
-                            </div>
-                        </div>
-
-                    
-
-
-            </td>           
-
+                }
+                @if (d.StatusName == "Editing" || d.StatusName == "Pending")
+                {
+                    <button id="edit" onclick="showModals({EmployeeID: @d.EmployeeID, modalName: @updateContractModal.ToString()})" type="button" class="btn btn-primary">Edit</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Approve</a>
+                        <a class="dropdown-item" href="#">Edit</a>
+                    </div>
+                }
+            </td>
         </tr>
+
     }
 
 </table>
