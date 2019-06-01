@@ -60,7 +60,7 @@ namespace MVCApp.Controllers
 
 
                     return RedirectToAction("showContractChangeForm", "UserDashboard", new {
-                        ID = lastCF.ID,
+                        ID = lastCF != null ? lastCF.ID : 0,
                         NewAddress = lastCF != null ? lastCF.NewAddress : employee.Address,
                         NewCity = lastCF != null ? lastCF.NewCity : employee.City,
                         NewCountry = lastCF != null ? lastCF.NewCountry : employee.Country,
@@ -72,7 +72,7 @@ namespace MVCApp.Controllers
                         DateCreated = lastCF != null ? lastCF.DateCreated : DateTime.Today,
                         ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
                         StatusID = lastCF != null ? lastCF.StatusID : 1,
-                        LegalFormsID = lastCF != null ? lastCF.LegalFormsID : new int?(),
+                        LegalFormsID = lastCF != null ? lastCF.LegalFormsID : 0,
                         EmployeeID = lastCF != null ? lastCF.EmployeeID : userID,
                         FormStatus = lastCF != null ? lastCF.FormStatus : new FormStatus(),
                         LegalForm = lastCF != null ? lastCF.LegalForm : new LegalForm(),
