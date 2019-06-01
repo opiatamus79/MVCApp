@@ -231,7 +231,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\HR\LoggedIn.cshtml" />
-    <Content Include="Views\HR\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\HR\ChangeHistoryTable.cshtml" />

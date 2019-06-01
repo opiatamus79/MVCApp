@@ -20,20 +20,16 @@ namespace MVCApp.Controllers
         }
 
         public ActionResult OptOutForm()
-        {
+        {//Setup the functionality for the OptOut Form
+
+
+
+
             return View();
         }
 
         public ActionResult LoadContractChangeForm( string action, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {
-            //Gather list of the current logged on users info, into model EmployeeContractChanges.
-            //
-
-
-            //then after form can be viewed and submitted can add partial view 
-
-
-
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
@@ -52,12 +48,9 @@ namespace MVCApp.Controllers
             var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
             var employee = db.Employees.Where(x => x.ID == userID).FirstOrDefault();
 
-                //Coming to error when editing as admin due to a user being editied does not have previous contract change form.
             if (lastContractChangeForm != null || employee != null)
              {
                var lastCF = lastContractChangeForm;
-
-
 
                     return RedirectToAction("showContractChangeForm", "UserDashboard", new {
                         ID = lastCF != null ? lastCF.ID : 0,
@@ -78,8 +71,6 @@ namespace MVCApp.Controllers
                         LegalForm = lastCF != null ? lastCF.LegalForm : new LegalForm(),
                         Employee = lastCF != null ? lastCF.Employee : employee
                     });
-
-                
              }
             }
 
@@ -126,15 +117,10 @@ namespace MVCApp.Controllers
                     DateTime SurveyPeriod = (employee.LastUpdate).AddMonths(3);
                     DateTime OptOutPeriod = (employee.LastUpdate).AddDays(90.00);
 
-
                     bool optOutLastDay = SurveyPeriod == OptOutPeriod;
 
                     showOptout = (OptOutPeriod <= today) ? false : true;
                     showSurvey = (  SurveyPeriod >= today) && !optOutLastDay  ? false : true;
-
-
-
-
 
                     TempData["showOptout"] = null;
                     TempData["showSurvey"] = null;

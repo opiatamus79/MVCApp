@@ -66,22 +66,25 @@
 
             var showingModal = $('#changeHistoryModal').hasClass('in');
             if (!showingModal && info.modalName == "changeHistoryModal")
-            {
+            {//shows change history when clicking on table row.
                 $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { employeeID: info.eId, changeLogID: info.cId });
                 $('#changeHistoryModal').modal('show');
             }
             else if (!showingModal && info.modalName == "updateContractModal")
-            {
-                $("#changeHistoryModal").removeClass("in");
-                $(".modal-backdrop").remove();
-                $("#changeHistoryModal").modal('hide');
+            {//shows update contract modal to allow HR staff to edit a users current Pending/Edited Contract form.
+
 
                 $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "Edit" });
                 $('#UpdateContractModal').modal('show');
+
+                $("#changeHistoryModal").removeClass("in");
+                $(".modal-backdrop").remove();
+                $("#changeHistoryModal").modal('hide');
                 
             }
             else
-            {
+            {//Loads the HR employee's own OptOut form.
+
                 //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {action="Show"});
                 //$('#createContractChangeFormModal').modal('show');
             }
