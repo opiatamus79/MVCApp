@@ -24,6 +24,7 @@
 
 @Html.Partial("ChangeHistoryModal");
 
+@Html.Partial("UpdateContractModal");
 
 @if (!showOptout)
 {
@@ -62,21 +63,26 @@
         function showModals(info)
         {
             console.log('came in here too.', info)
-           
+
             var showingModal = $('#changeHistoryModal').hasClass('in');
             if (!showingModal && info.modalName == "changeHistoryModal")
             {
                 $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { employeeID: info.eId, changeLogID: info.cId });
                 $('#changeHistoryModal').modal('show');
             }
-            else if (!showingModal == "updateContractModal")
+            else if (!showingModal && info.modalName == "updateContractModal")
             {
-                //$("#updaateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID= eId, role= "Admin" });
-                //$('#updateContractModal').modal('show');
+                $("#changeHistoryModal").removeClass("in");
+                $(".modal-backdrop").remove();
+                $("#changeHistoryModal").modal('hide');
+
+                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "Edit" });
+                $('#UpdateContractModal').modal('show');
+                
             }
             else
             {
-                //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {role="NonAdmin"});
+                //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {action="Show"});
                 //$('#createContractChangeFormModal').modal('show');
             }
         }
@@ -86,9 +92,12 @@
             //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
         }
-            
+        function hitSubmit() {
+            submitSurvey = true;
+            $("#createContractChangeFormModal").modal('hide');
+        }
 
 
-      
+
     </script>
 }

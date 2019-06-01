@@ -24,7 +24,7 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string role, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
+        public ActionResult LoadContractChangeForm( string action, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {
             //Gather list of the current logged on users info, into model EmployeeContractChanges.
             //
@@ -32,45 +32,51 @@ namespace MVCApp.Controllers
 
             //then after form can be viewed and submitted can add partial view 
 
-            
+
 
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 int userID = 0;
-                if (role == "NonAdmin")
+                if (action != "Edit")
                 {
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
-
                 }
-                userID = employeeID;
+                else
+                {
+                    userID = employeeID;
+                }
 
 
 
             var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
+            var employee = db.Employees.Where(x => x.ID == userID).FirstOrDefault();
 
-            if (lastContractChangeForm != null)
+                //Coming to error when editing as admin due to a user being editied does not have previous contract change form.
+            if (lastContractChangeForm != null || employee != null)
              {
                var lastCF = lastContractChangeForm;
 
+
+
                     return RedirectToAction("showContractChangeForm", "UserDashboard", new {
                         ID = lastCF.ID,
-                        NewAddress = lastCF.NewAddress,
-                        NewCity = lastCF.NewCity,
-                        NewCountry = lastCF.NewCountry,
-                        NewEmail = lastCF.NewEmail,
-                        NewHomePhone = lastCF.NewHomePhone,
-                        NewLastName = lastCF.NewLastName,
-                        NewState = lastCF.NewState,
-                        NewZipcode = lastCF.NewZipcode,
-                        DateCreated = lastCF.DateCreated,
-                        ChangeLogID = lastCF.ChangeLogID,
-                        StatusID = lastCF.StatusID,
-                        LegalFormsID = lastCF.LegalFormsID,
-                        EmployeeID = lastCF.EmployeeID,
-                        FormStatus = lastCF.FormStatus,
-                        LegalForm = lastCF.LegalForm,
-                        Employee = lastCF.Employee
+                        NewAddress = lastCF != null ? lastCF.NewAddress : employee.Address,
+                        NewCity = lastCF != null ? lastCF.NewCity : employee.City,
+                        NewCountry = lastCF != null ? lastCF.NewCountry : employee.Country,
+                        NewEmail = lastCF != null ? lastCF.NewEmail : employee.Email,
+                        NewHomePhone = lastCF != null ? lastCF.NewHomePhone : employee.HomePhone,
+                        NewLastName = lastCF != null ? lastCF.NewLastName : employee.LastName,
+                        NewState = lastCF != null ? lastCF.NewState : employee.State,
+                        NewZipcode = lastCF != null ?  lastCF.NewZipcode : employee.Zipcode,
+                        DateCreated = lastCF != null ? lastCF.DateCreated : DateTime.Today,
+                        ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
+                        StatusID = lastCF != null ? lastCF.StatusID : 1,
+                        LegalFormsID = lastCF != null ? lastCF.LegalFormsID : new int?(),
+                        EmployeeID = lastCF != null ? lastCF.EmployeeID : userID,
+                        FormStatus = lastCF != null ? lastCF.FormStatus : new FormStatus(),
+                        LegalForm = lastCF != null ? lastCF.LegalForm : new LegalForm(),
+                        Employee = lastCF != null ? lastCF.Employee : employee
                     });
 
                 

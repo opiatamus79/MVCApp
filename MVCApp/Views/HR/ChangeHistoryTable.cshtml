@@ -52,7 +52,7 @@
                 }
                 @if (d.StatusName == "Editing" || d.StatusName == "Pending")
                 {
-                    <button id="edit" onclick="showModals({EmployeeID: @d.EmployeeID, modalName: @updateContractModal.ToString()})" type="button" class="btn btn-primary">Edit</button>
+                    <button id="edit" onclick="showModals({eId: @d.EmployeeID, modalName: '@updateContractModal'})" type="button" class="btn btn-primary">Edit</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Approve</a>
                         <a class="dropdown-item" href="#">Edit</a>
