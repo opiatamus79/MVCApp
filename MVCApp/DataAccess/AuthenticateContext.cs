@@ -16,7 +16,7 @@ namespace MVCApp.DataAccess
         /// </summary>
         /// 
         public AuthenticateContext()
-            : base("AuthenticationDB")
+            : base("azureDB")
         {
 
         }
