@@ -15,16 +15,16 @@
 <!--1. have table, click on a button to open up -->
 <!--Button will be used for each row. When clicked will get the Id of the EmployeeContractChange-->
 
-@Html.Partial("ChangeHistoryTable", Model);
+@Html.Partial("ChangeHistoryTable", Model)
 
 <!--Will need to determine if we can add buton and pass the row selected to modal-->
 <!--<button id="History" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#changeHistoryModal"></button>-->
 
 
 
-@Html.Partial("ChangeHistoryModal");
+@Html.Partial("ChangeHistoryModal")
 
-@Html.Partial("UpdateContractModal");
+@Html.Partial("UpdateContractModal")
 
 @if (!showOptout)
 {
@@ -49,7 +49,7 @@
 
 
 
-@Html.Partial("~/Views/Shared/SetupContractChangeFormModal.cshtml");
+@Html.Partial("~/Views/Shared/SetupContractChangeFormModal.cshtml")
 
 
 
@@ -58,14 +58,20 @@
     <script>
         var submitSurvey = "@ViewBag.submitSurvey" != "True" ? false : true;
         var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
+        var clickedEditBtn = false;
 
         $('[data-toggle="tooltip"]').tooltip();
+        $("#editBtn").mouseover(function () {
+            clickedEditBtn = true;
+        })
+        .mouseout(function () {
+            clickedEditBtn = false;
+        });
+
         function showModals(info)
         {
-            console.log('came in here too.', info)
-
             var showingModal = $('#changeHistoryModal').hasClass('in');
-            if (!showingModal && info.modalName == "changeHistoryModal")
+            if (!showingModal && info.modalName == "changeHistoryModal" && !clickedEditBtn)
             {//shows change history when clicking on table row.
                 $("#contracts").load("@Html.Raw(Url.Action("ChangeHistory", "HR"))", { employeeID: info.eId, changeLogID: info.cId });
                 $('#changeHistoryModal').modal('show');
@@ -73,14 +79,10 @@
             else if (!showingModal && info.modalName == "updateContractModal")
             {//HR worker is editing employee's contract.
                 //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
-
+                console.log('Came in');
 
                 $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "editing" });
                 $('#UpdateContractModal').modal('show');
-
-                $("#changeHistoryModal").removeClass("in");
-                $(".modal-backdrop").remove();
-                $("#changeHistoryModal").modal('hide');
                 
             }
             else
