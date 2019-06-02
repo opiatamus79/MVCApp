@@ -49,7 +49,7 @@
 
 
 
-@Html.Partial("~/Views/Shared/CreateContractChangeFormModal.cshtml");
+@Html.Partial("~/Views/Shared/SetupContractChangeFormModal.cshtml");
 
 
 
@@ -92,13 +92,13 @@
         }
 
         if (!submitSurvey && showSurvey) {//HR worker is recieving their own survey.
-            $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
             //$('#createContractChangeFormModal').modal();
-            $("#createContractChangeFormModal").modal({ "backdrop": "static" });
+            $("#setupContractChangeFormModal").modal({ "backdrop": "static" });
         }
         function hitSubmit() {
             submitSurvey = true;
-            $("#createContractChangeFormModal").modal('hide');
+            $("#setupContractChangeFormModal").modal('hide');
         }
 
 

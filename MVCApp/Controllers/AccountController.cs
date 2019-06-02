@@ -183,6 +183,7 @@ namespace MVCApp.Controllers
             HttpCookie cookie = new HttpCookie("Cookie1", "");
             cookie.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie);
+            Session["Role"] = null;
 
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account", null);

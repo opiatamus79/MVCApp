@@ -1,11 +1,11 @@
 ﻿@model MVCApp.DataAccess.EmployeeContractChanges
 
-@using (Html.BeginForm("setupContractChangeForm", "UserDashboard", FormMethod.Post)) 
+@using (Html.BeginForm("setupContractChangeForm", "UserDashboard", FormMethod.Post, new { action="optout"}))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EmployeeContractChanges</h4>
+        <h4>Please validate your contact information.</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

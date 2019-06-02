@@ -30,7 +30,7 @@ namespace MVCApp.Controllers
                                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
                                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
                                          where (c.ChangeLogID == changeLogID &&  c.EmployeeID == employeeID)
-                                         select new ViewModels.ContractChanges //NEED TO REFACTOR THIS 
+                                         select new ViewModels.ContractChanges //TODO: refactor 
                                          {
                                              ID = c.ID,
                                              NewLastName = c.NewLastName,
@@ -69,8 +69,8 @@ namespace MVCApp.Controllers
 
 
         // GET: HR/ChangeHistoryView
-        public ActionResult ChangeHistoryOverview() //NOTE: need to come to only list table with unique change log ids and latest contract changes.
-        {
+        public ActionResult ChangeHistoryOverview()
+        {//displays change history for HR when selecting a table row.
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
