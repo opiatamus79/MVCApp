@@ -67,6 +67,8 @@ namespace MVCApp.DataAccess
         [Required]
         public int EmployeeID { get; set; }
 
+        public string FormType { get; set; }
+
 
         [ForeignKey("StatusID")]
         public virtual FormStatus FormStatus { get; set; }

@@ -4,6 +4,7 @@
     ViewBag.ModalHeader = "History";
     ViewBag.SurveyModalHeader = "Survey";
     ViewBag.SurveyModalTitle = "Please Review your current information.";
+    ViewBag.form = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool showOptout = ViewBag.showOptout;
 }
@@ -60,6 +61,8 @@
         var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
         var clickedEditBtn = false;
 
+        
+
         $('[data-toggle="tooltip"]').tooltip();
         $("#editBtn").mouseover(function () {
             clickedEditBtn = true;
@@ -79,8 +82,11 @@
             else if (!showingModal && info.modalName == "updateContractModal")
             {//HR worker is editing employee's contract.
                 //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
-                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "editing" });
+                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, form: "editing" });
                 $('#UpdateContractModal').modal('show');
+
+                //NOTE NEED TO REFRESH THE CONTRACTCHANGEHISTORY.
+                
             }
             else
             {//Loads the HR employee's own OptOut form.
@@ -91,7 +97,7 @@
         }
 
         if (!submitSurvey && showSurvey) {//HR worker is recieving their own survey.
-            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { form: "survey" });
             //$('#createContractChangeFormModal').modal();
             $("#setupContractChangeFormModal").modal({ "backdrop": "static" });
         }

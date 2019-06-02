@@ -52,14 +52,14 @@ namespace MVCApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract, string form="survey")
+            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract)
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
-
+            string form = contract.FormType;
             //ContractChanges c = new ContractChanges();
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             if (form.Contains("survey"))
-            {
+            {//Tested use case of HR 
                 int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 contract.StatusID = 1;
                 eCCR.InsertEmployeeContractChanges(contract, UserID);

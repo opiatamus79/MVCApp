@@ -46,6 +46,7 @@ namespace MVCApp.ViewModels
 
 
         public virtual int StatusID { get; set; } 
+        public string FormType { get; set; }
         public List<ContractChanges> ContractChanges { get; set; }
     }
 

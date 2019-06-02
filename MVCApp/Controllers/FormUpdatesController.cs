@@ -29,13 +29,13 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string action, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
+        public ActionResult LoadContractChangeForm( string form, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {//displays most recent contract change form to the user (will be most recent contract change form created or 
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 int userID = 0;
-                if (!action.Contains("editing"))
+                if (!form.Contains("editing"))
                 {//User is getting surveyed.
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 }
@@ -64,7 +64,9 @@ namespace MVCApp.Controllers
                         NewLastName = employee.LastName,
                         NewState =  employee.State,
                         NewZipcode =  employee.Zipcode,
-                        StatusID = 1/*
+                        StatusID = 1,
+                        FormType = form
+                        /*
                         DateCreated =  DateTime.Today,
                         ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
                         StatusID =  1,
