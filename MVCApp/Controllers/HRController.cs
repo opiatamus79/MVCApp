@@ -86,10 +86,6 @@ namespace MVCApp.Controllers
                 ViewBag.submitSurvey = ViewBag.showSurvey ? false : true;
 
 
-                //ViewBag.ID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID; //EXAMPLE TO RETRIEVE USER ID
-
-
-
               if (GroupedChangeLogs != null)
                 {
                     return View(GroupedChangeLogs.ToList()); 
@@ -105,10 +101,10 @@ namespace MVCApp.Controllers
             //Need to show Pending, Edited, and Approved forms for each user.
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             var UniqueContracChangeList = eCCR.GetUniqueEmployeeContractLogs();
-            ViewBag.pending = 0;
-            ViewBag.approved = 0;
-            ViewBag.editing = 0;
-            ViewBag.optout = 0;
+            ViewBag.pending= 0;
+            ViewBag.approved= 0;
+            ViewBag.editing= 0;
+            ViewBag.optout= 0;
 
             if (UniqueContracChangeList != null)
             {

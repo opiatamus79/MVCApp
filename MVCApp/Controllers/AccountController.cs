@@ -95,16 +95,10 @@ namespace MVCApp.Controllers
 
         [HttpGet]
         public ActionResult ShowDashboard()
-        {
+        {//Used to always revert back to sending users to their corresponding dashboards.
 
             if ((string)Session["Role"] == "Admin")
             {
-
-
-
-
-
-
                 return RedirectToAction("ChangeHistoryOverview", "HR");
             }
              

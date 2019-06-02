@@ -29,47 +29,51 @@ namespace MVCApp.Controllers
         }
 
         public ActionResult LoadContractChangeForm( string action, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
-        {
+        {//displays most recent contract change form to the user (will be most recent contract change form created or 
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 int userID = 0;
-                if (action != "Edit")
-                {
+                if (!action.Contains("editing"))
+                {//User is getting surveyed.
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 }
                 else
-                {
+                {//HR worker is not coming in to make changes to ContractChangeOrder
                     userID = employeeID;
                 }
 
 
 
             var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
-            var employee = db.Employees.Where(x => x.ID == userID).FirstOrDefault();
+           var employee = db.Employees.Where(x => x.ID == userID).FirstOrDefault();
 
-            if (lastContractChangeForm != null || employee != null)
+            if (lastContractChangeForm != null|| employee != null)
              {
                var lastCF = lastContractChangeForm;
 
+
+                    //LegalForm legalform = new LegalForm(); //create new LegalForm.
+                    //db.SaveChanges();
+
                     return RedirectToAction("showContractChangeForm", "UserDashboard", new {
-                        ID = lastCF != null ? lastCF.ID : 0,
-                        NewAddress = lastCF != null ? lastCF.NewAddress : employee.Address,
-                        NewCity = lastCF != null ? lastCF.NewCity : employee.City,
-                        NewCountry = lastCF != null ? lastCF.NewCountry : employee.Country,
-                        NewEmail = lastCF != null ? lastCF.NewEmail : employee.Email,
-                        NewHomePhone = lastCF != null ? lastCF.NewHomePhone : employee.HomePhone,
-                        NewLastName = lastCF != null ? lastCF.NewLastName : employee.LastName,
-                        NewState = lastCF != null ? lastCF.NewState : employee.State,
-                        NewZipcode = lastCF != null ?  lastCF.NewZipcode : employee.Zipcode,
-                        DateCreated = lastCF != null ? lastCF.DateCreated : DateTime.Today,
+                        ID = 0,
+                        NewAddress =employee.Address,
+                        NewCity =  employee.City,
+                        NewCountry =  employee.Country,
+                        NewEmail =  employee.Email,
+                        NewHomePhone =  employee.HomePhone,
+                        NewLastName = employee.LastName,
+                        NewState =  employee.State,
+                        NewZipcode =  employee.Zipcode,
+                        DateCreated =  DateTime.Today,
                         ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
-                        StatusID = lastCF != null ? lastCF.StatusID : 1,
-                        LegalFormsID = lastCF != null ? lastCF.LegalFormsID : 0,
-                        EmployeeID = lastCF != null ? lastCF.EmployeeID : userID,
-                        FormStatus = lastCF != null ? lastCF.FormStatus : new FormStatus(),
-                        LegalForm = lastCF != null ? lastCF.LegalForm : new LegalForm(),
-                        Employee = lastCF != null ? lastCF.Employee : employee
+                        StatusID =  1,
+                        LegalFormsID =  0,
+                        EmployeeID = userID,
+                        FormStatus =  new FormStatus(),
+                        LegalForm =  new LegalForm(),
+                        Employee =  employee
                     });
              }
             }
@@ -144,5 +148,7 @@ namespace MVCApp.Controllers
                 return Redirect("/Account/Login");
             }
         }
+
+
     }
 } 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MVCApp.ViewModels;
 
 
 
@@ -29,23 +30,29 @@ namespace MVCApp.Controllers
         }
         // GET: Dashboard
         public ActionResult ShowContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
-        {
-            
-
-            return PartialView("CreateContractChangeForm" , contract); //return to partial view
+        {//returns back data that is used to populate the Survey or Contract Change Form.
+            return PartialView("CreateContractChangeForm" , contract); 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult createContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract)
-        {
+        public ActionResult setupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract, string action="survey")
+        {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
-
+            ContractChanges c = new ContractChanges();
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+            if (action.Contains("survey"))
+            {
+                int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+                eCCR.InsertEmployeeContractChanges(contract, UserID);
+            }
+            else if (action.Contains("editing"))//hr worker is updating a users contract (one already created)
+            {//Hr worker will always be working on a created contract.
+                
+                
+            }
 
-             int UserID =  ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
-             eCCR.InsertEmployeeContractChanges(contract, UserID);
 
             //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
             return RedirectToAction("EnableSurvey", "FormUpdates");

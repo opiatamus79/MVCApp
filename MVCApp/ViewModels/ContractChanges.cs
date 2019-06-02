@@ -31,9 +31,19 @@ namespace MVCApp.ViewModels
         public string FilePath { get; set; }
         public string Reason { get; set; }
         public DateTime UpdatedOn { get; set; }
-        
 
 
+        public string getStatusName(int id)
+        {
+            string status = null;
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+                var x = db.FormStatuses.Find(id);
 
-}
+                status = x != null ? x.StatusName : status;
+            }
+            return status;
+        }
+
+    }
 }

@@ -71,10 +71,11 @@
                 $('#changeHistoryModal').modal('show');
             }
             else if (!showingModal && info.modalName == "updateContractModal")
-            {//shows update contract modal to allow HR staff to edit a users current Pending/Edited Contract form.
+            {//HR worker is editing employee's contract.
+                //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
 
 
-                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "Edit" });
+                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, action: "editing" });
                 $('#UpdateContractModal').modal('show');
 
                 $("#changeHistoryModal").removeClass("in");
@@ -90,7 +91,7 @@
             }
         }
 
-        if (!submitSurvey && showSurvey) {//Survey the User
+        if (!submitSurvey && showSurvey) {//HR worker is recieving their own survey.
             $("#CreateContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
             //$('#createContractChangeFormModal').modal();
             $("#createContractChangeFormModal").modal({ "backdrop": "static" });
