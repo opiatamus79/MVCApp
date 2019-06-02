@@ -63,7 +63,8 @@ namespace MVCApp.Controllers
                         NewHomePhone =  employee.HomePhone,
                         NewLastName = employee.LastName,
                         NewState =  employee.State,
-                        NewZipcode =  employee.Zipcode,/*
+                        NewZipcode =  employee.Zipcode,
+                        StatusID = 1/*
                         DateCreated =  DateTime.Today,
                         ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
                         StatusID =  1,
@@ -71,7 +72,8 @@ namespace MVCApp.Controllers
                         EmployeeID = userID,
                         FormStatus =  new FormStatus(),
                         LegalForm =  new LegalForm(), 
-                        Employee =  employee*/
+                        Employee =  employee
+                        */
                     });
              }
             }

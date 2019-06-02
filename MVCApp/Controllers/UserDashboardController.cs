@@ -61,6 +61,7 @@ namespace MVCApp.Controllers
             if (form.Contains("survey"))
             {
                 int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+                contract.StatusID = 1;
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
             }
             else if (form.Contains("editing"))//hr worker is updating a users contract (one already created)

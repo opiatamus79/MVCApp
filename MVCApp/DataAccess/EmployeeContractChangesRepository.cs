@@ -61,7 +61,7 @@ namespace MVCApp.DataAccess
                 LegalForm legalform = new LegalForm();
                 eCC.LegalForm = legalform;
                 eCC.LegalFormsID = legalform.ID;
-                eCC.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.ID).FirstOrDefault().ID;
+                eCC.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault().ID;
                 eCC.EmployeeID = employeeToUpdate.ID;
                 eCC.ChangeLogID = 1 + (EmpContractChangesDbContext.EmployeeContractChanges.
                     OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
@@ -80,7 +80,7 @@ namespace MVCApp.DataAccess
             
             ///2 
             eCC_NEW.LegalForm = new LegalForm();
-            eCC_NEW.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.ID).FirstOrDefault().ID;
+            eCC_NEW.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault().ID;
             eCC_NEW.EmployeeID = employeeToUpdate.ID;
             eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
                 OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);

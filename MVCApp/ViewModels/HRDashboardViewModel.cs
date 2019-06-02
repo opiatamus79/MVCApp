@@ -44,6 +44,8 @@ namespace MVCApp.ViewModels
         public string NewHomePhone { get; set; }
 
 
+
+        public virtual int StatusID { get; set; } 
         public List<ContractChanges> ContractChanges { get; set; }
     }
 
