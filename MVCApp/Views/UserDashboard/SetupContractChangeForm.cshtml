@@ -1,6 +1,6 @@
 ﻿@model MVCApp.ViewModels.HRDashboardViewModel
 
-@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", FormMethod.Post))
+@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { FormType = Model.FormType }, FormMethod.Post ))
 {
     @Html.AntiForgeryToken()
     
