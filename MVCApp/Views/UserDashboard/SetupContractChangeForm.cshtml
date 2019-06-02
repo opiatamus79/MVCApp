@@ -1,6 +1,6 @@
 ﻿@model MVCApp.ViewModels.HRDashboardViewModel
 
-@using (Html.BeginForm("setupContractChangeForm", "UserDashboard", FormMethod.Post, new { action="optout"}))
+@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { form="survey"}, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     

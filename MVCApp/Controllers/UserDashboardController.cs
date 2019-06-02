@@ -51,18 +51,19 @@ namespace MVCApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult setupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract, string action="survey")
+        public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+            "NewState,NewZipcode,NewCountry,NewHomePhone")] EmployeeContractChanges contract, string form="survey")
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
-            ContractChanges c = new ContractChanges();
+
+            //ContractChanges c = new ContractChanges();
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
-            if (action.Contains("survey"))
+            if (form.Contains("survey"))
             {
                 int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
             }
-            else if (action.Contains("editing"))//hr worker is updating a users contract (one already created)
+            else if (form.Contains("editing"))//hr worker is updating a users contract (one already created)
             {//Hr worker will always be working on a created contract.
                 
                 
