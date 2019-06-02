@@ -28,10 +28,25 @@ namespace MVCApp.Controllers
 
            return View();
         }
+
+
         // GET: Dashboard
-        public ActionResult ShowContractChangeForm(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        [HttpGet]
+        public ActionResult ShowContractChangeFormHR([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+            "NewState,NewZipcode,NewCountry,NewHomePhone")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey or Contract Change Form.
+
+
+            contract.ContractChanges = new List<ContractChanges>();
+
             return PartialView("SetupContractChangeForm" , contract); 
+        }
+        // GET: Dashboard
+        public ActionResult ShowContractChangeFormEmployee(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        {//returns back data that is used to populate the Survey or Contract Change Form.
+
+
+            return PartialView("SetupContractChangeForm", contract);
         }
 
         [HttpPost]

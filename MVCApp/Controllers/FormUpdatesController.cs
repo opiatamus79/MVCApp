@@ -1,4 +1,5 @@
 ﻿using MVCApp.DataAccess;
+using MVCApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,12 +53,9 @@ namespace MVCApp.Controllers
              {
                var lastCF = lastContractChangeForm;
 
-
-                    //LegalForm legalform = new LegalForm(); //create new LegalForm.
-                    //db.SaveChanges();
-
-                    return RedirectToAction("showContractChangeForm", "UserDashboard", new {
-                        ID = 0,
+                    
+                    //TODO: Need to create a function and pass in employee and the string for action (if action is editing or just viewing)
+                    return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", new HRDashboardViewModel() {
                         NewAddress =employee.Address,
                         NewCity =  employee.City,
                         NewCountry =  employee.Country,
@@ -65,15 +63,15 @@ namespace MVCApp.Controllers
                         NewHomePhone =  employee.HomePhone,
                         NewLastName = employee.LastName,
                         NewState =  employee.State,
-                        NewZipcode =  employee.Zipcode,
+                        NewZipcode =  employee.Zipcode,/*
                         DateCreated =  DateTime.Today,
                         ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
                         StatusID =  1,
                         LegalFormsID =  0,
                         EmployeeID = userID,
                         FormStatus =  new FormStatus(),
-                        LegalForm =  new LegalForm(),
-                        Employee =  employee
+                        LegalForm =  new LegalForm(), 
+                        Employee =  employee*/
                     });
              }
             }

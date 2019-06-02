@@ -181,6 +181,7 @@
     <Compile Include="Models\ContractChangeLogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ContractChanges.cs" />
+    <Compile Include="ViewModels\HRDashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\MVCApp.Models.AuthenticateContext.mdf" />
@@ -235,7 +236,6 @@
     <Content Include="Views\HR\ChangeHistoryTable.cshtml" />
     <Content Include="Views\HR\ChangeHistoryModal.cshtml" />
     <Content Include="Views\UserDashboard\Index.cshtml" />
-    <Content Include="Views\Shared\ContractForm.cshtml" />
     <Content Include="Views\HR\VisualOverview.cshtml" />
     <Content Include="Views\UserDashboard\UserActivity.cshtml" />
     <Content Include="Views\UserDashboard\SetupContractChangeForm.cshtml" />
