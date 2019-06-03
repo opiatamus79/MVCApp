@@ -40,10 +40,10 @@ namespace MVCApp.Controllers
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
                 }
                 else
-                {//HR worker is not coming in to make changes to ContractChangeOrder
+                {//HR worker is coming in to make changes to ContractChangeOrder
                     userID = employeeID;
                 }
-
+                //need case for opt out.
 
 
             var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
@@ -53,30 +53,14 @@ namespace MVCApp.Controllers
              {
                var lastCF = lastContractChangeForm;
 
-                    
-                    //TODO: Need to create a function and pass in employee and the string for action (if action is editing or just viewing)
-                    return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", new HRDashboardViewModel() {
-                        NewAddress =employee.Address,
-                        NewCity =  employee.City,
-                        NewCountry =  employee.Country,
-                        NewEmail =  employee.Email,
-                        NewHomePhone =  employee.HomePhone,
-                        NewLastName = employee.LastName,
-                        NewState =  employee.State,
-                        NewZipcode =  employee.Zipcode,
-                        StatusID = 1,
-                        FormType = form
-                        /*
-                        DateCreated =  DateTime.Today,
-                        ChangeLogID = lastCF != null ? lastCF.ChangeLogID : 1,
-                        StatusID =  1,
-                        LegalFormsID =  0,
-                        EmployeeID = userID,
-                        FormStatus =  new FormStatus(),
-                        LegalForm =  new LegalForm(), 
-                        Employee =  employee
-                        */
-                    });
+
+              
+                    EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+                    HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
+
+
+
+                    return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
              }
             }
 

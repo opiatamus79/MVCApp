@@ -34,15 +34,44 @@ namespace MVCApp.DataAccess
             EmpContractChangesDbContext.EmployeeContractChanges.Add(contract);
             EmpContractChangesDbContext.SaveChanges();
         }*/
+        public IEnumerable<ContractChanges> getChangeHistory(int changeLogID, int employeeID)
+        {//Will retrieve the 
+            AuthenticateContext db = EmpContractChangesDbContext;
+
+            var result = (from c in db.EmployeeContractChanges.AsEnumerable()
+             join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
+             join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
+             where (c.ChangeLogID == changeLogID && c.EmployeeID == employeeID)
+             select new ViewModels.ContractChanges
+             {
+                 ID = c.ID,
+                 NewLastName = c.NewLastName,
+                 NewEmail = c.NewEmail,
+                 NewAddress = c.NewAddress,
+                 NewCity = c.NewCity,
+                 NewState = c.NewState,
+                 NewZipcode = c.NewZipcode,
+                 NewCountry = c.NewCountry,
+                 NewHomePhone = c.NewHomePhone,
+                 DateCreated = c.DateCreated,
+                 StatusID = c.StatusID,
+                 LegalFormsID = c.LegalFormsID,
+                 EmployeeID = c.EmployeeID,
+                 ChangeLogID = c.ChangeLogID,
+                 StatusName = c.FormStatus.StatusName,
+                 Description = c.FormStatus.Description,
+                 FilePath = c.LegalForm.FilePath,
+                 Reason = c.LegalForm.Reason,
+                 UpdatedOn = c.DateCreated
+
+             });
+            return result;
+           
+        }
         public void InsertEmployeeContractChanges(EmployeeContractChanges contract, int employeeID)
         {
-
-
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees
                                         .FirstOrDefault(x => x.ID == employeeID);
-
-
-
 
             //Only supposed to do this when user is filling out survey.
             employeeToUpdate.LastUpdate = DateTime.Today;
@@ -115,6 +144,23 @@ namespace MVCApp.DataAccess
             EmpContractChangesDbContext.SaveChanges();
 
             
+        }
+
+        public HRDashboardViewModel HRDashboardViewModel(Employee employee, string form, int statusID)
+        {
+            return new HRDashboardViewModel()
+            {
+                NewAddress = employee.Address,
+                NewCity = employee.City,
+                NewCountry = employee.Country,
+                NewEmail = employee.Email,
+                NewHomePhone = employee.HomePhone,
+                NewLastName = employee.LastName,
+                NewState = employee.State,
+                NewZipcode = employee.Zipcode,
+                StatusID = statusID,
+                FormType = form
+            };
         }
     }
 }
