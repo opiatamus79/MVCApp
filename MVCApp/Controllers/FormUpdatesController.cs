@@ -46,7 +46,7 @@ namespace MVCApp.Controllers
                 //need case for opt out.
 
 
-            var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
+           var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
            var employee = db.Employees.Where(x => x.ID == userID).FirstOrDefault();
 
             if (lastContractChangeForm != null|| employee != null)
@@ -54,10 +54,12 @@ namespace MVCApp.Controllers
                var lastCF = lastContractChangeForm;
 
 
-              
                     EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
                     HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
 
+                    var UniqueList = eCCR.GetUniqueEmployeeContractLogs();//these changes recently added to get status
+                    var GroupedChangeLogs = UniqueList.ToList();
+                    HRModel.ContractChanges = GroupedChangeLogs.ToList();
 
 
                     return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);

@@ -74,23 +74,22 @@ namespace MVCApp.DataAccess
                                         .FirstOrDefault(x => x.ID == employeeID);
 
             //Only supposed to do this when user is filling out survey.
-            employeeToUpdate.LastUpdate = DateTime.Today;
+            employeeToUpdate.LastUpdate = DateTime.Now;
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
-
-            ///Determine if Users if filling out survey or HR worker is editing Employee Contract.
-            ///
-
+            EmployeeContractChanges lastCF = GetLCF(employeeToUpdate.ID);
+            
             //Check if contract with given id exists, if it does do block 2, if it does not do block 1 and 2.
+
             bool contractExists = EmpContractChangesDbContext
-                                 .EmployeeContractChanges.Find(contract.ID) != null ? true : false;
+                                 .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
 
             if(!contractExists)
             {//1 - Brand new entry into EmployeeContractChange table.
                 LegalForm legalform = new LegalForm();
                 eCC.LegalForm = legalform;
                 eCC.LegalFormsID = legalform.ID;
-                eCC.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault().ID;
+                eCC.StatusID = 1; //WILL BE PROVIDING STATUS
                 eCC.EmployeeID = employeeToUpdate.ID;
                 eCC.ChangeLogID = 1 + (EmpContractChangesDbContext.EmployeeContractChanges.
                     OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
@@ -103,13 +102,15 @@ namespace MVCApp.DataAccess
                 eCC.NewState = employeeToUpdate.State;
                 eCC.NewZipcode = employeeToUpdate.Zipcode;
 
+                EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC);
                 EmpContractChangesDbContext.SaveChanges();
             }
+            var b = EmpContractChangesDbContext.EmployeeContractChanges.ToList(); //DELETE ME
             EmployeeContractChanges eCC_NEW = new EmployeeContractChanges();
-            
+
             ///2 
-            eCC_NEW.LegalForm = new LegalForm();
-            eCC_NEW.StatusID = EmpContractChangesDbContext.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault().ID;
+            eCC_NEW.LegalFormsID = lastCF.LegalFormsID;
+            eCC_NEW.StatusID = 1; //WILL BE PROVIDING STATUS
             eCC_NEW.EmployeeID = employeeToUpdate.ID;
             eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
                 OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
@@ -123,10 +124,17 @@ namespace MVCApp.DataAccess
             eCC_NEW.NewZipcode = contract.NewZipcode;
 
 
-
+            EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC_NEW);
             EmpContractChangesDbContext.SaveChanges();
 
+            b = EmpContractChangesDbContext.EmployeeContractChanges.ToList();
+
+            Console.Write(b);
+
         }
+
+
+
         public void UpdateEmployee(Employee e)
         {
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == e.ID);
@@ -161,6 +169,14 @@ namespace MVCApp.DataAccess
                 StatusID = statusID,
                 FormType = form
             };
+        }
+
+        public EmployeeContractChanges GetLCF(int userID)
+        {//Gets Last contract change form.
+            AuthenticateContext db = EmpContractChangesDbContext;
+            return db.EmployeeContractChanges
+                .Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
+
         }
     }
 }

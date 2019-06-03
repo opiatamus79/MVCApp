@@ -54,18 +54,18 @@ namespace MVCApp.Controllers
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
             string form = FormType;
-            //ContractChanges c = new ContractChanges();
+            int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             if (form.Contains("survey"))
             {//Tested use case of HR 
-                int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
-                contract.StatusID = 1;
+                //contract.StatusID = 1;
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
             }
             else if (form.Contains("editing"))//hr worker is updating a users contract (one already created)
             {//Hr worker will always be working on a created contract.
-                
-                
+
+                eCCR.InsertEmployeeContractChanges(contract, UserID);
+
             }
 
 
