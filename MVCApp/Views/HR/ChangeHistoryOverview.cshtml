@@ -85,6 +85,7 @@
                 $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, form: "editing" });
                 $('#UpdateContractModal').modal('show');
 
+
                 //NOTE NEED TO REFRESH THE CONTRACTCHANGEHISTORY.
                 
             }
@@ -96,9 +97,13 @@
             }
         }
 
+        $('#UpdateContractModal').on('hidden.bs.modal', function () {
+            console.log('Came in here.')
+        })
+
+
         if (!submitSurvey && showSurvey) {//HR worker is recieving their own survey.
             $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { form: "survey" });
-            //$('#createContractChangeFormModal').modal();
             $("#setupContractChangeFormModal").modal({ "backdrop": "static" });
         }
         function hitSubmit() {

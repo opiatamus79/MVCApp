@@ -101,6 +101,7 @@ namespace MVCApp.DataAccess
                 eCC.NewLastName = employeeToUpdate.LastName;
                 eCC.NewState = employeeToUpdate.State;
                 eCC.NewZipcode = employeeToUpdate.Zipcode;
+                eCC.DateCreated = DateTime.Now;
 
                 EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC);
                 EmpContractChangesDbContext.SaveChanges();
@@ -122,6 +123,7 @@ namespace MVCApp.DataAccess
             eCC_NEW.NewLastName = contract.NewLastName;
             eCC_NEW.NewState = contract.NewState;
             eCC_NEW.NewZipcode = contract.NewZipcode;
+            eCC_NEW.DateCreated = DateTime.Now;
 
 
             EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC_NEW);
