@@ -44,7 +44,7 @@ namespace MVCApp.Controllers
         {//returns back data that is used to populate the Survey or Contract Change Form.
 
 
-            return PartialView("SetupContractChangeForm", contract);
+            return PartialView("~Views/Shared/SetupContractChangeForm", contract);
         }
 
         [HttpPost]

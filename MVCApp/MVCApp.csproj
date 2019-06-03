@@ -246,6 +246,7 @@
     <Content Include="Views\Shared\SetupContractChangeFormModal.cshtml" />
     <Content Include="Views\HR\updateContractModal.cshtml" />
     <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
+    <Content Include="Views\Shared\SetupContractChangeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

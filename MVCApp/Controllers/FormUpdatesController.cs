@@ -29,19 +29,23 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string form, int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
+        public ActionResult LoadContractChangeForm( string form = "survey", int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
         {//displays most recent contract change form to the user (will be most recent contract change form created or 
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 int userID = 0;
+                //bool survey = false;
+                bool editing = false;
                 if (!form.Contains("editing"))
                 {//User is getting surveyed.
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+                    //survey = true;
                 }
                 else
                 {//HR worker is coming in to make changes to ContractChangeOrder
                     userID = employeeID;
+                    editing = true;
                 }
                 //need case for opt out.
 
@@ -53,16 +57,24 @@ namespace MVCApp.Controllers
              {
                var lastCF = lastContractChangeForm;
 
-
                     EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
-                    HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
 
-                    var UniqueList = eCCR.GetUniqueEmployeeContractLogs();//these changes recently added to get status
-                    var GroupedChangeLogs = UniqueList.ToList();
-                    HRModel.ContractChanges = GroupedChangeLogs.ToList();
+                    if (editing == true)
+                    {                       
+                        HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
 
+                        var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
+                        var GroupedChangeLogs = UniqueList.ToList();
+                        HRModel.ContractChanges = GroupedChangeLogs.ToList();          
+                        return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
 
-                    return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
+                        
+                    }
+                    else
+                    {//For Worker Survey (Will need to have model similiar to HR model but without  Status ID and Status ID set to 1.
+                        RedirectToAction("ShowContractChangeFormEmployee", "UserDashboard");
+                    }
+
              }
             }
 

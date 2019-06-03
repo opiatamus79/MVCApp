@@ -43,7 +43,12 @@ namespace MVCApp.Controllers
         public ActionResult ChangeHistoryOverview()
         {//displays change history for HR when selecting a table row.
 
-            using (AuthenticateContext db = new AuthenticateContext())
+            if (TempData["showOptout"] == null)
+            {
+                return RedirectToAction("EnableSurvey", "FormUpdates");
+            }
+
+                using (AuthenticateContext db = new AuthenticateContext())
             {
                 //pass in stored procedure result here then modify to be ContractChanges format.
                 EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
@@ -52,6 +57,10 @@ namespace MVCApp.Controllers
                 ViewBag.Title = "Dashboard";
                 ViewBag.ModalHeader = "Survey";
                 ViewBag.Name = Session["Firstname"] + " " + Session["Lastname"];
+
+                var x = ViewBag.showSurvey;
+
+
                 ViewBag.showOptout = (string)TempData["showOptout"] == "hide" ? false : true;
                 ViewBag.showSurvey = (string)TempData["showSurvey"] == "hide" ? false : true;
                 ViewBag.submitSurvey = ViewBag.showSurvey ? false : true;
