@@ -242,11 +242,12 @@
     <Content Include="Views\UserDashboard\Index.cshtml" />
     <Content Include="Views\HR\VisualOverview.cshtml" />
     <Content Include="Views\UserDashboard\UserActivity.cshtml" />
-    <Content Include="Views\UserDashboard\SetupContractChangeForm.cshtml" />
+    <Content Include="Views\HR\SetupContractChangeForm.cshtml" />
     <Content Include="Views\Shared\SetupContractChangeFormModal.cshtml" />
     <Content Include="Views\HR\updateContractModal.cshtml" />
     <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
-    <Content Include="Views\Shared\SetupContractChangeForm.cshtml" />
+    <Content Include="Views\UserDashboard\SetupContractChangeForm.cshtml" />
+    <Content Include="Views\UserDashboard\SetupOptOutForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

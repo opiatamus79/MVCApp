@@ -78,21 +78,28 @@ namespace MVCApp.DataAccess
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
             EmployeeContractChanges lastCF = GetLCF(employeeToUpdate.ID);
-            
+
             //Check if contract with given id exists, if it does do block 2, if it does not do block 1 and 2.
+            bool contractExists = false;
+            if(lastCF != null)
+            {
+                 contractExists = EmpContractChangesDbContext
+                     .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
+            }
 
-            bool contractExists = EmpContractChangesDbContext
-                                 .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
 
+            LegalForm legalform = new LegalForm(){ FilePath = "N/A", Reason = "N/A" };
             if(!contractExists)
             {//1 - Brand new entry into EmployeeContractChange table.
-                LegalForm legalform = new LegalForm();
+
+                legalform = CreateNewLegalForm(legalform);
+
                 eCC.LegalForm = legalform;
                 eCC.LegalFormsID = legalform.ID;
                 eCC.StatusID = 1; //WILL BE PROVIDING STATUS
                 eCC.EmployeeID = employeeToUpdate.ID;
-                eCC.ChangeLogID = 1 + (EmpContractChangesDbContext.EmployeeContractChanges.
-                    OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
+                eCC.ChangeLogID = 1; //+ (EmpContractChangesDbContext.EmployeeContractChanges.
+                    //OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
                 eCC.NewAddress = employeeToUpdate.Address;
                 eCC.NewCity = employeeToUpdate.City;
                 eCC.NewCountry = employeeToUpdate.Country;
@@ -106,11 +113,12 @@ namespace MVCApp.DataAccess
                 EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC);
                 EmpContractChangesDbContext.SaveChanges();
             }
-            var b = EmpContractChangesDbContext.EmployeeContractChanges.ToList(); //DELETE ME
+
+
             EmployeeContractChanges eCC_NEW = new EmployeeContractChanges();
 
             ///2 
-            eCC_NEW.LegalFormsID = lastCF.LegalFormsID;
+            eCC_NEW.LegalFormsID = lastCF != null ? lastCF.LegalFormsID : legalform.ID;
             eCC_NEW.StatusID = 1; //WILL BE PROVIDING STATUS
             eCC_NEW.EmployeeID = employeeToUpdate.ID;
             eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
@@ -129,9 +137,6 @@ namespace MVCApp.DataAccess
             EmpContractChangesDbContext.EmployeeContractChanges.Add(eCC_NEW);
             EmpContractChangesDbContext.SaveChanges();
 
-            b = EmpContractChangesDbContext.EmployeeContractChanges.ToList();
-
-            Console.Write(b);
 
         }
 
@@ -179,6 +184,41 @@ namespace MVCApp.DataAccess
             return db.EmployeeContractChanges
                 .Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
 
+        }
+
+
+        public void ResetContractChange(int userID, EmployeeContractChanges contract)
+        {//Will reset the user account information based on Last Change Log ID and earliest created entry with this
+            //change log id.
+
+            int lastChangeLogID = GetLCF(userID).ChangeLogID;
+
+            AuthenticateContext db = EmpContractChangesDbContext;
+            var result = db.EmployeeContractChanges
+                .Where(x => x.ChangeLogID == lastChangeLogID)
+                .OrderByDescending(x => x.ID).FirstOrDefault();
+
+            Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == userID);
+
+            employeeToUpdate.LastName = result.NewLastName;
+            employeeToUpdate.Email = result.NewEmail;
+            employeeToUpdate.Address = result.NewAddress;
+            employeeToUpdate.City = result.NewCity;
+            employeeToUpdate.State = result.NewState;
+            employeeToUpdate.Zipcode = result.NewZipcode;
+            employeeToUpdate.Country = result.NewCountry;
+            employeeToUpdate.HomePhone = result.NewHomePhone;
+
+            db.SaveChanges();
+
+
+        }
+
+        public LegalForm CreateNewLegalForm(LegalForm lf) {
+            LegalForm legalform = EmpContractChangesDbContext.LegalForms.Add(lf);
+            EmpContractChangesDbContext.SaveChanges();
+
+            return legalform;
         }
     }
 }

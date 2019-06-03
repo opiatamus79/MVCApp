@@ -1,6 +1,6 @@
 ﻿@model MVCApp.DataAccess.EmployeeContractChanges
 
-@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { FormType = "survey" }, FormMethod.Post ))
+@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { FormType = "optout" }, FormMethod.Post ))
 {
     @Html.AntiForgeryToken()
     

@@ -60,19 +60,35 @@ namespace MVCApp.Controllers
                     EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
 
                     if (editing == true)
-                    {                       
+                    {
                         HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
 
                         var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
                         var GroupedChangeLogs = UniqueList.ToList();
-                        HRModel.ContractChanges = GroupedChangeLogs.ToList();          
+                        HRModel.ContractChanges = GroupedChangeLogs.ToList();
                         return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
 
-                        
+
                     }
                     else
-                    {//For Worker Survey (Will need to have model similiar to HR model but without  Status ID and Status ID set to 1.
-                        RedirectToAction("ShowContractChangeFormEmployee", "UserDashboard");
+                    {//For Worker Survey (Will need to have model similiar to HR model but without  Status ID field.
+                        return RedirectToAction("ShowContractChangeFormEmployee", "UserDashboard",
+                            new EmployeeContractChanges()
+                            {
+                                StatusID = 1,
+                                EmployeeID = employee.ID,
+                                NewAddress = employee.Address,
+                                NewCity = employee.City,
+                                NewCountry = employee.Country,
+                                NewEmail = employee.Email,
+                                NewHomePhone = employee.HomePhone,
+                                NewLastName = employee.LastName,
+                                NewState = employee.State,
+                                NewZipcode = employee.Zipcode,
+                                DateCreated = DateTime.Now,
+                                ChangeLogID = 1
+
+                            });
                     }
 
              }

@@ -18,6 +18,11 @@ namespace MVCApp.Controllers
         // GET: Dashboard
         public ActionResult Index() //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {
+            if (TempData["showOptout"] == null)
+            {
+                return RedirectToAction("EnableSurvey", "FormUpdates");
+            }
+
             ViewBag.Title = "Dashboard";
             ViewBag.ModalHeader = "Survey";
             ViewBag.Name = Session["Firstname"] + " " + Session["Lastname"];
@@ -37,14 +42,16 @@ namespace MVCApp.Controllers
         {//returns back data that is used to populate the Survey or Contract Change Form.
             contract.ContractChanges = new List<ContractChanges>();
 
-            return PartialView("SetupContractChangeForm" , contract); 
+            //return PartialView("SetupContractChangeForm" , contract);
+            return PartialView("~/Views/HR/SetupContractChangeForm.cshtml", contract);
         }
         // GET: Dashboard
+        [HttpGet]
         public ActionResult ShowContractChangeFormEmployee(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
-        {//returns back data that is used to populate the Survey or Contract Change Form.
+        {//returns back data that is used to populate the Survey.
 
 
-            return PartialView("~Views/Shared/SetupContractChangeForm", contract);
+            return PartialView("SetupContractChangeForm", contract);
         }
 
         [HttpPost]
@@ -58,7 +65,6 @@ namespace MVCApp.Controllers
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             if (form.Contains("survey"))
             {//Tested use case of HR 
-                //contract.StatusID = 1;
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
             }
             else if (form.Contains("editing"))//hr worker is updating a users contract (one already created)
@@ -66,6 +72,11 @@ namespace MVCApp.Controllers
 
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
 
+            }
+            else if (form.Contains("optout"))
+            {
+                //set employees values to that of earliest EmployeeContractChange entry with current changelogid.
+                eCCR.ResetContractChange(UserID, contract);
             }
 
 

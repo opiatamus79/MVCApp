@@ -44,7 +44,7 @@ namespace MVCApp.Controllers
         {//displays change history for HR when selecting a table row.
 
             if (TempData["showOptout"] == null)
-            {
+            {//Determine if user has refreshed the page and needs to collect values to enable survey.
                 return RedirectToAction("EnableSurvey", "FormUpdates");
             }
 
