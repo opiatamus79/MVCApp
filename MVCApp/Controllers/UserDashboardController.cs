@@ -68,7 +68,7 @@ namespace MVCApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType")] EmployeeContractChanges contract, string FormType)
+            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID")] EmployeeContractChanges contract, string FormType)
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
             string form = FormType;

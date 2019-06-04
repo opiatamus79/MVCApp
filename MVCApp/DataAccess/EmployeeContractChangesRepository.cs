@@ -119,7 +119,7 @@ namespace MVCApp.DataAccess
 
             ///2 
             eCC_NEW.LegalFormsID = lastCF != null ? lastCF.LegalFormsID : legalform.ID;
-            eCC_NEW.StatusID = 1; //WILL BE PROVIDING STATUS
+            eCC_NEW.StatusID = contract.StatusID; //WILL BE PROVIDING STATUS
             eCC_NEW.EmployeeID = employeeToUpdate.ID;
             eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
                 OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
