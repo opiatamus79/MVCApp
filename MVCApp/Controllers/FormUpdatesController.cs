@@ -37,17 +37,17 @@ namespace MVCApp.Controllers
                 int userID = 0;
                 //bool survey = false;
                 bool editing = false;
+                bool optout = form.Contains("optout") ? true : false;
                 if (!form.Contains("editing"))
                 {//User is getting surveyed.
                     userID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
-                    //survey = true;
                 }
                 else
                 {//HR worker is coming in to make changes to ContractChangeOrder
                     userID = employeeID;
                     editing = true;
                 }
-                //need case for opt out.
+                
 
 
            var lastContractChangeForm = db.EmployeeContractChanges.Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
@@ -70,28 +70,16 @@ namespace MVCApp.Controllers
 
 
                     }
+                    else if (optout == true)
+                    {
+                        return RedirectToAction("ShowOptOutForm", "UserDashboard", eCCR.GetEmployee(employee));
+                    }
                     else
-                    {//For Worker Survey (Will need to have model similiar to HR model but without  Status ID field.
-                        return RedirectToAction("ShowContractChangeFormEmployee", "UserDashboard",
-                            new EmployeeContractChanges()
-                            {
-                                StatusID = 1,
-                                EmployeeID = employee.ID,
-                                NewAddress = employee.Address,
-                                NewCity = employee.City,
-                                NewCountry = employee.Country,
-                                NewEmail = employee.Email,
-                                NewHomePhone = employee.HomePhone,
-                                NewLastName = employee.LastName,
-                                NewState = employee.State,
-                                NewZipcode = employee.Zipcode,
-                                DateCreated = DateTime.Now,
-                                ChangeLogID = 1
-
-                            });
+                    {
+                        return RedirectToAction("ShowContractChangeFormEmployee", "UserDashboard", eCCR.GetEmployee(employee));
                     }
 
-             }
+                }
             }
 
             if (Url.IsLocalUrl(ReturnUrl))

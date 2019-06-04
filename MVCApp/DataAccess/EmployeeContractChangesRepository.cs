@@ -39,34 +39,34 @@ namespace MVCApp.DataAccess
             AuthenticateContext db = EmpContractChangesDbContext;
 
             var result = (from c in db.EmployeeContractChanges.AsEnumerable()
-             join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
-             join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
-             where (c.ChangeLogID == changeLogID && c.EmployeeID == employeeID)
-             select new ViewModels.ContractChanges
-             {
-                 ID = c.ID,
-                 NewLastName = c.NewLastName,
-                 NewEmail = c.NewEmail,
-                 NewAddress = c.NewAddress,
-                 NewCity = c.NewCity,
-                 NewState = c.NewState,
-                 NewZipcode = c.NewZipcode,
-                 NewCountry = c.NewCountry,
-                 NewHomePhone = c.NewHomePhone,
-                 DateCreated = c.DateCreated,
-                 StatusID = c.StatusID,
-                 LegalFormsID = c.LegalFormsID,
-                 EmployeeID = c.EmployeeID,
-                 ChangeLogID = c.ChangeLogID,
-                 StatusName = c.FormStatus.StatusName,
-                 Description = c.FormStatus.Description,
-                 FilePath = c.LegalForm.FilePath,
-                 Reason = c.LegalForm.Reason,
-                 UpdatedOn = c.DateCreated
+                          join status in db.FormStatuses.AsEnumerable() on c.StatusID equals status.ID
+                          join legal in db.LegalForms.AsEnumerable() on c.LegalFormsID equals legal.ID
+                          where (c.ChangeLogID == changeLogID && c.EmployeeID == employeeID)
+                          select new ViewModels.ContractChanges
+                          {
+                              ID = c.ID,
+                              NewLastName = c.NewLastName,
+                              NewEmail = c.NewEmail,
+                              NewAddress = c.NewAddress,
+                              NewCity = c.NewCity,
+                              NewState = c.NewState,
+                              NewZipcode = c.NewZipcode,
+                              NewCountry = c.NewCountry,
+                              NewHomePhone = c.NewHomePhone,
+                              DateCreated = c.DateCreated,
+                              StatusID = c.StatusID,
+                              LegalFormsID = c.LegalFormsID,
+                              EmployeeID = c.EmployeeID,
+                              ChangeLogID = c.ChangeLogID,
+                              StatusName = c.FormStatus.StatusName,
+                              Description = c.FormStatus.Description,
+                              FilePath = c.LegalForm.FilePath,
+                              Reason = c.LegalForm.Reason,
+                              UpdatedOn = c.DateCreated
 
-             });
+                          });
             return result;
-           
+
         }
         public void InsertEmployeeContractChanges(EmployeeContractChanges contract, int employeeID)
         {
@@ -81,22 +81,22 @@ namespace MVCApp.DataAccess
 
             //Check if contract with given id exists, if it does do block 2, if it does not do block 1 and 2.
             bool contractExists = false;
-            if(lastCF != null)
+            if (lastCF != null)
             {
-                 contractExists = EmpContractChangesDbContext
-                     .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
+                contractExists = EmpContractChangesDbContext
+                    .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
             }
 
 
-            LegalForm legalform = new LegalForm(){ FilePath = "N/A", Reason = "N/A" };
-            if(!contractExists)
+            LegalForm legalform = new LegalForm() { FilePath = "N/A", Reason = "N/A" };
+            if (!contractExists || StatusIs(lastCF.StatusID) == "Approved" || StatusIs(lastCF.StatusID) == "Opt-out")
             {//1 - Brand new entry into EmployeeContractChange table.
 
                 legalform = CreateNewLegalForm(legalform);
 
                 eCC.LegalForm = legalform;
                 eCC.LegalFormsID = legalform.ID;
-                eCC.StatusID = 1; //WILL BE PROVIDING STATUS
+                eCC.StatusID = 1; 
                 eCC.EmployeeID = employeeToUpdate.ID;
                 eCC.ChangeLogID = 1; //+ (EmpContractChangesDbContext.EmployeeContractChanges.
                     //OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
@@ -119,7 +119,7 @@ namespace MVCApp.DataAccess
 
             ///2 
             eCC_NEW.LegalFormsID = lastCF != null ? lastCF.LegalFormsID : legalform.ID;
-            eCC_NEW.StatusID = contract.StatusID; //WILL BE PROVIDING STATUS
+            eCC_NEW.StatusID = contract.StatusID == 0 ? 1 : contract.StatusID; //WILL BE PROVIDING STATUS
             eCC_NEW.EmployeeID = employeeToUpdate.ID;
             eCC_NEW.ChangeLogID = (EmpContractChangesDbContext.EmployeeContractChanges.
                 OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
@@ -140,7 +140,19 @@ namespace MVCApp.DataAccess
 
         }
 
+        public string StatusIs(int statusId)
+        {
+            AuthenticateContext db = EmpContractChangesDbContext;
 
+            var result = db.FormStatuses.Where(x => x.ID == statusId).First();
+
+            if (result != null)
+            {
+                return result.StatusName;
+            }
+
+            return "Not Found";
+        }
 
         public void UpdateEmployee(Employee e)
         {
@@ -214,6 +226,26 @@ namespace MVCApp.DataAccess
 
         }
 
+        public EmployeeContractChanges GetEmployee(Employee employee)
+        {
+            return new EmployeeContractChanges()
+            {
+                StatusID = 1,
+                EmployeeID = employee.ID,
+                NewAddress = employee.Address,
+                NewCity = employee.City,
+                NewCountry = employee.Country,
+                NewEmail = employee.Email,
+                NewHomePhone = employee.HomePhone,
+                NewLastName = employee.LastName,
+                NewState = employee.State,
+                NewZipcode = employee.Zipcode,
+                DateCreated = DateTime.Now,
+                ChangeLogID = 1
+
+            };
+        }
+
         public LegalForm CreateNewLegalForm(LegalForm lf) {
             LegalForm legalform = EmpContractChangesDbContext.LegalForms.Add(lf);
             EmpContractChangesDbContext.SaveChanges();
@@ -231,7 +263,7 @@ namespace MVCApp.DataAccess
             {
                 UpdateEmployee(new Employee
                 {
-                    ID = contract.EmployeeID,
+                    ID = UserID,
                     LastName = contract.NewLastName,
                     Email = contract.NewEmail,
                     Address = contract.NewAddress,

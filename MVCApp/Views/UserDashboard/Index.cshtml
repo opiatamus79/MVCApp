@@ -54,7 +54,9 @@
         function callContractChangeFormModal()
         {//If User submits they are opting out
 
-            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+            //$("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))");
+
+            $("#SetupOptOutForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new { form= "optout"}))");
             $('#setupContractChangeFormModal').modal('show');
 
         }

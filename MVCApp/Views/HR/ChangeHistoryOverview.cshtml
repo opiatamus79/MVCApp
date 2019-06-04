@@ -84,9 +84,6 @@
                 //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
                 $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, form: "editing" });
                 $('#UpdateContractModal').modal('show');
-
-
-                //NOTE NEED TO REFRESH THE CONTRACTCHANGEHISTORY.
                 
             }
             else
