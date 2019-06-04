@@ -253,6 +253,7 @@
     <Content Include="Views\HR\ChangeHistoryOverview.cshtml" />
     <Content Include="Views\UserDashboard\SetupContractChangeForm.cshtml" />
     <Content Include="Views\UserDashboard\SetupOptOutForm.cshtml" />
+    <Content Include="Views\HR\SetupOptOutForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

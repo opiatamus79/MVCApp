@@ -42,7 +42,7 @@
 {
     <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
     <button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
-            id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+            id="test" type="button" class="btn btn-info btn-lg" onclick="showModals({ eId: ' ', cId: ' ', modalName: 'SetupOptOutForm'})">
         Reset Account
     </button>
 }
@@ -86,11 +86,14 @@
                 $('#UpdateContractModal').modal('show');
                 
             }
-            else
+            else if (!showingModal && info.modalName == "SetupOptOutForm")
             {//Loads the HR employee's own OptOut form.
 
                 //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {action="Show"});
                 //$('#createContractChangeFormModal').modal('show');
+
+                $("#SetupOptOutForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new { form= "optout"}))");
+                $('#setupContractChangeFormModal').modal('show');
             }
         }
 
