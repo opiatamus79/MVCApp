@@ -190,6 +190,7 @@
     <Compile Include="Models\ContractChangeLogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ContractChanges.cs" />
+    <Compile Include="ViewModels\UserDashboardViewModel.cs" />
     <Compile Include="ViewModels\EmployeeSurveyViewModel.cs" />
     <Compile Include="ViewModels\HRDashboardViewModel.cs" />
   </ItemGroup>
@@ -254,6 +255,7 @@
     <Content Include="Views\UserDashboard\SetupContractChangeForm.cshtml" />
     <Content Include="Views\UserDashboard\SetupOptOutForm.cshtml" />
     <Content Include="Views\HR\SetupOptOutForm.cshtml" />
+    <Content Include="Views\UserDashboard\ChangeHistoryTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

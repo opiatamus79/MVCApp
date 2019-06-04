@@ -29,6 +29,29 @@ namespace MVCApp.Controllers
             ViewBag.showSurvey = (string)TempData["showSurvey"] == "hide" ? false : true;
             ViewBag.submitSurvey = ViewBag.showSurvey ? false : true;
 
+
+            EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+            int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+            Employee employee = eCCR.GetEmployeeBy(UserID);
+
+            var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
+            var GroupedChangeLogs = UniqueList.ToList().Where(x => x.EmployeeID == UserID);
+
+
+
+
+
+            DateTime today = DateTime.Today;
+            DateTime OptDate = (employee.LastUpdate).AddDays(90.00);
+
+            if (employee != null)
+                ViewBag.OptOutDaysLeft = ViewBag.showOptOut ? (OptDate.Subtract(today)).Days : 0;
+
+            if (GroupedChangeLogs != null)
+            {
+                return View(GroupedChangeLogs);
+            }
+
            return View();
         }
 

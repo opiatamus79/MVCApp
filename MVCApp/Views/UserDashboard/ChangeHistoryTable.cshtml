@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
+
+@{
+    Layout = null;
+    var changeHistoryModal = "changeHistoryModal";
+    var updateContractModal = "updateContractModal";
+
+}
+
+
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        <th># </th>
+        <th>Edited Address</th>
+        <th>Edited City</th>
+        <th>Edited State</th>
+        <th>Edited Zipcode</th>
+        <th>Edited Country</th>
+        <th>Edited Email</th>
+        <th>Edited HomePhone</th>
+        <th>Edited Last Name</th>
+        <th>Status </th>
+        <th>UpdatedOn</th>
+    </tr>
+    @foreach (var d in Model)
+    {
+        <tr id="view"
+            onclick="showModals({ eId: @d.EmployeeID, cId: @d.ChangeLogID, modalName: '@changeHistoryModal'})" >
+            <td>@d.ChangeLogID</td>
+            <td>@d.NewAddress</td>
+            <td>@d.NewCity</td>
+            <td>@d.NewState</td>
+            <td>@d.NewZipcode</td>
+            <td>@d.NewCountry</td>
+            <td>@d.NewEmail</td>
+            <td>@d.NewHomePhone</td>
+            <td>@d.NewLastName</td>
+            <td>@d.StatusName</td>
+            <td>@d.UpdatedOn</td>
+
+        </tr>
+
+    }
+
+</table>
+

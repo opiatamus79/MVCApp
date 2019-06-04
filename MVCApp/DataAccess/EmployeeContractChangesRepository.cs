@@ -166,6 +166,17 @@ namespace MVCApp.DataAccess
             return "Not Found";
         }
 
+        public Employee GetEmployeeBy(int UserID)
+        {
+            AuthenticateContext db = EmpContractChangesDbContext;
+
+            var employee = (from e in db.Employees
+                            where e.ID == UserID
+                            select e).FirstOrDefault();
+
+            return employee;
+        }
+
         public void UpdateEmployee(Employee e)
         {
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == e.ID);

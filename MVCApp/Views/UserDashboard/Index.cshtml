@@ -1,4 +1,5 @@
-﻿@model MVCApp.DataAccess.EmployeeContractChanges
+﻿@model IEnumerable<MVCApp.ViewModels.ContractChanges>
+
 @{
     /**/
 
@@ -16,25 +17,30 @@
 
 
 
-   @if (!showOptout)
-   {
-        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
-        <button data-toggle="modal" disabled data-placement="top" title="Reset your account credentials to previous change."
-                id="disabledOptOut" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
-            Reset Account
-        </button>
+@if (!showOptout)
+{
+    <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+    <button data-toggle="modal" disabled data-placement="top" title="Reset your account credentials to previous change."
+            id="disabledOptOut" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+        Reset Account
+    </button>
 
-    }
+}
+
+<h3>My Activity</h3>
+
+@Html.Partial("ChangeHistoryTable", Model)
 
 
-    @if(showOptout)
-    {
-        <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
-        <button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
-                id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
-            Reset Account
-        </button>
-    }
+<p>@ViewBag.OptOutDaysLeft days left to Reset Account.</p>
+@if (showOptout)
+{
+    <!--data-toggle="tooltip" data-placement="top" title="Reset your account credentials to previous change?"-->
+    <button data-toggle="modal" data-placement="top" title="Reset your account credentials to previous change?"
+            id="test" type="button" class="btn btn-info btn-lg" onclick="callContractChangeFormModal()">
+        Reset Account
+    </button>
+}
 
 
 
@@ -48,7 +54,7 @@
     <script>
         var submitSurvey = "@ViewBag.submitSurvey" != "True" ? false : true;
         var showSurvey = "@ViewBag.showSurvey" != "True" ? false : true;
-        
+
 
         $('[data-toggle="tooltip"]').tooltip();
         function callContractChangeFormModal()
