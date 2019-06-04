@@ -83,11 +83,16 @@ namespace MVCApp.Controllers
 
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
 
+                //if status is approved need to updated Employee Info.
+                eCCR.CheckApproved(contract, UserID);
+                
+
             }
             else if (form.Contains("optout"))
             {
                 //set employees values to that of earliest EmployeeContractChange entry with current changelogid.
                 eCCR.ResetContractChange(UserID, contract);
+                //Check to see if creating a new entry in contract change table setting optout as status.
             }
 
 

@@ -220,5 +220,29 @@ namespace MVCApp.DataAccess
 
             return legalform;
         }
+
+        public void CheckApproved(EmployeeContractChanges contract, int UserID)
+        {
+            AuthenticateContext db = EmpContractChangesDbContext;
+
+            var status = db.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault();
+
+            if (status != null && status.StatusName.Contains("Approved"))
+            {
+                UpdateEmployee(new Employee
+                {
+                    ID = contract.EmployeeID,
+                    LastName = contract.NewLastName,
+                    Email = contract.NewEmail,
+                    Address = contract.NewAddress,
+                    City = contract.NewCity,
+                    State = contract.NewState,
+                    Zipcode = contract.NewZipcode,
+                    Country = contract.NewCountry,
+                    HomePhone = contract.NewHomePhone
+                });
+            }
+
+        }
     }
 }
