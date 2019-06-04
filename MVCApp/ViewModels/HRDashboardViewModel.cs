@@ -43,6 +43,10 @@ namespace MVCApp.ViewModels
         [Display(Name = "New HomePhone")]
         public string NewHomePhone { get; set; }
 
+        [Required(ErrorMessage = "Contact Information is invalid.")]
+        [Display(Name = "Status")]
+        public FormStatus Status { get; set; }
+
 
 
         public virtual int StatusID { get; set; } 

@@ -41,6 +41,17 @@ namespace MVCApp.Controllers
             "NewState,NewZipcode,NewCountry,NewHomePhone,FormType")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey or Contract Change Form.
             contract.ContractChanges = new List<ContractChanges>();
+            IEnumerable<FormStatus> Statuses = new List<FormStatus>();
+
+
+            using (AuthenticateContext db = new AuthenticateContext())
+            {
+                 Statuses = db.FormStatuses.AsEnumerable().ToList();
+               
+            }
+            ViewBag.FormStatuses = new SelectList(Statuses, "ID", "StatusName");
+
+
 
             //return PartialView("SetupContractChangeForm" , contract);
             return PartialView("~/Views/HR/SetupContractChangeForm.cshtml", contract);
