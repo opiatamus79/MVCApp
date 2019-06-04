@@ -8,7 +8,7 @@ using System.Web;
 
 namespace MVCApp.ViewModels
 {
-    public class HRDashboardViewModel
+    public class EmployeeSurveyViewModel
     {
 
 
@@ -44,9 +44,11 @@ namespace MVCApp.ViewModels
         [Display(Name = "New HomePhone")]
         public string NewHomePhone { get; set; }
 
-        [Required(ErrorMessage = "Contact Information is invalid.")]
-        [Display(Name = "Status")]
-        public FormStatus Status { get; set; }
+
+
+        [RequiredIf("NewLastName != null")]
+        public string FileURL { get; set; }
+
 
 
 

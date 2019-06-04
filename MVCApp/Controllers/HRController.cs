@@ -32,9 +32,7 @@ namespace MVCApp.Controllers
              {
                 return PartialView("ChangeHistoryTable", ContractChangeHistory.ToList());
              }
-                
-            
-            
+                                     
             return View();
         }
 
@@ -47,7 +45,6 @@ namespace MVCApp.Controllers
             {//Determine if user has refreshed the page and needs to collect values to enable survey.
                 return RedirectToAction("EnableSurvey", "FormUpdates");
             }
-
                 using (AuthenticateContext db = new AuthenticateContext())
             {
                 //pass in stored procedure result here then modify to be ContractChanges format.
@@ -68,21 +65,15 @@ namespace MVCApp.Controllers
 
               if (GroupedChangeLogs != null)
                 {
-
                     HRDashboardViewModel model = new HRDashboardViewModel();
-
                     model.ContractChanges = GroupedChangeLogs.ToList();
 
                     return View(model);
-
-                    //return View(GroupedChangeLogs.ToList()); 
-                }
-                
-
+                }               
                 return View();
             }
-
         }
+
         public ActionResult VisualOverview()
         {
             //Need to show Pending, Edited, and Approved forms for each user.
@@ -106,10 +97,7 @@ namespace MVCApp.Controllers
 
             }
 
-            return View();
-            
-            
-           
+            return View();                              
         }
 
         public ActionResult Login()
@@ -128,10 +116,5 @@ namespace MVCApp.Controllers
                 return RedirectToAction("Login");
             }
         }
-
-
-
-
-
     }
 }

@@ -11,6 +11,9 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using ExpressiveAnnotations.Attributes;
+using ExpressiveAnnotations.MvcUnobtrusive.Providers;
+using ExpressiveAnnotations.MvcUnobtrusive.Validators;
 
 namespace MVCApp
 {

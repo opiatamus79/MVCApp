@@ -22,7 +22,6 @@ namespace MVCApp.Controllers
             {
                 return RedirectToAction("EnableSurvey", "FormUpdates");
             }
-
             ViewBag.Title = "Dashboard";
             ViewBag.ModalHeader = "Survey";
             ViewBag.Name = Session["Firstname"] + " " + Session["Lastname"];
@@ -30,10 +29,8 @@ namespace MVCApp.Controllers
             ViewBag.showSurvey = (string)TempData["showSurvey"] == "hide" ? false : true;
             ViewBag.submitSurvey = ViewBag.showSurvey ? false : true;
 
-
            return View();
         }
-
 
         // GET: Dashboard
         [HttpGet]
@@ -41,28 +38,21 @@ namespace MVCApp.Controllers
             "NewState,NewZipcode,NewCountry,NewHomePhone,FormType,EmployeeID")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey or Contract Change Form.
             contract.ContractChanges = new List<ContractChanges>();
-
-
             IEnumerable<FormStatus> Statuses = new List<FormStatus>();
-
 
             using (AuthenticateContext db = new AuthenticateContext())
             {
-                 Statuses = db.FormStatuses.AsEnumerable().ToList();
-               
+                 Statuses = db.FormStatuses.AsEnumerable().ToList();  
             }
             ViewBag.FormStatuses = new SelectList(Statuses, "ID", "StatusName");
 
-
-
-            //return PartialView("SetupContractChangeForm" , contract);
             return PartialView("~/Views/HR/SetupContractChangeForm.cshtml", contract);
         }
+
         // GET: Dashboard
         [HttpGet]
-        public ActionResult ShowContractChangeFormEmployee(EmployeeContractChanges contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+        public ActionResult ShowContractChangeFormEmployee(EmployeeSurveyViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey.
-
               return PartialView("SetupContractChangeForm", contract);
         }
 
@@ -72,8 +62,6 @@ namespace MVCApp.Controllers
             return PartialView("SetupOptOutForm", contract);
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
@@ -82,6 +70,9 @@ namespace MVCApp.Controllers
 
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             string form = FormType;
+            bool editing = form.Contains("editing");
+            bool survey = form.Contains("survey");
+            bool optout = form.Contains("optout");
 
             int UserID = -1;
 
@@ -90,29 +81,16 @@ namespace MVCApp.Controllers
             else
                 UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
 
-
-
-            if (form.Contains("survey"))
-            {//Tested use case of HR 
-                eCCR.InsertEmployeeContractChanges(contract, UserID);
-            }
-            else if (form.Contains("editing"))//hr worker is updating a users contract (one already created)
-            {//Hr worker will always be working on a created contract.
-
-                eCCR.InsertEmployeeContractChanges(contract, UserID);
-
-                //if status is approved need to updated Employee Info.
-                eCCR.CheckApproved(contract, UserID);
-                
-
-            }
-            else if (form.Contains("optout"))
+            if (survey || editing)
             {
-                //set employees values to that of earliest EmployeeContractChange entry with current changelogid.
+                eCCR.InsertEmployeeContractChanges(contract, UserID, editing, survey);
+                if(editing)
+                    eCCR.CheckApproved(contract, UserID);
+            }
+            else if (optout)
+            {
                 eCCR.ResetContractChange(UserID, contract);
             }
-
-
             //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
             return RedirectToAction("EnableSurvey", "FormUpdates");
         }

@@ -68,13 +68,14 @@ namespace MVCApp.DataAccess
             return result;
 
         }
-        public void InsertEmployeeContractChanges(EmployeeContractChanges contract, int employeeID)
+        public void InsertEmployeeContractChanges(EmployeeContractChanges contract, int employeeID, bool editing = false, bool survey = false)
         {
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees
                                         .FirstOrDefault(x => x.ID == employeeID);
 
             //Only supposed to do this when user is filling out survey.
-            employeeToUpdate.LastUpdate = DateTime.Now;
+            if(survey)
+                employeeToUpdate.LastUpdate = DateTime.Now;
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
             EmployeeContractChanges lastCF = GetLCF(employeeToUpdate.ID);
