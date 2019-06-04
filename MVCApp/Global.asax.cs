@@ -12,7 +12,6 @@ using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using ExpressiveAnnotations.Attributes;
-using ExpressiveAnnotations.MvcUnobtrusive.Providers;
 using ExpressiveAnnotations.MvcUnobtrusive.Validators;
 
 namespace MVCApp
@@ -25,6 +24,11 @@ namespace MVCApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+               typeof(RequiredIfAttribute), typeof(RequiredIfValidator));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+                typeof(AssertThatAttribute), typeof(AssertThatValidator));
 
         }
         

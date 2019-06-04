@@ -21,10 +21,10 @@
             <div class="navbar-collapse collapse">
                 @if ((string)Session["Role"] == "Admin")
                 {
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Contract Changes Overview", "ChangeHistoryOverview", "HR")</li>
-                    <li>@Html.ActionLink("Visual Overview", "VisualOverview", "HR")</li>
-                </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Contract Changes Overview", "ChangeHistoryOverview", "HR")</li>
+                        <li>@Html.ActionLink("Visual Overview", "VisualOverview", "HR")</li>
+                    </ul>
 
                 }
                 @if ((string)Session["Role"] == "Admin" || (string)Session["Role"] == "NonAdmin")
@@ -45,8 +45,20 @@
         </footer>
     </div>
 
+    <!--jquery.js, jquery.validate.js and jquery.validate.unobtrusive.js-->
+
+
+
+
     @Scripts.Render("~/bundles/jquery")
+
+
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/expressive.annotations.validate.js"></script>
+
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
