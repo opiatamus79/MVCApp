@@ -95,7 +95,7 @@ namespace MVCApp.Controllers
         public ActionResult EnableSurvey() 
         {
             //Determine if user is passed due on survey period.
-
+            EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
             using (AuthenticateContext db = new AuthenticateContext())
             {
                 
@@ -106,21 +106,19 @@ namespace MVCApp.Controllers
 
 
 
-                var latestContractForm = (from c in db.EmployeeContractChanges
-                                          join s in db.FormStatuses on c.StatusID equals s.ID
-                                          join e in db.Employees.Where(e => e.ID == userID) on c.EmployeeID equals e.ID
-                                          select new{ c, s, e})
-                                          .OrderByDescending(contracts => contracts.c.DateCreated);
+                var latestContractForm = eCCR.GetLCF(userID);
 
 
 
                 bool showSurvey = true;
                 bool showOptout = true;
-
+                
                 //case where Employee has past contract changes.
                 if (employee != null && latestContractForm != null)
                 {
-                    var latestCF = latestContractForm.FirstOrDefault();
+                    var latestCF = latestContractForm;
+                    var latestCFStatus = eCCR.StatusIs(latestCF.StatusID);
+                    
                     DateTime today = DateTime.Today;
                     DateTime SurveyPeriod = (employee.LastUpdate).AddMonths(3);
                     DateTime OptOutPeriod = (employee.LastUpdate).AddDays(90.00);
@@ -128,6 +126,7 @@ namespace MVCApp.Controllers
                     bool optOutLastDay = SurveyPeriod == OptOutPeriod;
 
                     showOptout = (OptOutPeriod <= today) ? false : true;
+                    showOptout = latestCFStatus == "Opt-Out" ? false : showOptout;
                     showSurvey = (  SurveyPeriod >= today) && !optOutLastDay  ? false : true;
 
                     TempData["showOptout"] = null;

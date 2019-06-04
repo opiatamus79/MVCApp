@@ -78,18 +78,25 @@ namespace MVCApp.DataAccess
 
             EmployeeContractChanges eCC = new EmployeeContractChanges();
             EmployeeContractChanges lastCF = GetLCF(employeeToUpdate.ID);
-
+            bool newContract = false;
+            
             //Check if contract with given id exists, if it does do block 2, if it does not do block 1 and 2.
             bool contractExists = false;
             if (lastCF != null)
             {
                 contractExists = EmpContractChangesDbContext
                     .EmployeeContractChanges.Find(lastCF.ID) != null ? true : false;
+                if (StatusIs(lastCF.StatusID) == "Approved" || StatusIs(lastCF.StatusID) == "Opt-Out")
+                {
+                    newContract = true;
+
+                }
             }
 
 
+
             LegalForm legalform = new LegalForm() { FilePath = "N/A", Reason = "N/A" };
-            if (!contractExists || StatusIs(lastCF.StatusID) == "Approved" || StatusIs(lastCF.StatusID) == "Opt-out")
+            if (!contractExists || newContract)
             {//1 - Brand new entry into EmployeeContractChange table.
 
                 legalform = CreateNewLegalForm(legalform);
@@ -98,8 +105,7 @@ namespace MVCApp.DataAccess
                 eCC.LegalFormsID = legalform.ID;
                 eCC.StatusID = 1; 
                 eCC.EmployeeID = employeeToUpdate.ID;
-                eCC.ChangeLogID = 1; //+ (EmpContractChangesDbContext.EmployeeContractChanges.
-                    //OrderByDescending(e => e.EmployeeID == employeeToUpdate.ID).FirstOrDefault().ChangeLogID);
+                eCC.ChangeLogID = newContract ?  (1 + lastCF.ChangeLogID) : 1; 
                 eCC.NewAddress = employeeToUpdate.Address;
                 eCC.NewCity = employeeToUpdate.City;
                 eCC.NewCountry = employeeToUpdate.Country;
@@ -144,6 +150,7 @@ namespace MVCApp.DataAccess
         {
             AuthenticateContext db = EmpContractChangesDbContext;
 
+            
             var result = db.FormStatuses.Where(x => x.ID == statusId).First();
 
             if (result != null)
@@ -193,8 +200,9 @@ namespace MVCApp.DataAccess
         public EmployeeContractChanges GetLCF(int userID)
         {//Gets Last contract change form.
             AuthenticateContext db = EmpContractChangesDbContext;
-            return db.EmployeeContractChanges
-                .Where(x => x.EmployeeID == userID).OrderByDescending(x => x.DateCreated).FirstOrDefault();
+            var result = db.EmployeeContractChanges
+                .Where(x => x.EmployeeID == userID).OrderByDescending(x => x.ID).First();
+            return result;
 
         }
 
@@ -220,6 +228,10 @@ namespace MVCApp.DataAccess
             employeeToUpdate.Zipcode = result.NewZipcode;
             employeeToUpdate.Country = result.NewCountry;
             employeeToUpdate.HomePhone = result.NewHomePhone;
+
+            result.StatusID = db.FormStatuses
+                .Where(x => x.StatusName == "Opt-out")
+                .ToList().First().ID;
 
             db.SaveChanges();
 
