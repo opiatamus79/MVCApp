@@ -98,9 +98,9 @@ namespace MVCApp.Controllers
                 foreach (ContractChanges c in UniqueContractChangeList)
                 {
                     ViewBag.pending = c.StatusName == "Pending" ? (ViewBag.pending + 1) : ViewBag.pending;
-                    ViewBag.editing = c.StatusName == "Editing" ? (ViewBag.editing + 1) : ViewBag.approved;
+                    ViewBag.editing = c.StatusName == "Editing" ? (ViewBag.editing + 1) : ViewBag.editing;
                     ViewBag.approved = c.StatusName == "Approved" ? (ViewBag.approved + 1) : ViewBag.approved;
-                    ViewBag.optout = c.StatusName == "Opt-out" ? (ViewBag.optout + 1) : ViewBag.optout;
+                    ViewBag.optout = c.StatusName == "Opt-Out" ? (ViewBag.optout + 1) : ViewBag.optout;
                 }
                 return View(UniqueContractChangeList);
 

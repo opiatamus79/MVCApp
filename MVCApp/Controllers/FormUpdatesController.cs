@@ -64,8 +64,9 @@ namespace MVCApp.Controllers
                         HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
 
                         var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
-                        var GroupedChangeLogs = UniqueList.ToList();
+                        var GroupedChangeLogs = UniqueList.ToList(); 
                         HRModel.ContractChanges = GroupedChangeLogs.ToList();
+                        HRModel.EmployeeID = employee.ID;
                         return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
 
 
@@ -114,10 +115,10 @@ namespace MVCApp.Controllers
                 bool showOptout = true;
                 
                 //case where Employee has past contract changes.
-                if (employee != null && latestContractForm != null)
+                if (employee != null )
                 {
                     var latestCF = latestContractForm;
-                    var latestCFStatus = eCCR.StatusIs(latestCF.StatusID);
+                    var latestCFStatus = latestCF != null ?  eCCR.StatusIs(latestCF.StatusID) : "DNE";
                     
                     DateTime today = DateTime.Today;
                     DateTime SurveyPeriod = (employee.LastUpdate).AddMonths(3);

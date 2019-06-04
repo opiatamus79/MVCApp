@@ -38,9 +38,11 @@ namespace MVCApp.Controllers
         // GET: Dashboard
         [HttpGet]
         public ActionResult ShowContractChangeFormHR([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone,FormType")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
+            "NewState,NewZipcode,NewCountry,NewHomePhone,FormType,EmployeeID")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey or Contract Change Form.
             contract.ContractChanges = new List<ContractChanges>();
+
+
             IEnumerable<FormStatus> Statuses = new List<FormStatus>();
 
 
@@ -75,12 +77,21 @@ namespace MVCApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID")] EmployeeContractChanges contract, string FormType)
+            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID, EmployeeID")] EmployeeContractChanges contract, string FormType)
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
-            string form = FormType;
-            int UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+            string form = FormType;
+
+            int UserID = -1;
+
+            if (form == "editing")
+                UserID = contract.EmployeeID;
+            else
+                UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+
+
+
             if (form.Contains("survey"))
             {//Tested use case of HR 
                 eCCR.InsertEmployeeContractChanges(contract, UserID);
@@ -99,15 +110,12 @@ namespace MVCApp.Controllers
             {
                 //set employees values to that of earliest EmployeeContractChange entry with current changelogid.
                 eCCR.ResetContractChange(UserID, contract);
-                //Check to see if creating a new entry in contract change table setting optout as status.
             }
 
 
             //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
             return RedirectToAction("EnableSurvey", "FormUpdates");
         }
-
-
 
 
 

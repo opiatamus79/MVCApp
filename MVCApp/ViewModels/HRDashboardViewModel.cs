@@ -50,6 +50,7 @@ namespace MVCApp.ViewModels
 
 
         public int StatusID { get; set; } 
+        public int EmployeeID { get; set; }
         public string FormType { get; set; }
         public List<ContractChanges> ContractChanges { get; set; }
     }
