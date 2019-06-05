@@ -102,7 +102,7 @@ namespace MVCApp.Controllers
             bool editing = form.Contains("editing");
             bool survey = form.Contains("survey");
             bool optout = form.Contains("optout");
-
+            bool notEditingCurrentCF = false;
             int UserID = -1;
 
             if (form == "editing")
@@ -110,14 +110,23 @@ namespace MVCApp.Controllers
             else
                 UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
 
-            //!eCCR.CanEditCF(contract, UserID)
-            if (true)
-            {
-                ModelState.AddModelError("", "Changes have been made to the Contract Form, please review these changes.");
 
-                HRDashboardViewModel passBackContract = eCCR.HRDashboardViewModel(contract, form);//eCCR.EmployeeSurveyViewModel(contract);
-                
+
+            EmployeeContractChanges LastCF = eCCR.GetLCF(UserID);
+            if (editing)
+            {
+                if (LastCF != null)
+                    notEditingCurrentCF = (contract.ID != eCCR.GetLCF(UserID).ID) ? true : false;
+
+                //eCCR.EmployeeSurveyViewModel(contract);  
+                if (notEditingCurrentCF)
+                {
+                    ModelState.AddModelError("", "Changes have been made to the Contract Form, please review these changes.");
+                    HRDashboardViewModel passBackContract = eCCR.HRDashboardViewModel(contract, form);
+                }
             }
+
+
 
 
             if (survey || editing)
