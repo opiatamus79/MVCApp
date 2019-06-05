@@ -35,7 +35,12 @@ namespace MVCApp.Controllers
                                      
             return View();
         }
+        //GET: HR/DownloadAttachments
+        public ActionResult DownloadAttachments(int LegalFormsID)
+        {
 
+            return View();
+        }
 
         // GET: HR/ChangeHistoryView
         public ActionResult ChangeHistoryOverview()

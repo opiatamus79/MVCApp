@@ -22,15 +22,14 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Reason)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UpdatedOn)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -43,16 +42,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FilePath)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UpdatedOn)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                @Html.ActionLink("Download", "DownloadAttachments", new { LegalFormsID = item.LegalFormsID })
             </td>
         </tr>
     }
