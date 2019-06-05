@@ -210,6 +210,8 @@ namespace MVCApp.DataAccess
 
             int UserID = employee.ID;
 
+
+
             EmployeeContractChanges lastCF = GetLCF(UserID);
             if (lastCF != null)
             {
@@ -223,12 +225,23 @@ namespace MVCApp.DataAccess
 
             return CFInProgress;
         }
+        public bool CanEditCF(EmployeeContractChanges contract, int UserID)
+        {
+            bool canEditCF = false;
 
-        public HRDashboardViewModel HRDashboardViewModel(Employee employee, string form, int statusID)
+
+
+
+            return canEditCF;
+        }
+
+
+
+        public HRDashboardViewModel HRDashboardViewModelLastCF(Employee employee, string form, int statusID)
         {
 
 
-            bool ContractIsInProgress = CFInProgress(employee);
+            bool ContractIsInProgress = CFInProgress(employee);//Need to pass in contract id if editing.
             EmployeeContractChanges lastCF = GetLCF(employee.ID);
 
             return new HRDashboardViewModel()
@@ -243,6 +256,40 @@ namespace MVCApp.DataAccess
                 NewZipcode = ContractIsInProgress ? lastCF.NewZipcode : employee.Zipcode,
                 StatusID = ContractIsInProgress ? lastCF .StatusID: statusID,
                 FormType = form
+            };
+        }
+        public HRDashboardViewModel HRDashboardViewModel(EmployeeContractChanges contract, string form = "editing")
+        {
+            return new HRDashboardViewModel()
+            {
+                NewAddress = contract.NewAddress,
+                NewCity = contract.NewCity,
+                NewCountry = contract.NewCountry,
+                NewEmail = contract.NewEmail,
+                NewHomePhone = contract.NewHomePhone,
+                NewLastName = contract.NewLastName,
+                NewState = contract.NewState,
+                NewZipcode = contract.NewZipcode,
+                StatusID = contract.StatusID,
+                FormType = form
+            };
+        }
+
+        public EmployeeSurveyViewModel EmployeeSurveyViewModel(EmployeeContractChanges contract)
+        {
+
+            return new ViewModels.EmployeeSurveyViewModel()
+            {
+                NewAddress = contract.NewAddress,
+                NewCity = contract.NewCity,
+                NewCountry = contract.NewCountry,
+                NewEmail = contract.NewEmail,
+                NewHomePhone = contract.NewHomePhone,
+                NewLastName = contract.NewLastName,
+                NewState = contract.NewState,
+                NewZipcode = contract.NewZipcode,
+                StatusID = contract.StatusID
+                
             };
         }
 
@@ -292,7 +339,7 @@ namespace MVCApp.DataAccess
         }
 
         public EmployeeContractChanges GetEmployee(Employee employee)
-        {
+        {//converts model of employee to EmployeeContractChanges
             return new EmployeeContractChanges()
             {
                 StatusID = 1,
@@ -319,7 +366,7 @@ namespace MVCApp.DataAccess
         }
 
         public void CheckApproved(EmployeeContractChanges contract, int UserID)
-        {
+        {//Updates a contract to approved and updates user with new contact info.
             AuthenticateContext db = EmpContractChangesDbContext;
 
             var status = db.FormStatuses.Where(x => x.ID == contract.StatusID).FirstOrDefault();

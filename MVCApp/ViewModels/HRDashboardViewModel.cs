@@ -11,7 +11,7 @@ namespace MVCApp.ViewModels
     public class HRDashboardViewModel
     {
 
-
+        public int ID { get; set; }
         [Required(ErrorMessage = "Contact Information is invalid.")]
         [Display(Name = "New Last Name")]
         public string NewLastName { get; set; }

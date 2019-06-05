@@ -50,7 +50,7 @@ namespace MVCApp.ViewModels
 
         [RequiredIf("NewLastName != LastName", ErrorMessage = "Required to provide Legal Documentation if changing Last Name.")]
         [Display (Name = "Legal Documents")]
-        public string FileURL { get; set; }
+        public HttpPostedFileBase File { get; set; }
 
         [RequiredIf("NewLastName != LastName", ErrorMessage = "Required to provide Reason if changing Last Name.")]
         [Display(Name = "Reason")]

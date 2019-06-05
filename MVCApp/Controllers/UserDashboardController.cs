@@ -57,7 +57,7 @@ namespace MVCApp.Controllers
 
         // GET: Dashboard
         [HttpGet]
-        public ActionResult ShowContractChangeFormHR([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+        public ActionResult ShowContractChangeFormHR([Bind(Include = "ID,NewLastName, NewEmail, NewAddress, NewCity," +
             "NewState,NewZipcode,NewCountry,NewHomePhone,FormType,EmployeeID")] HRDashboardViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey or Contract Change Form.
             contract.ContractChanges = new List<ContractChanges>();
@@ -89,11 +89,15 @@ namespace MVCApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetupContractChangeForm([Bind(Include = "NewLastName, NewEmail, NewAddress, NewCity," +
+        public ActionResult SetupContractChangeForm([Bind(Include = "ID,NewLastName, NewEmail, NewAddress, NewCity," +
             "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID, EmployeeID")] EmployeeContractChanges contract, string FormType)
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
+
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
+          
+
+
             string form = FormType;
             bool editing = form.Contains("editing");
             bool survey = form.Contains("survey");
@@ -105,6 +109,16 @@ namespace MVCApp.Controllers
                 UserID = contract.EmployeeID;
             else
                 UserID = ((CustomAuthentication.CustomPrincipal)this.HttpContext.User).ID;
+
+            //!eCCR.CanEditCF(contract, UserID)
+            if (true)
+            {
+                ModelState.AddModelError("", "Changes have been made to the Contract Form, please review these changes.");
+
+                HRDashboardViewModel passBackContract = eCCR.HRDashboardViewModel(contract, form);//eCCR.EmployeeSurveyViewModel(contract);
+                
+            }
+
 
             if (survey || editing)
             {

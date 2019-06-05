@@ -29,7 +29,7 @@ namespace MVCApp.Controllers
             return View();
         }
 
-        public ActionResult LoadContractChangeForm( string form = "survey", int employeeID = 0,  string ReturnUrl="" ) //User can only see this if they are in opt out period.
+        public ActionResult LoadContractChangeForm( string form = "survey", int employeeID = 0,  string ReturnUrl="", int contractID = 0 ) //User can only see this if they are in opt out period.
         {//displays most recent contract change form to the user (will be most recent contract change form created or 
 
             using (AuthenticateContext db = new AuthenticateContext())
@@ -61,12 +61,13 @@ namespace MVCApp.Controllers
 
                     if (editing == true)
                     {
-                        HRDashboardViewModel HRModel = eCCR.HRDashboardViewModel(employee, form, lastCF.StatusID);
+                        HRDashboardViewModel HRModel = eCCR.HRDashboardViewModelLastCF(employee, form, lastCF.StatusID);
 
                         var UniqueList = eCCR.GetUniqueEmployeeContractLogs();
                         var GroupedChangeLogs = UniqueList.ToList(); 
                         HRModel.ContractChanges = GroupedChangeLogs.ToList();
                         HRModel.EmployeeID = employee.ID;
+                        HRModel.ID = contractID;
                         return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
 
 

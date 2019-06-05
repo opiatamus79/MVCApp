@@ -82,7 +82,7 @@
             else if (!showingModal && info.modalName == "updateContractModal")
             {//HR worker is editing employee's contract.
                 //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
-                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { employeeID: info.eId, form: "editing" });
+                $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { contractID: info.contractId, employeeID: info.eId, form: "editing" });
                 $('#UpdateContractModal').modal('show');
                 
             }
