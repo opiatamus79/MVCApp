@@ -5,6 +5,7 @@
     ViewBag.SurveyModalHeader = "";
     ViewBag.SurveyModalTitle = "Please review the contact information.";
     ViewBag.form = "";
+    ViewBag.Error = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool showOptout = ViewBag.showOptout;
 }
@@ -111,7 +112,21 @@
             $("#setupContractChangeFormModal").modal('hide');
         }
 
+        function handleSuccess(result) {
 
+            if (result.redirectTo) {
+                // The controller action returned a JSON object with the redirectTo property
+                // let's redirect to this location:
+                window.location.href = result.redirectTo;
+            } else {
+                // The controller action returned a partial view with the form and the errors
+                // So we need to update some containing DIV with it:
+                console.log(result);
+               // $('#dialogContent').html(result);
+                //$('#errMessage').removeClass('hidden');
+                document.getElementById("errMessage").style.display = "block";
+            }
+        }
 
     </script>
 }

@@ -6,9 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCApp.ViewModels;
-
-
-
+using System.Collections;
 
 namespace MVCApp.Controllers
 {
@@ -95,7 +93,11 @@ namespace MVCApp.Controllers
 
 
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
-          
+
+            if (ModelState.IsValid)
+            {
+
+            }
 
 
             string form = FormType;
@@ -117,12 +119,30 @@ namespace MVCApp.Controllers
             {
                 if (LastCF != null)
                     notEditingCurrentCF = (contract.ID != eCCR.GetLCF(UserID).ID) ? true : false;
-
-                //eCCR.EmployeeSurveyViewModel(contract);  
+  
                 if (notEditingCurrentCF)
                 {
-                    ModelState.AddModelError("", "Changes have been made to the Contract Form, please review these changes.");
+                    ModelState.AddModelError("", "Recent changes have been made to this Contract, please review these changes.");
                     HRDashboardViewModel passBackContract = eCCR.HRDashboardViewModel(contract, form);
+                    passBackContract.ContractChanges = new List<ContractChanges>();
+                    IEnumerable<FormStatus> Statuses = new List<FormStatus>();
+
+                    using (AuthenticateContext db = new AuthenticateContext())
+                    {
+                        Statuses = db.FormStatuses.AsEnumerable().ToList();
+                    }
+                    ViewBag.FormStatuses = new SelectList(Statuses, "ID", "StatusName");
+                    ViewBag.Error = "Recent changes have been made to this Contract, please review these changes";
+                    //return PartialView("~/Views/HR/SetupContractChangeForm.cshtml", passBackContract);
+                    var errors = new Hashtable();
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Value.Errors.Count > 0)
+                        {
+                            errors[pair.Key] = pair.Value.Errors.Select(error => error.ErrorMessage).ToList();
+                        }
+                    }
+                    return Json(new { success = true, errors });
                 }
             }
 
@@ -134,10 +154,13 @@ namespace MVCApp.Controllers
                 eCCR.InsertEmployeeContractChanges(contract, UserID, editing, survey);
                 if(editing)
                     eCCR.CheckApproved(contract, UserID);
+
+                return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
             }
             else if (optout)
             {
                 eCCR.ResetContractChange(UserID, contract);
+                return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
             }
             //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
             return RedirectToAction("EnableSurvey", "FormUpdates");
