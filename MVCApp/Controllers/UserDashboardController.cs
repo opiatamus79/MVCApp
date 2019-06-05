@@ -77,7 +77,7 @@ namespace MVCApp.Controllers
         public ActionResult ShowContractChangeFormEmployee(EmployeeSurveyViewModel contract) //Will determine if user account needs to have survey created and sent and opt out button enabled.
         {//returns back data that is used to populate the Survey.
 
-              contract.LastName = contract.NewLastName;
+            contract.LastName = contract.NewLastName;
               return PartialView("SetupContractChangeForm", contract);
         }
 
