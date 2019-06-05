@@ -25,7 +25,7 @@ namespace MVCApp
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-yeti.css",
                       "~/Content/site.css"));
 
 

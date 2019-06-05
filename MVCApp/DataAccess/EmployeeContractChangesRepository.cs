@@ -266,7 +266,7 @@ namespace MVCApp.DataAccess
             AuthenticateContext db = EmpContractChangesDbContext;
             var result = db.EmployeeContractChanges
                 .Where(x => x.ChangeLogID == lastChangeLogID)
-                .OrderByDescending(x => x.ID).FirstOrDefault();
+                .OrderBy(x => x.ID).FirstOrDefault();
 
             Employee employeeToUpdate = EmpContractChangesDbContext.Employees.FirstOrDefault(x => x.ID == userID);
 
@@ -279,12 +279,15 @@ namespace MVCApp.DataAccess
             employeeToUpdate.Country = result.NewCountry;
             employeeToUpdate.HomePhone = result.NewHomePhone;
 
-            result.StatusID = db.FormStatuses
+            db.SaveChanges();
+
+            var lastCF = GetLCF(userID);
+
+            lastCF.StatusID = db.FormStatuses
                 .Where(x => x.StatusName == "Opt-out")
                 .ToList().First().ID;
 
             db.SaveChanges();
-
 
         }
 
