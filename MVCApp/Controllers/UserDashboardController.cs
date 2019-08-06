@@ -76,6 +76,7 @@ namespace MVCApp.Controllers
         {//returns back data that is used to populate the Survey.
 
             contract.LastName = contract.NewLastName;
+            contract.FormType = "survey";
               return PartialView("SetupContractChangeForm", contract);
         }
 
@@ -87,18 +88,12 @@ namespace MVCApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetupContractChangeForm([Bind(Include = "ID,NewLastName, NewEmail, NewAddress, NewCity," +
-            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID, EmployeeID")] EmployeeContractChanges contract, string FormType)
+        public ActionResult SetupContractChangeForm([Bind(Include = "ID ,NewLastName, NewEmail, NewAddress, NewCity," +
+            "NewState,NewZipcode,NewCountry,NewHomePhone, FormType, StatusID, EmployeeID, File")] EmployeeContractChanges contract, string FormType, HttpPostedFileBase File)
         {//called to either initiate a contract change request (during surveys) or HR editing a contract change form.
 
-
+            
             EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
-
-            if (ModelState.IsValid)
-            {
-
-            }
-
 
             string form = FormType;
             bool editing = form.Contains("editing");
@@ -152,15 +147,18 @@ namespace MVCApp.Controllers
             if (survey || editing)
             {
                 eCCR.InsertEmployeeContractChanges(contract, UserID, editing, survey);
-                if(editing)
+                if (editing)
+                {
                     eCCR.CheckApproved(contract, UserID);
 
-                return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
+                    return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
+                }
             }
             else if (optout)
             {
                 eCCR.ResetContractChange(UserID, contract);
-                return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
+                //return Json(new { redirectTo = Url.Action("EnableSurvey", "FormUpdates") });
+                return RedirectToAction("EnableSurvey", "FormUpdates");
             }
             //Need to send to Form updater method that goes through to determine if user needs to get Surveyed.
             return RedirectToAction("EnableSurvey", "FormUpdates");

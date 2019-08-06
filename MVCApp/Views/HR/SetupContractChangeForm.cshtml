@@ -5,7 +5,7 @@
 @model MVCApp.ViewModels.HRDashboardViewModel
 
 
-@using (Ajax.BeginForm("SetupContractChangeForm", "UserDashboard", new { FormType = Model.FormType, EmployeeID = Model.EmployeeID }, new AjaxOptions { OnSuccess = "handleSuccess" }))
+@using (Ajax.BeginForm("SetupContractChangeForm", "UserDashboard", new {ID = Model.ID, FormType = Model.FormType, EmployeeID = Model.EmployeeID }, new AjaxOptions { OnSuccess = "handleSuccess" }))
 {
     @Html.AntiForgeryToken()
 

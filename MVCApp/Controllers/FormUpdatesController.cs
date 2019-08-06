@@ -37,6 +37,7 @@ namespace MVCApp.Controllers
                 int userID = 0;
                 //bool survey = false;
                 bool editing = false;
+                
                 bool optout = form.Contains("optout") ? true : false;
                 if (!form.Contains("editing"))
                 {//User is getting surveyed.
@@ -56,7 +57,7 @@ namespace MVCApp.Controllers
             if (lastContractChangeForm != null|| employee != null)
              {
                var lastCF = lastContractChangeForm;
-
+                    
                     EmployeeContractChangesRepository eCCR = new EmployeeContractChangesRepository();
 
                     if (editing == true)
@@ -68,6 +69,7 @@ namespace MVCApp.Controllers
                         HRModel.ContractChanges = GroupedChangeLogs.ToList();
                         HRModel.EmployeeID = employee.ID;
                         HRModel.ID = contractID;
+                        HRModel.FormType = form;
                         return RedirectToAction("ShowContractChangeFormHR", "UserDashboard", HRModel);
 
 

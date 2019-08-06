@@ -12,8 +12,6 @@ namespace MVCApp.ViewModels
     public class EmployeeSurveyViewModel
     {
 
-
-        
         [RequiredIf("true", ErrorMessage = "Contact Information is invalid.")]
         [Display(Name = "New Last Name")]
         public string NewLastName { get; set; }

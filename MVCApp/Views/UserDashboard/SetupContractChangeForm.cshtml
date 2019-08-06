@@ -4,7 +4,7 @@
 <script src="~/Scripts/expressive.annotations.validate.js"></script>
 @model MVCApp.ViewModels.EmployeeSurveyViewModel
 
-@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { FormType = "survey" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SetupContractChangeForm", "UserDashboard", new { ID = 0, FormType = "survey" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

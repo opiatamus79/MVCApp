@@ -27,7 +27,7 @@
     {
         <tr id="view"
             onclick="showModals({ eId: @d.EmployeeID, cId: @d.ChangeLogID, modalName: '@changeHistoryModal'})" data-toggle="tooltip" data-placement="top" title="Show History?">
-            <td>@d.ChangeLogID</td>
+            <td>@d.ID</td>
             <td>@d.NewAddress</td>
             <td>@d.NewCity</td>
             <td>@d.NewState</td>
@@ -52,7 +52,7 @@
                 }
                 @if (d.StatusName == "Editing" || d.StatusName == "Pending")
                 {
-                    <button id="editBtn" onclick="showModals({contractId: @d.ID,eId: @d.EmployeeID, modalName: '@updateContractModal'})" type="button" class="btn btn-primary">Edit</button>
+                    <button id="editBtn" onclick="showModals({contractId: @d.ID, eId: @d.EmployeeID, modalName: '@updateContractModal'})" type="button" class="btn btn-primary">Edit</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Approve</a>
                         <a class="dropdown-item" href="#">Edit</a>

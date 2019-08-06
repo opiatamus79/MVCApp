@@ -12,7 +12,7 @@
 <h2>@ViewBag.Title</h2>
 
 
-<p> Forms Pending: @ViewBag.pending</p>
+
 <!--ADD Another Partial view here for the table, the table that is showing contract changes.-->
 <!--1. have table, click on a button to open up -->
 <!--Button will be used for each row. When clicked will get the Id of the EmployeeContractChange-->
@@ -72,6 +72,8 @@
             clickedEditBtn = false;
         });
 
+
+        console.log('Came in here')
         function showModals(info)
         {
             var showingModal = $('#changeHistoryModal').hasClass('in');
@@ -83,6 +85,7 @@
             else if (!showingModal && info.modalName == "updateContractModal")
             {//HR worker is editing employee's contract.
                 //shows update contract modal to allow HR staff to edit  (creates entries into EmployeeContractChanges table) a users current Pending/Edited Contract form
+                console.log(info);
                 $("#updateContract").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { contractID: info.contractId, employeeID: info.eId, form: "editing" });
                 $('#UpdateContractModal').modal('show');
                 
@@ -93,7 +96,7 @@
                 //$("#CreateContractChangeForm").load("@Html.Raw(Url.Action("OptOutForm", "FormUpdates"))", {action="Show"});
                 //$('#createContractChangeFormModal').modal('show');
 
-                $("#SetupOptOutForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new { form= "optout"}))");
+                $("#SetupOptOutForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new { form = "optout" }))");
                 $('#setupContractChangeFormModal').modal('show');
             }
         }
@@ -104,7 +107,7 @@
 
 
         if (!submitSurvey && showSurvey) {//HR worker is recieving their own survey.
-            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates"))", { form: "survey" });
+            $("#SetupContractChangeForm").load("@Html.Raw(Url.Action("LoadContractChangeForm", "FormUpdates", new  { form= "survey" }))");
             $("#setupContractChangeFormModal").modal({ "backdrop": "static" });
         }
         function hitSubmit() {

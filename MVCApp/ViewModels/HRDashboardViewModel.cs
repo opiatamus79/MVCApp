@@ -12,6 +12,7 @@ namespace MVCApp.ViewModels
     {
 
         public int ID { get; set; }
+        public int ContractID { get; set; }
         [Required(ErrorMessage = "Contact Information is invalid.")]
         [Display(Name = "New Last Name")]
         public string NewLastName { get; set; }
